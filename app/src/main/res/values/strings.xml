@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">NVSU Timetable</string>
+    <string name="user">Пользователь</string>
 </resources>
