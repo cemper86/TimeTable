@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private static RecyclerView RecyclerView;
     private RecyclerView.LayoutManager LayoutManager;
     private Toolbar toolbar;
+    private TextView groupUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,18 +41,13 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView.setLayoutManager(LayoutManager);
         PairAdapter adapter = new PairAdapter(data);
         RecyclerView.setAdapter(adapter);
+        groupUser = (TextView) findViewById(R.id.user_group);
+        groupUser.setText("3702");
     }
 
     public static void update(){
         PairAdapter adapter = new PairAdapter(data);
         RecyclerView.setAdapter(adapter);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_scrolling, menu);
-        return true;
     }
 
     @Override

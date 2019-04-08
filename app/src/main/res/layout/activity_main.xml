@@ -20,7 +20,7 @@
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|enterAlways"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:toolbarId="@+id/toolbar">
 
             <android.support.v7.widget.Toolbar
@@ -30,7 +30,22 @@
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/AppTheme.PopupOverlay" />
 
-
+            <TextView
+                android:id="@+id/user_group"
+                android:layout_width="wrap_content"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_gravity="end"
+                android:gravity="center"
+                android:text="@string/user_group"
+                android:textSize="24sp"
+                android:textColor="@color/colorWhite"
+                android:drawablePadding="5dp"
+                android:drawableEnd="@drawable/ic_user"
+                android:drawableRight="@drawable/ic_user"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                app:layout_collapseMode="pin"
+                 />
 
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
@@ -47,4 +62,6 @@
         app:srcCompat="@drawable/ic_today"
         app:backgroundTint="@color/colorFloatingActionButton"
         tools:ignore="VectorDrawableCompat" />
+
+
 </android.support.design.widget.CoordinatorLayout>
