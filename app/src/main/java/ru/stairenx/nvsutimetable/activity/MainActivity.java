@@ -1,5 +1,6 @@
-package ru.stairenx.nvsutimetable;
+package ru.stairenx.nvsutimetable.activity;
 
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -14,9 +15,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
+import ru.stairenx.nvsutimetable.R;
 import ru.stairenx.nvsutimetable.adapter.PairAdapter;
 import ru.stairenx.nvsutimetable.item.PairItem;
 import ru.stairenx.nvsutimetable.server.WebAction;
@@ -28,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private static RecyclerView RecyclerView;
     private RecyclerView.LayoutManager LayoutManager;
     private Toolbar toolbar;
-    private TextView groupUser;
+    private Button buttonSettingsUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +44,7 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView.setLayoutManager(LayoutManager);
         PairAdapter adapter = new PairAdapter(data);
         RecyclerView.setAdapter(adapter);
-        groupUser = (TextView) findViewById(R.id.user_group);
-        groupUser.setText("3702");
+        initButtons();
     }
 
     public static void update(){
@@ -83,4 +85,17 @@ public class MainActivity extends AppCompatActivity {
         if(toolbar != null)
             toolbar.setTitle(title);
      }
+
+     private void initButtons(){
+         buttonSettingsUser = (Button) findViewById(R.id.button_settigns_user);
+         buttonSettingsUser.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
+             }
+         });
+         buttonSettingsUser.setText("3702");
+     }
+
+
 }

@@ -3,4 +3,6 @@
     <dimen name="app_bar_height">280dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="text_margin">16dp</dimen>
+    <dimen name="padding_right_button_toolbar_settings">8dp</dimen>
+    <dimen name="padding_left_button_toolbar_settings">18dp</dimen>
 </resources>

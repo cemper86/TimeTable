@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".MainActivity">
+    tools:context=".activity.MainActivity">
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
@@ -30,22 +30,23 @@
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/AppTheme.PopupOverlay" />
 
-            <TextView
-                android:id="@+id/user_group"
+            <Button
+                android:id="@+id/button_settigns_user"
                 android:layout_width="wrap_content"
-                android:layout_height="?attr/actionBarSize"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_user"
                 android:layout_gravity="end"
-                android:gravity="center"
-                android:text="@string/user_group"
-                android:textSize="24sp"
-                android:textColor="@color/colorWhite"
-                android:drawablePadding="5dp"
-                android:drawableEnd="@drawable/ic_user"
-                android:drawableRight="@drawable/ic_user"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
                 app:layout_collapseMode="pin"
-                 />
+                android:text="@string/user_group"
+                android:textSize="20sp"
+                android:background="@drawable/button_form_toolbar"
+                android:drawableRight="@drawable/ic_user"
+                android:drawableEnd="@drawable/ic_user"
+                android:drawablePadding="5dp"
+                android:paddingStart="@dimen/padding_left_button_toolbar_settings"
+                android:paddingLeft="@dimen/padding_left_button_toolbar_settings"
+                android:paddingEnd="@dimen/padding_right_button_toolbar_settings"
+                android:paddingRight="@dimen/padding_right_button_toolbar_settings"/>
 
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
