@@ -21,7 +21,6 @@ public class SettingsActivity extends AppCompatActivity {
         setSupportActionBar(toolbarSettings);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        toolbarSettings.getNavigationIcon().setTint(getResources().getColor(R.color.colorWhite)); //Временное решение
     }
 
     @Override
