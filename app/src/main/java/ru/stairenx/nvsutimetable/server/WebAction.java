@@ -10,8 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import ru.stairenx.nvsutimetable.ConstantsNVSU;
-import ru.stairenx.nvsutimetable.MainActivity;
+import ru.stairenx.nvsutimetable.activity.MainActivity;
 import ru.stairenx.nvsutimetable.item.PairItem;
 
 /**

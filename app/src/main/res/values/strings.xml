@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">NVSU Timetable</string>
+    <string name="app_name">НВГУ Расписание</string>
+    <string name="user">Пользователь</string>
+    <string name="user_group">Ваша группа</string>
+    <string name="toolbar_settings">Настройки</string>
+    <string name="edit_text_group">Введите группу</string>
+    <string name="edit_text_subgroup">Введите подгруппу</string>
+    <string name="button_apply_change">Принять изменения</string>
 </resources>
