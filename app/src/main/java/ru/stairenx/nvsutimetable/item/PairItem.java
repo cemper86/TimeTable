@@ -15,12 +15,25 @@ public class PairItem {
     private String SUBGRUP;
     private String DATEZAN;
 
+    private String TIME;
+
     public PairItem(String GRUP, String PAIR, String DISCIPLINE, String VID, String AUD, String TEACHER) {
         this.GRUP = GRUP;
         this.PAIR = PAIR;
         this.DISCIPLINE = DISCIPLINE;
         this.VID = VID;
         this.AUD = AUD;
+        this.TEACHER = TEACHER;
+    }
+
+    public PairItem(String GRUP, String PAIR, String TIME, String DISCIPLINE, String VID, String AUD,String POTOK, String TEACHER) {
+        this.GRUP = GRUP;
+        this.PAIR = PAIR;
+        this.TIME = TIME;
+        this.DISCIPLINE = DISCIPLINE;
+        this.VID = VID;
+        this.AUD = AUD;
+        this.POTOK = POTOK;
         this.TEACHER = TEACHER;
     }
 
@@ -53,6 +66,14 @@ public class PairItem {
 
     public void setPAIR(String PAIR) {
         this.PAIR = PAIR;
+    }
+
+    public String getTIME() {
+        return TIME;
+    }
+
+    public void setTIME(String TIME) {
+        this.TIME = TIME;
     }
 
     public String getDISCIPLINE() {

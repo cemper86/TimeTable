@@ -2,6 +2,8 @@ package ru.stairenx.nvsutimetable;
 
 public class ConstantsNVSU {
 
+    public static String group = "3502";
+
     public static String facultet_gumanitar = "Гуманитарный Факультет";
     public static String facultet_inginer_tech = "Инженерно-технический факультет";
     public static String facultet_dop_edu = "Факультет дополнительного образования";

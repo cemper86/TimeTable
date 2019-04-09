@@ -31,6 +31,8 @@ public class PairAdapter  extends RecyclerView.Adapter<PairAdapter.PairViewHolde
         TextView vid;
         TextView aud;
         TextView teacher;
+        TextView potok;
+        TextView time;
 
         private PairViewHolder(View itemView) {
             super(itemView);
@@ -41,6 +43,8 @@ public class PairAdapter  extends RecyclerView.Adapter<PairAdapter.PairViewHolde
             vid = itemView.findViewById(R.id.vid);
             aud = itemView.findViewById(R.id.aud);
             teacher = itemView.findViewById(R.id.teacher);
+            potok = itemView.findViewById(R.id.potok);
+            time = itemView.findViewById(R.id.time);
 
         }
     }
@@ -63,6 +67,8 @@ public class PairAdapter  extends RecyclerView.Adapter<PairAdapter.PairViewHolde
         holder.vid.setText(item.getVID());
         holder.aud.setText(item.getAUD());
         holder.teacher.setText(item.getTEACHER());
+        holder.potok.setText(item.getPOTOK());
+        holder.time.setText(item.getTIME());
     }
 
     @Override

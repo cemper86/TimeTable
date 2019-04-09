@@ -1,12 +1,14 @@
 package ru.stairenx.nvsutimetable;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,16 +23,15 @@ public class MainActivity extends AppCompatActivity {
     public static List<PairItem> data = new ArrayList<>();
     private static RecyclerView rv;
     private RecyclerView.LayoutManager lm;
-    private Button btn;
-    private EditText group;
+    private Toolbar toolbar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        group = findViewById(R.id.numGroup);
-        btn = findViewById(R.id.btn);
-        initBtn();
+        new WebAction.getBook().execute(ConstantsNVSU.group);
+        initToolbar();
         rv = (RecyclerView) findViewById(R.id.recyclerView);
         rv.setHasFixedSize(true);
         lm = new LinearLayoutManager(this);
@@ -44,13 +45,28 @@ public class MainActivity extends AppCompatActivity {
         rv.setAdapter(adapter);
     }
 
-    private void initBtn(){
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String gr = group.getText().toString();
-                new WebAction.getBook().execute(gr);
-            }
-        });
+    private void initToolbar(){
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_test,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.menu_profile :
+                startActivity(new Intent(this, ProfileActivity.class));
+                break;
+            case  R.id.menu_about :
+                //startActivity(new Intent(this, AboutActivity.class));
+                break;
+        }
+        return true;
     }
 }
