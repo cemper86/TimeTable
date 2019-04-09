@@ -5,4 +5,5 @@
     <dimen name="text_margin">16dp</dimen>
     <dimen name="padding_right_button_toolbar_settings">8dp</dimen>
     <dimen name="padding_left_button_toolbar_settings">18dp</dimen>
+    <dimen name="text_size_edit_text">16sp</dimen>
 </resources>
