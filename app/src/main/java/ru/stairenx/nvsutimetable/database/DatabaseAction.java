@@ -27,7 +27,7 @@ public class DatabaseAction {
 
     public static void addUser(String faculty, String group, String subgroup){
         DatabaseHelper dbHelper = new DatabaseHelper(getContext());
-        sql =dbHelper.getWritableDatabase();
+        sql = dbHelper.getWritableDatabase();
         UserTable user = new UserTable(faculty, group, subgroup);
         cupboard().withDatabase(sql).put(user);
     }
@@ -85,7 +85,7 @@ public class DatabaseAction {
         cursor.close();
         Long idL = Long.valueOf(id);
         UserTable item = cupboard().withDatabase(sql).get(UserTable.class, idL);
-        info.add(new UserItem(item.faculty, item.group, item.subgroup));
+        info.add(new UserItem(item.faculty, item.myGroup, item.mySubGroup));
         return info;
     }
 

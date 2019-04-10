@@ -4,19 +4,19 @@ public class UserTable {
 
     Long _id;
     String faculty;
-    String group;
-    String subgroup;
+    String myGroup;
+    String mySubGroup;
 
 
     public UserTable(String faculty, String group) {
         this.faculty = faculty;
-        this.group = group;
+        this.myGroup = group;
     }
 
     public UserTable(String faculty, String group, String subgroup) {
         this.faculty = faculty;
-        this.group = group;
-        this.subgroup = subgroup;
+        this.myGroup = group;
+        this.mySubGroup = subgroup;
     }
 
     @Override
@@ -24,8 +24,8 @@ public class UserTable {
         return "UserTable{" +
                 "_id=" + _id +
                 ", faculty='" + faculty + '\'' +
-                ", group='" + group + '\'' +
-                ", subgroup='" + subgroup + '\'' +
+                ", group='" + myGroup + '\'' +
+                ", subgroup='" + mySubGroup + '\'' +
                 '}';
     }
 }
