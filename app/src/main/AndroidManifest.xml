@@ -25,7 +25,9 @@
         </activity>
         <activity android:name=".ProfileActivity">
             <meta-data android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity"/>
+                android:value=".activity.MainActivity"/>
+        </activity>
+        <activity android:name=".activity.LoginActivity">
         </activity>
     </application>
 

@@ -15,10 +15,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import ru.stairenx.nvsutimetable.ConstantsNVSU;
 import ru.stairenx.nvsutimetable.R;
 import ru.stairenx.nvsutimetable.adapter.PairAdapter;
 import ru.stairenx.nvsutimetable.item.PairItem;
@@ -32,24 +35,32 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager LayoutManager;
     private Toolbar toolbar;
     private Button buttonSettingsUser;
+    public static String group;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        group = getIntent().getExtras().getString("group");
         setContentView(R.layout.activity_main);
         initToolbarAndSnackBar();
         RecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         RecyclerView.setHasFixedSize(true);
         LayoutManager = new LinearLayoutManager(this);
         RecyclerView.setLayoutManager(LayoutManager);
-        PairAdapter adapter = new PairAdapter(data);
-        RecyclerView.setAdapter(adapter);
         initButtons();
+        getTimeTable(group);
+        update();
     }
 
     public static void update(){
-        PairAdapter adapter = new PairAdapter(data);
-        RecyclerView.setAdapter(adapter);
+        if(data.size()!=0) {
+            PairAdapter adapter = new PairAdapter(data);
+            RecyclerView.setAdapter(adapter);
+        }else{
+            data.add(ConstantsNVSU.ITEM_PLACEHOLDER);
+            PairAdapter adapter = new PairAdapter(data);
+            RecyclerView.setAdapter(adapter);
+        }
     }
 
     @Override
@@ -69,14 +80,15 @@ public class MainActivity extends AppCompatActivity {
          toolbar = (Toolbar) findViewById(R.id.toolbar);
          toolbar.setTitle("");
          setSupportActionBar(toolbar);
+         // Ставиться в Toolbar сегодняшняя дата
+         setToolbarTitle("Cегодня "+ getNowDate());
          FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
          fab.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View view) {
                  Snackbar.make(view, "Расписание на сегодня", Snackbar.LENGTH_LONG)
                          .setAction("Action", null).show();
-                 new WebAction.getBook().execute("3702");
-                setToolbarTitle("Сегодня + Дата");//потом сделать чтобы сюда дата сама ставилась
+                 getTimeTable(group);
              }
          });
      }
@@ -94,8 +106,19 @@ public class MainActivity extends AppCompatActivity {
                  startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
              }
          });
-         buttonSettingsUser.setText("3702");
+         buttonSettingsUser.setText(group);
      }
 
+     private String getNowDate(){
+        String now;
+        Date date = new Date();
+        SimpleDateFormat dataFormat = new SimpleDateFormat("E, d.M");
+        now = dataFormat.format(date);
+        return now;
+     }
+
+     public static void getTimeTable(String group){
+         new WebAction.getBook().execute(group);
+     }
 
 }
