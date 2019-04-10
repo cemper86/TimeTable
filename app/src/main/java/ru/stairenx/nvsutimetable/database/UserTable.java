@@ -19,6 +19,10 @@ public class UserTable {
         this.mySubGroup = subgroup;
     }
 
+    public UserTable(){
+
+    }
+
     @Override
     public String toString() {
         return "UserTable{" +

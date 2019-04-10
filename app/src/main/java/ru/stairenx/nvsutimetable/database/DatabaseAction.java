@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.icu.text.UnicodeSet;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,13 +23,30 @@ public class DatabaseAction {
         DatabaseHelper dbHelper = new DatabaseHelper(getContext());
         sql = dbHelper.getWritableDatabase();
         UserTable user = new UserTable(faculty, mGroup);
-        cupboard().withDatabase(sql).put(user);
+        long id = cupboard().withDatabase(sql).put(user);
+        Log.d("===========", "id its: "+id);
     }
 
     public static void addUser(String faculty, String group, String subgroup){
         DatabaseHelper dbHelper = new DatabaseHelper(getContext());
         sql = dbHelper.getWritableDatabase();
         UserTable user = new UserTable(faculty, group, subgroup);
+        cupboard().withDatabase(sql).put(user);
+    }
+
+    public static void changeUserGroup(String mGroup){
+        DatabaseHelper dbHelper = new DatabaseHelper(getContext());
+        sql = dbHelper.getWritableDatabase();
+        UserTable user = (UserTable) cupboard().withDatabase(sql).get(UserTable.class, 1L);
+        user.myGroup=mGroup;
+        cupboard().withDatabase(sql).put(user);
+    }
+
+    public static void changeUserSubGroup(String subGroup){
+        DatabaseHelper dbHelper = new DatabaseHelper(getContext());
+        sql = dbHelper.getWritableDatabase();
+        UserTable user = (UserTable) cupboard().withDatabase(sql).get(UserTable.class, 1L);
+        user.mySubGroup=subGroup;
         cupboard().withDatabase(sql).put(user);
     }
 
@@ -42,7 +60,7 @@ public class DatabaseAction {
             String textQuery = "SELECT * FROM " + table + " ORDER BY " + DatabaseConstants.COLUMN_ID + " DESC";
             Cursor cursor = sql.rawQuery(textQuery, null);
             while (cursor.moveToNext()) {
-                group = cursor.getString(cursor.getColumnIndex("group"));
+                group = cursor.getString(cursor.getColumnIndex("myGroup"));
             }
             cursor.close();
         }else{
@@ -78,7 +96,7 @@ public class DatabaseAction {
         DatabaseHelper dbHelper = new DatabaseHelper(getContext());
         sql = dbHelper.getWritableDatabase();
         String table = getNameTable(UserTable.class);
-        String textQuery = "SELECT * FROM "+table+" WHERE group='"+group+"';";
+        String textQuery = "SELECT * FROM "+table+" WHERE myGroup='"+group+"';";
         Cursor cursor = sql.rawQuery(textQuery, null);
         cursor.moveToFirst();
         id = cursor.getInt(cursor.getColumnIndex(DatabaseConstants.COLUMN_ID));

@@ -52,6 +52,14 @@ public class MainActivity extends AppCompatActivity {
         update();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        buttonSettingsUser.setText(group);
+        getTimeTable(group);
+
+    }
+
     public static void update(){
         if(data.size()!=0) {
             PairAdapter adapter = new PairAdapter(data);
@@ -106,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
                  startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
              }
          });
-         buttonSettingsUser.setText(group);
+
      }
 
      private String getNowDate(){
