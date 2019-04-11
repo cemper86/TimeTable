@@ -1,6 +1,8 @@
 package ru.stairenx.nvsutimetable.activity;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -8,15 +10,20 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
+
+import com.prolificinteractive.materialcalendarview.CalendarDay;
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
+import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
+
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.format.DateTimeFormatter;
 
 import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -35,36 +42,47 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager LayoutManager;
     private Toolbar toolbar;
     private Button buttonSettingsUser;
+    private MaterialCalendarView CalendarView;
+    private CalendarDay currentDay = CalendarDay.today();
+    private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd_MM_yyyy");
+    private CollapsingToolbarLayout collapsingToolbarLayout;
+    private Animation anim;
     public static String group;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        group = getIntent().getExtras().getString("group");
+
         setContentView(R.layout.activity_main);
-        initToolbarAndSnackBar();
+        group = getIntent().getExtras().getString("group");
         RecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         RecyclerView.setHasFixedSize(true);
         LayoutManager = new LinearLayoutManager(this);
         RecyclerView.setLayoutManager(LayoutManager);
+        anim = AnimationUtils.loadAnimation(this, R.anim.translate_list);
+        RecyclerView.startAnimation(anim);
+        initToolbarAndSnackBar();
         initButtons();
-        getTimeTable(group);
+        initMaterialCalendarView();
         update();
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         buttonSettingsUser.setText(group);
+        CalendarView.setSelectedDate(CalendarDay.from(currentDay.getDate()));
+        setTitleCollapsingToolbarTime(currentDay);
         getTimeTable(group);
-
     }
 
-    public static void update(){
-        if(data.size()!=0) {
+    public static void update() {
+        if (data.size() != 0) {
             PairAdapter adapter = new PairAdapter(data);
             RecyclerView.setAdapter(adapter);
-        }else{
+        } else {
             data.add(ConstantsNVSU.ITEM_PLACEHOLDER);
             PairAdapter adapter = new PairAdapter(data);
             RecyclerView.setAdapter(adapter);
@@ -84,49 +102,69 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-     private void initToolbarAndSnackBar(){
-         toolbar = (Toolbar) findViewById(R.id.toolbar);
-         toolbar.setTitle("");
-         setSupportActionBar(toolbar);
-         // Ставиться в Toolbar сегодняшняя дата
-         setToolbarTitle("Cегодня "+ getNowDate());
-         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-         fab.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View view) {
-                 Snackbar.make(view, "Расписание на сегодня", Snackbar.LENGTH_LONG)
-                         .setAction("Action", null).show();
-                 getTimeTable(group);
-             }
-         });
-     }
 
-     private void setToolbarTitle(String title){
-        if(toolbar != null)
-            toolbar.setTitle(title);
-     }
+    private void initToolbarAndSnackBar() {
+        collapsingToolbarLayout = findViewById(R.id.toolbar_layout);
+        collapsingToolbarLayout.setTitleEnabled(true);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Расписание на сегодня", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+                CalendarView.setSelectedDate(CalendarDay.from(LocalDate.now()));
+                getTimeTable(group);
+            }
+        });
+    }
 
-     private void initButtons(){
-         buttonSettingsUser = (Button) findViewById(R.id.button_settigns_user);
-         buttonSettingsUser.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View v) {
-                 startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
-             }
-         });
+    private void initButtons() {
+        buttonSettingsUser = (Button) findViewById(R.id.button_settigns_user);
+        buttonSettingsUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
+            }
+        });
 
-     }
+    }
 
-     private String getNowDate(){
+    private String getNowDate() {
         String now;
         Date date = new Date();
         SimpleDateFormat dataFormat = new SimpleDateFormat("E, d.M");
         now = dataFormat.format(date);
         return now;
-     }
+    }
 
-     public static void getTimeTable(String group){
-         new WebAction.getBook().execute(group);
-     }
 
+    public void getTimeTable(String group) {
+        new WebAction.getBook().execute(group, currentDay.getDate().format(dateTimeFormatter));
+    }
+
+    private void initMaterialCalendarView() {
+        CalendarView = (MaterialCalendarView) findViewById(R.id.calendarView);
+        CalendarView.setOnDateChangedListener(new OnDateSelectedListener() {
+            @Override
+            public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
+                setTitleCollapsingToolbarTime(date);
+                new WebAction.getBook().execute(group, date.getDate().format(dateTimeFormatter));
+                RecyclerView.startAnimation(anim);
+                //toolbar.setTitle((date.getDate().format(dateTimeFormatter)));
+                //getSupportActionBar().setTitle(date.getDate().format(dateTimeFormatter));
+            }
+        });
+    }
+
+    private void setTitleCollapsingToolbarTime(CalendarDay date){
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd MMMM");
+        if (date.getDay() == currentDay.getDay()) collapsingToolbarLayout.setTitle("На Сегодня");
+        else if(date.getDay()-1 == currentDay.getDay()) collapsingToolbarLayout.setTitle("На Завтра");
+        else if(date.getDay()-2 == currentDay.getDay()) collapsingToolbarLayout.setTitle("На Послезавтра");
+        else if(date.getDay()+1 == currentDay.getDay()) collapsingToolbarLayout.setTitle("Вчера");
+        else
+            collapsingToolbarLayout.setTitle("На "+date.getDate().format(dateTimeFormatter));
+    }
 }
