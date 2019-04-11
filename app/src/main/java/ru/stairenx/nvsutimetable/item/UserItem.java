@@ -3,19 +3,19 @@ package ru.stairenx.nvsutimetable.item;
 public class UserItem {
 
     String faculty;
-    String group;
-    String subroup;
+    String myGroup;
+    String mySubGroup;
 
     public UserItem(String faculty, String group, String subroup) {
         this.faculty = faculty;
-        this.group = group;
-        this.subroup = subroup;
+        this.myGroup = group;
+        this.mySubGroup = subroup;
     }
 
     public UserItem(String faculty, String group) {
         this.faculty = faculty;
-        this.group = group;
-        this.subroup = "subroup";
+        this.myGroup = group;
+        this.mySubGroup = "subroup";
     }
 
     public String getFaculty() {
@@ -27,18 +27,18 @@ public class UserItem {
     }
 
     public String getGroup() {
-        return group;
+        return myGroup;
     }
 
     public void setGroup(String group) {
-        this.group = group;
+        this.myGroup = group;
     }
 
     public String getSubroup() {
-        return subroup;
+        return mySubGroup;
     }
 
     public void setSubroup(String subroup) {
-        this.subroup = subroup;
+        this.mySubGroup = subroup;
     }
 }

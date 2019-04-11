@@ -50,6 +50,8 @@
                 android:paddingEnd="@dimen/padding_right_button_toolbar_settings"
                 android:paddingRight="@dimen/padding_right_button_toolbar_settings"/>
 
+
+
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 

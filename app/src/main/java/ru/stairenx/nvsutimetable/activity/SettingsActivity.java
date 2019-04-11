@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import ru.stairenx.nvsutimetable.R;
+import ru.stairenx.nvsutimetable.database.DatabaseAction;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -61,6 +62,8 @@ public class SettingsActivity extends AppCompatActivity {
                 String gr = et_group.getText().toString();
                 if(!gr.equals("")){
                     MainActivity.group = gr;
+                    DatabaseAction.setContext(getApplicationContext());
+                    DatabaseAction.changeUserGroup(gr);
                     Toast.makeText(SettingsActivity.this, "Группа изменена на "+ gr, Toast.LENGTH_SHORT).show();
                 }
             }
