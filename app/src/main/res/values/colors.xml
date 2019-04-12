@@ -6,9 +6,9 @@
     <color name="colorFloatingActionButton">#284B6F</color>
     <color name="colorWhite">#FFFFFF</color>
 
-    <color name="colorVidLekcy">#FF9600</color>
-    <color name="colorVidLab">#FF6600</color>
-    <color name="colorVidPr">#3CC238</color>
-    <color name="colorVidEc">#FF0000</color>
+    <color name="colorVidLekcy">#04AC00</color>
+    <color name="colorVidLab">#DB5800</color>
+    <color name="colorVidPr">#E49100</color>
+    <color name="colorVidEc">#BB0000</color>
 
 </resources>
