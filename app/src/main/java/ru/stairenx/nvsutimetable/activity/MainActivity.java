@@ -66,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
         initButtons();
         initMaterialCalendarView();
         update();
-
     }
 
     @Override

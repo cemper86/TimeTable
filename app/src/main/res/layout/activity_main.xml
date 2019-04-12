@@ -17,7 +17,7 @@
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/toolbar_layout"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/app_bar_height"
+            android:layout_height="280dp"
             android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorPrimary"
             android:background="@drawable/ic_background"
@@ -54,14 +54,15 @@
                 android:id="@+id/calendarView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="?attr/actionBarSize"
                 app:mcv_showOtherDates="none"
                 app:mcv_selectionColor="@color/colorFloatingActionButton"
                 app:mcv_dateTextAppearance="@color/colorWhite"
                 app:mcv_showWeekDays="true"
                 app:mcv_calendarMode="week"
+                app:mcv_tileHeight="match_parent"
                 app:mcv_selectionMode="single"
-                android:layout_marginTop="0dp"
+                android:layout_marginTop="?attr/actionBarSize"
+                android:layout_marginBottom="?attr/actionBarSize"
                 />
 
         </android.support.design.widget.CollapsingToolbarLayout>
