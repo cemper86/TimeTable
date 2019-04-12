@@ -29,6 +29,7 @@ dependencies {
     implementation 'nl.qbusict:cupboard:2.1.2'
 
     implementation 'com.loopj.android:android-async-http:1.4.9'
+    implementation 'com.github.prolificinteractive:material-calendarview:2.0.1'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
