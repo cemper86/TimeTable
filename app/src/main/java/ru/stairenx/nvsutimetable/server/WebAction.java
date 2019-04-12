@@ -109,6 +109,9 @@ public class WebAction {
         case "Лек" :
             type = "Лекция";
             break;
+        case "Эк" :
+            type = "Экзамен";
+            break;
     }
     return type;
     }

@@ -5,4 +5,10 @@
     <color name="colorAccent">#D81B60</color>
     <color name="colorFloatingActionButton">#284B6F</color>
     <color name="colorWhite">#FFFFFF</color>
+
+    <color name="colorVidLekcy">#FF9600</color>
+    <color name="colorVidLab">#FF6600</color>
+    <color name="colorVidPr">#3CC238</color>
+    <color name="colorVidEc">#FF0000</color>
+
 </resources>
