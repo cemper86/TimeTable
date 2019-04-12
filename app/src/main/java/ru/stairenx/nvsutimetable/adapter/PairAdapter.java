@@ -103,23 +103,19 @@ public class PairAdapter  extends RecyclerView.Adapter<PairAdapter.PairViewHolde
         String vid = holder.vid.getText().toString();
         switch (vid){
             case "Лекция" :
-                holder.vid.setBackgroundColor(ContextCompat.getColor(holder.context, colorLektciya));
-                holder.pair.setBackground(ContextCompat.getDrawable(holder.context, drawPairLactciya));
+                holder.vid.setBackground(ContextCompat.getDrawable(holder.context, drawPairLactciya));
                 holder.imgPairType.setBackground(ContextCompat.getDrawable(holder.context, drawLactciya));
                 break;
             case "Практика" :
-                holder.vid.setBackgroundColor(ContextCompat.getColor(holder.context, colorPraktica));
-                holder.pair.setBackground(ContextCompat.getDrawable(holder.context, drawPairPraktika));
+                holder.vid.setBackground(ContextCompat.getDrawable(holder.context, drawPairPraktika));
                 holder.imgPairType.setBackground(ContextCompat.getDrawable(holder.context, drawPraktika));
                 break;
             case "Лабораторная" :
-                holder.vid.setBackgroundColor(ContextCompat.getColor(holder.context, colorLab));
-                holder.pair.setBackground(ContextCompat.getDrawable(holder.context, drawPairLabaratory));
+                holder.vid.setBackground(ContextCompat.getDrawable(holder.context, drawPairLabaratory));
                 holder.imgPairType.setBackground(ContextCompat.getDrawable(holder.context, drawLabaratory));
                 break;
             case "Экзамен" :
-                holder.vid.setBackgroundColor(ContextCompat.getColor(holder.context, colorExam));
-                holder.pair.setBackground(ContextCompat.getDrawable(holder.context, drawPairExam));
+                holder.vid.setBackground(ContextCompat.getDrawable(holder.context, drawPairExam));
                 holder.imgPairType.setBackground(ContextCompat.getDrawable(holder.context, drawExam));
                 break;
         }
