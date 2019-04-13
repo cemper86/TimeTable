@@ -150,7 +150,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void updateTableFromDate(String group, CalendarDay date) {
-        date.
         new WebAction.getTimeTable().execute(group, date.getDate().format(dateTimeFormatter));
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd MMMM");
         if (date.getDay() == currentDay.getDay()) collapsingToolbarLayout.setTitle("На Сегодня");
