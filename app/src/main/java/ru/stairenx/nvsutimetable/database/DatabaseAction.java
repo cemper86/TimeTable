@@ -120,6 +120,26 @@ public class DatabaseAction {
         cupboard().withDatabase(sql).delete(UserTable.class,idL);
     }
 
+    public static String getUserSubgroup(){
+        String subgroup = "";
+        DatabaseHelper dbHelper = new DatabaseHelper(getContext());
+        sql = dbHelper.getWritableDatabase();
+        String table = getNameTable(UserTable.class);
+        if (getCountTable(table)){
+            String textQuery = "SELECT * FROM " + table + " ORDER BY " + DatabaseConstants.COLUMN_ID + " DESC";
+            Cursor cursor = sql.rawQuery(textQuery, null);
+            while (cursor.moveToNext()) {
+                subgroup = cursor.getString(cursor.getColumnIndex("mySubGroup"));
+            }
+            cursor.close();
+        }else{
+            subgroup = ConstantsNVSU.NONE;
+        }
+        sql.close();
+
+        return subgroup;
+    }
+
     public static Context getContext(){
         return context;
     }

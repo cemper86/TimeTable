@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import ru.stairenx.nvsutimetable.activity.MainActivity;
+import ru.stairenx.nvsutimetable.database.DatabaseAction;
 import ru.stairenx.nvsutimetable.item.PairItem;
 
 /**
@@ -61,23 +62,29 @@ public class WebAction {
         String link = LinkAPI.URL+LinkAPI.GROUP + group + LinkAPI.AND + LinkAPI.DATE + date;
         Log.d("-----",link);
         List<String> jsonArray = token(ConnectServer.getJSON(link));
+        String subgroupLink;
+        String subgroupDatabase;
         int a = 0;
         //System.out.println("Размер массива: "+jsonArray.size());
         for(int i=0;i<jsonArray.size();i++){
             String json = jsonArray.get(a);
             try{
                 JSONObject obj = new JSONObject(json);
-                MainActivity.data.add(new PairItem(
-                        obj.optString(ConstantsJson.OBJ_GRUP),
-                        obj.optString(ConstantsJson.OBJ_PAIR),
-                        getTime(obj.optString(ConstantsJson.OBJ_PAIR)),
-                        obj.optString(ConstantsJson.OBJ_DISCIPLINE),
-                        typePair(obj.optString(ConstantsJson.OBJ_VID)),
-                        obj.optString(ConstantsJson.OBJ_AUD),
-                        getSubgroup(obj.optString(ConstantsJson.OBJ_POTOK)),
-                        obj.optString(ConstantsJson.OBJ_TEACHER),
-                        obj.optString(ConstantsJson.OBJ_KORP)
-                ));
+                subgroupLink = getSubgroup(obj.optString(ConstantsJson.OBJ_POTOK));
+                subgroupDatabase = DatabaseAction.getUserSubgroup();
+                if(subgroupLink.equals(subgroupDatabase) || subgroupLink.equals("0")) {
+                    MainActivity.data.add(new PairItem(
+                            obj.optString(ConstantsJson.OBJ_GRUP),
+                            obj.optString(ConstantsJson.OBJ_PAIR),
+                            getTime(obj.optString(ConstantsJson.OBJ_PAIR)),
+                            obj.optString(ConstantsJson.OBJ_DISCIPLINE),
+                            typePair(obj.optString(ConstantsJson.OBJ_VID)),
+                            obj.optString(ConstantsJson.OBJ_AUD),
+                            getSubgroup(obj.optString(ConstantsJson.OBJ_POTOK)),
+                            obj.optString(ConstantsJson.OBJ_TEACHER),
+                            obj.optString(ConstantsJson.OBJ_KORP)
+                    ));
+                }
                 a++;
             }catch (JSONException e){
                 e.getStackTrace();
@@ -146,12 +153,12 @@ public class WebAction {
     }
 
     private static String getSubgroup(String potok){
-        String subgroup = "";
+        String subgroup;
         String[] data = potok.split("/");
         if(data.length>1) {
             subgroup = data[1];
         }else{
-            subgroup = "Для всей группы";
+            subgroup = "0";
         }
         return subgroup;
     }
