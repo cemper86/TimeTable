@@ -31,6 +31,7 @@ import org.threeten.bp.format.DateTimeFormatter;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -79,8 +80,7 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         buttonSettingsUser.setText(group);
         calendarView.setSelectedDate(CalendarDay.from(currentDay.getDate()));
-        setTitleCollapsingToolbarTime(currentDay);
-        getTimeTable(group);
+        updateTableFromDate(group,currentDay);
     }
 
     public static void update() {
@@ -121,8 +121,11 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Расписание на сегодня", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+
+
                 calendarView.setSelectedDate(CalendarDay.from(LocalDate.now()));
-                getTimeTable(group);
+                calendarView.setCurrentDate(currentDay);
+                updateTableFromDate(group,currentDay);
             }
         });
     }
@@ -147,32 +150,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void getTimeTable(String group) {
-        new WebAction.getBook().execute(group, currentDay.getDate().format(dateTimeFormatter));
-    }
-
-    private void initMaterialCalendarView() {
-        calendarView = (MaterialCalendarView) findViewById(R.id.calendarView);
-        calendarView.setHeaderTextAppearance(R.style.MaterialCalendarViewHeaderText);
-        calendarView.setWeekDayTextAppearance(R.style.MaterialCalendarViewWeekDayText);
-        calendarView.setDateTextAppearance(R.style.MaterialCalendarViewDateText);
-        calendarView.setLeftArrow(0);
-        calendarView.setRightArrow(0);
-        calendarView.setTitleFormatter(DateFormatTitleFormatter.DEFAULT);
-        calendarView.setOnDateChangedListener(new OnDateSelectedListener() {
-            @Override
-            public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
-                setTitleCollapsingToolbarTime(date);
-                new WebAction.getBook().execute(group, date.getDate().format(dateTimeFormatter));
-                RecyclerView.startAnimation(anim);
-
-                //toolbar.setTitle((date.getDate().format(dateTimeFormatter)));
-                //getSupportActionBar().setTitle(date.getDate().format(dateTimeFormatter));
-            }
-        });
-    }
-
-    private void setTitleCollapsingToolbarTime(CalendarDay date){
+    public void updateTableFromDate(String group, CalendarDay date) {
+        new WebAction.getBook().execute(group, date.getDate().format(dateTimeFormatter));
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd MMMM");
         if (date.getDay() == currentDay.getDay()) collapsingToolbarLayout.setTitle("На Сегодня");
         else if(date.getDay()-1 == currentDay.getDay()) collapsingToolbarLayout.setTitle("На Завтра");
@@ -181,4 +160,23 @@ public class MainActivity extends AppCompatActivity {
         else
             collapsingToolbarLayout.setTitle("На "+date.getDate().format(dateTimeFormatter));
     }
+
+    private void initMaterialCalendarView() {
+        calendarView = (MaterialCalendarView) findViewById(R.id.calendarView);
+        calendarView.setHeaderTextAppearance(R.style.MaterialCalendarViewHeaderText);
+        calendarView.setWeekDayTextAppearance(R.style.MaterialCalendarViewWeekDayText);
+        calendarView.setDateTextAppearance(R.style.MaterialCalendarViewDateText);
+        calendarView.setTitleFormatter(DateFormatTitleFormatter.DEFAULT);
+        calendarView.setOnDateChangedListener(new OnDateSelectedListener() {
+            @Override
+            public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
+                updateTableFromDate(group, date);
+                RecyclerView.startAnimation(anim);
+
+                //toolbar.setTitle((date.getDate().format(dateTimeFormatter)));
+                //getSupportActionBar().setTitle(date.getDate().format(dateTimeFormatter));
+            }
+        });
+    }
+
 }

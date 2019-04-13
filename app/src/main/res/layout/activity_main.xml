@@ -23,7 +23,8 @@
             android:background="@drawable/ic_background"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
             app:toolbarId="@+id/toolbar"
-            app:expandedTitleTextAppearance="@style/CollapsingToolbarExpandedCustom">
+            app:expandedTitleTextAppearance="@style/CollapsingToolbarExpandedCustom"
+            app:expandedTitleMarginBottom="20dp">
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -32,20 +33,6 @@
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
                 />
-
-            <com.prolificinteractive.materialcalendarview.MaterialCalendarView
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/calendarView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:mcv_showOtherDates="none"
-                app:mcv_selectionColor="@color/colorFloatingActionButton"
-                app:mcv_dateTextAppearance="@color/colorWhite"
-                app:mcv_showWeekDays="true"
-                app:mcv_calendarMode="week"
-                app:mcv_selectionMode="single"
-                android:layout_marginTop="70dp"
-                android:layout_marginBottom="0dp" />
 
             <Button
                 android:id="@+id/button_settigns_user"
@@ -64,6 +51,23 @@
                 android:paddingLeft="@dimen/padding_left_button_toolbar_settings"
                 android:paddingEnd="@dimen/padding_right_button_toolbar_settings"
                 android:paddingRight="@dimen/padding_right_button_toolbar_settings"/>
+
+            <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/calendarView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:mcv_showOtherDates="none"
+                app:mcv_selectionColor="@color/colorFloatingActionButton"
+                app:mcv_dateTextAppearance="@color/colorWhite"
+                app:mcv_showWeekDays="true"
+                app:mcv_calendarMode="week"
+                app:mcv_selectionMode="single"
+                app:mcv_tileHeight="40dp"
+                app:mcv_rightArrow="@drawable/ic_arrow_selector_months_right"
+                app:mcv_leftArrow="@drawable/ic_arrow_selector_months_left"
+                android:layout_marginTop="80dp"
+                android:layout_marginBottom="0dp"/>
 
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
