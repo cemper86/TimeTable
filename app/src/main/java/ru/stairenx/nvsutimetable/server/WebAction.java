@@ -74,7 +74,7 @@ public class WebAction {
                         obj.optString(ConstantsJson.OBJ_DISCIPLINE),
                         typePair(obj.optString(ConstantsJson.OBJ_VID)),
                         obj.optString(ConstantsJson.OBJ_AUD),
-                        obj.optString(ConstantsJson.OBJ_POTOK),
+                        getSubgroup(obj.optString(ConstantsJson.OBJ_POTOK)),
                         obj.optString(ConstantsJson.OBJ_TEACHER),
                         obj.optString(ConstantsJson.OBJ_KORP)
                 ));
@@ -143,5 +143,16 @@ public class WebAction {
                 break;
         }
         return time;
+    }
+
+    private static String getSubgroup(String potok){
+        String subgroup = "";
+        String[] data = potok.split("/");
+        if(data.length>1) {
+            subgroup = data[1];
+        }else{
+            subgroup = "Для всей группы";
+        }
+        return subgroup;
     }
 }

@@ -145,7 +145,6 @@
                 android:text="potok"
                 android:gravity="right"
                 android:id="@+id/potok"
-                android:visibility="invisible"
                 tools:ignore="MissingConstraints" />
 
         </android.support.constraint.ConstraintLayout>
