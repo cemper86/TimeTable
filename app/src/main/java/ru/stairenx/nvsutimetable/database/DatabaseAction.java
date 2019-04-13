@@ -85,6 +85,12 @@ public class DatabaseAction {
         }
     }
 
+    public static List<UserItem> getUserInfo(){
+        List<UserItem> user = new ArrayList<>();
+
+        return user;
+    }
+
     public static String getNameTable(Class table){
         String nameTable = cupboard().getTable(table);
         return nameTable;

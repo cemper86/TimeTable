@@ -24,11 +24,33 @@
         android:layout_below="@id/toolbar_settings"
         android:layout_alignParentBottom="true">
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="26dp"
             android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:textAlignment="center"
+                android:layout_gravity="center"
+                android:textColor="#111"
+                android:textSize="14dp"
+                android:text="faculty"
+                android:id="@+id/name_faculty"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="#111"
+                android:textSize="16dp"
+                android:text="1010"
+                android:id="@+id/name_group"/>
 
             <TextView
                 android:layout_width="match_parent"
