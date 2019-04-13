@@ -21,10 +21,6 @@ public class WebAction {
     public static class getBook extends AsyncTask<String,Void,String>{
         @Override
         protected String doInBackground(String... params) {
-            /*String gr = new String();
-            for(String p : params){
-                gr = p;
-            }*/
             MainActivity.data = new ArrayList<>();
             String result_json = getObject(params[0], params[1]);
            return result_json;
