@@ -90,9 +90,9 @@ public class PairAdapter  extends RecyclerView.Adapter<PairAdapter.PairViewHolde
         holder.vid.setText(item.getVID());
         holder.aud.setText(item.getAUD());
         holder.teacher.setText(item.getTEACHER());
-        holder.potok.setText(item.getPOTOK());
+        holder.potok.setText(setSubgroup(item.getPOTOK()));
         holder.time.setText(item.getTIME());
-        holder.KORP.setText(" - "+item.getKORP());
+        holder.KORP.setText(" - " + item.getKORP());
         setBackgroundColor(holder);
     }
 
@@ -121,5 +121,15 @@ public class PairAdapter  extends RecyclerView.Adapter<PairAdapter.PairViewHolde
                 //holder.imgPairType.setBackground(ContextCompat.getDrawable(holder.context, drawExam));
                 break;
         }
+    }
+
+    private String setSubgroup(String intSubgroup){
+        String subgroup;
+        if(intSubgroup.equals("0")){
+            subgroup = "Общая пара";
+        }else{
+            subgroup = intSubgroup + " подгруппа";
+        }
+        return subgroup;
     }
 }
