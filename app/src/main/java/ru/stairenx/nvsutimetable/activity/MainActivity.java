@@ -10,13 +10,12 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.DayViewDecorator;
@@ -151,7 +150,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void updateTableFromDate(String group, CalendarDay date) {
-        new WebAction.getBook().execute(group, date.getDate().format(dateTimeFormatter));
+        date.
+        new WebAction.getTimeTable().execute(group, date.getDate().format(dateTimeFormatter));
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd MMMM");
         if (date.getDay() == currentDay.getDay()) collapsingToolbarLayout.setTitle("На Сегодня");
         else if(date.getDay()-1 == currentDay.getDay()) collapsingToolbarLayout.setTitle("На Завтра");

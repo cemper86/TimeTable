@@ -19,7 +19,7 @@ import ru.stairenx.nvsutimetable.item.PairItem;
  */
 public class WebAction {
 
-    public static class getBook extends AsyncTask<String,Void,String>{
+    public static class getTimeTable extends AsyncTask<String,Void,String>{
         @Override
         protected String doInBackground(String... params) {
             MainActivity.data = new ArrayList<>();
