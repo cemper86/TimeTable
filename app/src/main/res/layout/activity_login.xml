@@ -63,6 +63,54 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:id="@+id/layout_check"
+        android:visibility="invisible"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Указать подгруппу"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:textColor="@color/colorWhite"/>
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/check_subgroup"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_margin="12dp"
+        android:id="@+id/layout_subgroup">
+
+        <EditText
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:maxLength="1"
+            android:background="@drawable/shape_radius_100w"
+            android:hint="Подгруппа"
+            android:padding="12dp"
+            android:inputType="number"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:id="@+id/subgroup"
+            android:visibility="invisible"
+            />
+
+    </LinearLayout>
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

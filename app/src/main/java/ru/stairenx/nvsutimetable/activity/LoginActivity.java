@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -23,7 +25,10 @@ public class LoginActivity extends AppCompatActivity {
 
     private LinearLayout layoutGroup;
     private ImageView imageView;
+    private EditText subgroup;
+    private CheckBox checkBox;
     private Button submit;
+    private LinearLayout lCheck;
     private Spinner faculty;
     private Spinner group;
     private String[] facultyArray = {"Факультет ->",ConstantsNVSU.facultet_gumanitar,ConstantsNVSU.facultet_inginer_tech,ConstantsNVSU.facultet_dop_edu,ConstantsNVSU.facultet_it,ConstantsNVSU.facultet_disign,ConstantsNVSU.facultet_pedagog,ConstantsNVSU.facultet_sport,ConstantsNVSU.facultet_eco,ConstantsNVSU.facultet_finance};
@@ -36,13 +41,17 @@ public class LoginActivity extends AppCompatActivity {
         initLayoutFaculty();
         imageView = findViewById(R.id.vector_animation);
         animateImageView(imageView);
+        DatabaseAction.setContext(getApplicationContext());
 
     }
 
     private void initView(){
         faculty = findViewById(R.id.spinner_faculty);
         layoutGroup = findViewById(R.id.layout_spinner_group);
+        lCheck = findViewById(R.id.layout_check);
         group = findViewById(R.id.spinner_group);
+        subgroup = findViewById(R.id.subgroup);
+        checkBox = findViewById(R.id.check_subgroup);
         submit = findViewById(R.id.btn_add_user);
     }
 
@@ -57,6 +66,7 @@ public class LoginActivity extends AppCompatActivity {
                 switch (position){
                     case 0 :
                         layoutGroup.setVisibility(View.GONE);
+                        lCheck.setVisibility(View.INVISIBLE);
                         break;
                     case 1 :
                         initLayoutGroup(ConstantsNVSU.ARRAY_FACULTET_GUMANITAR);
@@ -100,6 +110,18 @@ public class LoginActivity extends AppCompatActivity {
         submit.setVisibility(View.VISIBLE);
         ArrayAdapter adapter = new ArrayAdapter(this, R.layout.castom_spinner_item,R.id.spinner_item_text,array);
         group.setAdapter(adapter);
+        lCheck.setVisibility(View.VISIBLE);
+        checkBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(checkBox.isChecked()){
+                    subgroup.setVisibility(View.VISIBLE);
+                }else{
+                    subgroup.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+
         save();
     }
 
@@ -110,10 +132,15 @@ public class LoginActivity extends AppCompatActivity {
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 String f;
                 String g;
+                String s;
                 f = faculty.getSelectedItem().toString();
                 g = group.getSelectedItem().toString();
+                s = subgroup.getText().toString();
+                if(s.equals("")){
+                    s = "0";
+                }
                 DatabaseAction.setContext(getApplicationContext());
-                DatabaseAction.addUser(f, g);
+                DatabaseAction.addUser(f, g, s);
                 intent.putExtra("group", g);
                 startActivity(intent);
                 finish();
