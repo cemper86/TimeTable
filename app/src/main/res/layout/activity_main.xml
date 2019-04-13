@@ -22,7 +22,9 @@
             app:contentScrim="?attr/colorPrimary"
             android:background="@drawable/ic_background"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
-            app:toolbarId="@+id/toolbar">
+            app:toolbarId="@+id/toolbar"
+            app:expandedTitleTextAppearance="@style/CollapsingToolbarExpandedCustom"
+            app:expandedTitleMarginBottom="20dp">
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -31,6 +33,7 @@
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
                 />
+
             <Button
                 android:id="@+id/button_settigns_user"
                 android:layout_width="wrap_content"
@@ -59,11 +62,12 @@
                 app:mcv_dateTextAppearance="@color/colorWhite"
                 app:mcv_showWeekDays="true"
                 app:mcv_calendarMode="week"
-                app:mcv_tileHeight="match_parent"
                 app:mcv_selectionMode="single"
-                android:layout_marginTop="?attr/actionBarSize"
-                android:layout_marginBottom="?attr/actionBarSize"
-                />
+                app:mcv_tileHeight="40dp"
+                app:mcv_rightArrow="@drawable/ic_arrow_selector_months_right"
+                app:mcv_leftArrow="@drawable/ic_arrow_selector_months_left"
+                android:layout_marginTop="80dp"
+                android:layout_marginBottom="0dp"/>
 
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>

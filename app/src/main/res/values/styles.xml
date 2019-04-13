@@ -23,4 +23,28 @@
         <item name="android:windowBackground">@drawable/splash_screen</item>
     </style>
 
+    <style name="MaterialCalendarViewHeaderText" parent="Base.TextAppearance.AppCompat.Medium">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold|italic</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="MaterialCalendarViewWeekDayText" parent="Base.TextAppearance.AppCompat.Medium">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="MaterialCalendarViewDateText" parent="Base.TextAppearance.AppCompat.Medium">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold|italic</item>
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
+    <style name="CollapsingToolbarExpandedCustom" parent="TextAppearance.Design.CollapsingToolbar.Expanded">
+        <item name="android:textSize">34sp</item>
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
+
 </resources>
