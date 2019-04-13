@@ -51,6 +51,7 @@ public class PairAdapter  extends RecyclerView.Adapter<PairAdapter.PairViewHolde
         TextView teacher;
         TextView potok;
         TextView time;
+        TextView KORP;
         ImageView imgPairType;
         Context context;
 
@@ -67,7 +68,7 @@ public class PairAdapter  extends RecyclerView.Adapter<PairAdapter.PairViewHolde
             teacher = itemView.findViewById(R.id.teacher);
             potok = itemView.findViewById(R.id.potok);
             time = itemView.findViewById(R.id.time);
-
+            KORP = itemView.findViewById(R.id.KORP);
         }
     }
 
@@ -91,6 +92,7 @@ public class PairAdapter  extends RecyclerView.Adapter<PairAdapter.PairViewHolde
         holder.teacher.setText(item.getTEACHER());
         holder.potok.setText(item.getPOTOK());
         holder.time.setText(item.getTIME());
+        holder.KORP.setText(" - "+item.getKORP());
         setBackgroundColor(holder);
     }
 
@@ -104,19 +106,19 @@ public class PairAdapter  extends RecyclerView.Adapter<PairAdapter.PairViewHolde
         switch (vid){
             case "Лекция" :
                 holder.vid.setBackground(ContextCompat.getDrawable(holder.context, drawPairLactciya));
-                holder.imgPairType.setBackground(ContextCompat.getDrawable(holder.context, drawLactciya));
+                //holder.imgPairType.setBackground(ContextCompat.getDrawable(holder.context, drawLactciya));
                 break;
             case "Практика" :
                 holder.vid.setBackground(ContextCompat.getDrawable(holder.context, drawPairPraktika));
-                holder.imgPairType.setBackground(ContextCompat.getDrawable(holder.context, drawPraktika));
+                //holder.imgPairType.setBackground(ContextCompat.getDrawable(holder.context, drawPraktika));
                 break;
             case "Лабораторная" :
                 holder.vid.setBackground(ContextCompat.getDrawable(holder.context, drawPairLabaratory));
-                holder.imgPairType.setBackground(ContextCompat.getDrawable(holder.context, drawLabaratory));
+                //holder.imgPairType.setBackground(ContextCompat.getDrawable(holder.context, drawLabaratory));
                 break;
             case "Экзамен" :
                 holder.vid.setBackground(ContextCompat.getDrawable(holder.context, drawPairExam));
-                holder.imgPairType.setBackground(ContextCompat.getDrawable(holder.context, drawExam));
+                //holder.imgPairType.setBackground(ContextCompat.getDrawable(holder.context, drawExam));
                 break;
         }
     }

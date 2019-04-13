@@ -32,16 +32,20 @@
 
             <TextView
                 android:id="@+id/pair"
+                android:background="@drawable/shape_corners_pair"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="0dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
                 android:text="pair"
                 android:textAlignment="center"
-                android:textColor="#111"
+                android:textColor="@color/colorWhite"
                 android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageViewPair"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -51,16 +55,15 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="10dp"
                 android:layout_marginLeft="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginTop="0dp"
                 android:text="time"
                 android:textAlignment="center"
                 android:textColor="#111"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/pair"
                 app:layout_constraintStart_toEndOf="@+id/imageViewPair"
-                app:layout_constraintTop_toBottomOf="@+id/pair" />
+                app:layout_constraintTop_toTopOf="parent" />
         </android.support.constraint.ConstraintLayout>
 
         <android.support.constraint.ConstraintLayout
@@ -89,7 +92,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="0dp"
                 android:text="discipline"
-                android:textColor="#111"
+                android:textColor="#325C8C"
                 android:textSize="22sp"
                 app:layout_constraintBottom_toTopOf="@+id/aud"
                 app:layout_constraintStart_toStartOf="@+id/vid"
@@ -107,11 +110,21 @@
                 app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
+                android:id="@+id/KORP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
+                android:layout_marginLeft="0dp"
+                android:text="building"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/aud" />
+
+            <TextView
                 android:id="@+id/teacher"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
-                android:layout_marginRight="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
                 android:layout_marginBottom="0dp"
                 android:text="teacher"
                 app:layout_constraintBottom_toBottomOf="parent"

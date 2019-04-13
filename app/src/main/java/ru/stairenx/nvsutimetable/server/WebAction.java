@@ -75,7 +75,8 @@ public class WebAction {
                         typePair(obj.optString(ConstantsJson.OBJ_VID)),
                         obj.optString(ConstantsJson.OBJ_AUD),
                         obj.optString(ConstantsJson.OBJ_POTOK),
-                        obj.optString(ConstantsJson.OBJ_TEACHER)
+                        obj.optString(ConstantsJson.OBJ_TEACHER),
+                        obj.optString(ConstantsJson.OBJ_KORP)
                 ));
                 a++;
             }catch (JSONException e){

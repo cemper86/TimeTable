@@ -26,7 +26,7 @@ public class PairItem {
         this.TEACHER = TEACHER;
     }
 
-    public PairItem(String GRUP, String PAIR, String TIME, String DISCIPLINE, String VID, String AUD,String POTOK, String TEACHER) {
+    public PairItem(String GRUP, String PAIR, String TIME, String DISCIPLINE, String VID, String AUD,String POTOK, String TEACHER, String KORP) {
         this.GRUP = GRUP;
         this.PAIR = PAIR;
         this.TIME = TIME;
@@ -35,6 +35,7 @@ public class PairItem {
         this.AUD = AUD;
         this.POTOK = POTOK;
         this.TEACHER = TEACHER;
+        this.KORP = KORP;
     }
 
     public PairItem(String GRUP, String PAIR, String DISCIPLINE, String VID, String AUD, String BUILDING, String KORP, String TEACHER, String DOL, String POTOK, String SUBGRUP, String DATEZAN) {

@@ -1,6 +1,8 @@
 package ru.stairenx.nvsutimetable.activity;
 
 import android.content.Intent;
+import android.graphics.drawable.Animatable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -19,6 +22,7 @@ import ru.stairenx.nvsutimetable.database.DatabaseAction;
 public class LoginActivity extends AppCompatActivity {
 
     private LinearLayout layoutGroup;
+    private ImageView imageView;
     private Button submit;
     private Spinner faculty;
     private Spinner group;
@@ -30,6 +34,9 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         initView();
         initLayoutFaculty();
+        imageView = findViewById(R.id.vector_animation);
+        animateImageView(imageView);
+
     }
 
     private void initView(){
@@ -126,6 +133,13 @@ public class LoginActivity extends AppCompatActivity {
                 + ConstantsNVSU.ARRAY_FACULTET_ECO.length
                 + ConstantsNVSU.ARRAY_FACULTET_FINANCE.length;
         Toast.makeText(this, "В универе" + String.valueOf(count) + " групп", Toast.LENGTH_SHORT).show();
+    }
+    private static void animateImageView(ImageView imageView) {
+        final Drawable drawable = imageView.getDrawable();
+        if (drawable instanceof Animatable) {
+            Animatable animatable = ((Animatable) drawable);
+            animatable.start();
+        }
     }
 
 }
