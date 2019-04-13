@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager LayoutManager;
     private Toolbar toolbar;
     private Button buttonSettingsUser;
-    private MaterialCalendarView CalendarView;
+    private MaterialCalendarView calendarView;
     private CalendarDay currentDay = CalendarDay.today();
     private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd_MM_yyyy");
     private CollapsingToolbarLayout collapsingToolbarLayout;
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         buttonSettingsUser.setText(group);
-        CalendarView.setSelectedDate(CalendarDay.from(currentDay.getDate()));
+        calendarView.setSelectedDate(CalendarDay.from(currentDay.getDate()));
         setTitleCollapsingToolbarTime(currentDay);
         getTimeTable(group);
     }
@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Расписание на сегодня", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-                CalendarView.setSelectedDate(CalendarDay.from(LocalDate.now()));
+                calendarView.setSelectedDate(CalendarDay.from(LocalDate.now()));
                 getTimeTable(group);
             }
         });
@@ -144,13 +144,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initMaterialCalendarView() {
-        CalendarView = (MaterialCalendarView) findViewById(R.id.calendarView);
-        CalendarView.setOnDateChangedListener(new OnDateSelectedListener() {
+        calendarView = (MaterialCalendarView) findViewById(R.id.calendarView);
+        calendarView.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
                 setTitleCollapsingToolbarTime(date);
                 new WebAction.getBook().execute(group, date.getDate().format(dateTimeFormatter));
                 RecyclerView.startAnimation(anim);
+                calendarView.setDynamicHeightEnabled(true);
                 //toolbar.setTitle((date.getDate().format(dateTimeFormatter)));
                 //getSupportActionBar().setTitle(date.getDate().format(dateTimeFormatter));
             }
