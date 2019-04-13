@@ -15,10 +15,16 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.prolificinteractive.materialcalendarview.CalendarDay;
+import com.prolificinteractive.materialcalendarview.DayViewDecorator;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
+import com.prolificinteractive.materialcalendarview.format.DateFormatTitleFormatter;
+import com.prolificinteractive.materialcalendarview.format.TitleFormatter;
+import com.rhexgomez.typer.roboto.TyperRoboto;
 
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.format.DateTimeFormatter;
@@ -105,6 +111,8 @@ public class MainActivity extends AppCompatActivity {
     private void initToolbarAndSnackBar() {
         collapsingToolbarLayout = findViewById(R.id.toolbar_layout);
         collapsingToolbarLayout.setTitleEnabled(true);
+        collapsingToolbarLayout.setCollapsedTitleTypeface(TyperRoboto.ROBOTO_REGULAR());
+        collapsingToolbarLayout.setExpandedTitleTypeface(TyperRoboto.ROBOTO_ITALIC());
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -145,13 +153,19 @@ public class MainActivity extends AppCompatActivity {
 
     private void initMaterialCalendarView() {
         calendarView = (MaterialCalendarView) findViewById(R.id.calendarView);
+        calendarView.setHeaderTextAppearance(R.style.MaterialCalendarViewHeaderText);
+        calendarView.setWeekDayTextAppearance(R.style.MaterialCalendarViewWeekDayText);
+        calendarView.setDateTextAppearance(R.style.MaterialCalendarViewDateText);
+        calendarView.setLeftArrow(0);
+        calendarView.setRightArrow(0);
+        calendarView.setTitleFormatter(DateFormatTitleFormatter.DEFAULT);
         calendarView.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
                 setTitleCollapsingToolbarTime(date);
                 new WebAction.getBook().execute(group, date.getDate().format(dateTimeFormatter));
                 RecyclerView.startAnimation(anim);
-                calendarView.setDynamicHeightEnabled(true);
+
                 //toolbar.setTitle((date.getDate().format(dateTimeFormatter)));
                 //getSupportActionBar().setTitle(date.getDate().format(dateTimeFormatter));
             }
