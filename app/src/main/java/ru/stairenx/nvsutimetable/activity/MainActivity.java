@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void updateData(){
+    private void updateData() {
         buttonSettingsUser.setText(group);
         calendarView.setSelectedDate(CalendarDay.from(currentDay.getDate()));
         updateTableFromDate(group, currentDay);
@@ -172,6 +172,18 @@ public class MainActivity extends AppCompatActivity {
                     buttonSettingsUser.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
                     buttonSettingsUser.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_save_fast_settings, 0);
                     collapsingToolbarLayout.setTitleEnabled(false);
+                    editTextGroup.setText(group);
+                    if (!DatabaseAction.getUserSubgroup().equals("0")) {
+                        editTextSubGroup.setVisibility(View.VISIBLE);
+                        checkBoxSubGroup.setChecked(true);
+                        editTextSubGroup.setText(DatabaseAction.getUserSubgroup());
+                        checkBoxSubGroup.setText("");
+                    } else {
+                        editTextSubGroup.setText("");
+                        editTextSubGroup.setVisibility(View.INVISIBLE);
+                        checkBoxSubGroup.setChecked(false);
+                        checkBoxSubGroup.setText("Указать \n подгруппу");
+                    }
                     setSizeLinearLayout(LinearLayout.LayoutParams.MATCH_PARENT);
                 } else {
                     buttonSettingsUser.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.button_form_toolbar));
@@ -180,8 +192,12 @@ public class MainActivity extends AppCompatActivity {
                     buttonSettingsUser.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_user, 0);
                     collapsingToolbarLayout.setTitleEnabled(true);
                     setSizeLinearLayout(0);
-                    if(editTextGroup.length()>0 && checkBoxSubGroup.isChecked()) saveInformation(editTextGroup.getText().toString(),editTextSubGroup.getText().toString());
-                    else if (editTextGroup.length()>0 && !checkBoxSubGroup.isChecked()) saveInformation(editTextGroup.getText().toString(),"0");
+                    if (editTextGroup.length() > 3 && checkBoxSubGroup.isChecked())
+                        saveInformation(editTextGroup.getText().toString(), editTextSubGroup.getText().toString());
+                    else if (editTextGroup.length() > 3 && !checkBoxSubGroup.isChecked())
+                        saveInformation(editTextGroup.getText().toString(), "0");
+                    else
+                        Toast.makeText(getApplicationContext(), "Параметры заданы не верно, попробуйте еще раз", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -240,12 +256,6 @@ public class MainActivity extends AppCompatActivity {
                 RecyclerView.startAnimation(animRecyclerView);
             }
         });
-        calendarView.setOnDateLongClickListener(new OnDateLongClickListener() {
-            @Override
-            public void onDateLongClick(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date) {
-
-            }
-        });
         calendarView.setOnTitleClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -271,10 +281,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void saveInformation(String newGroup, String newSubGroup) {
-        MainActivity.group = newGroup;
-        DatabaseAction.setContext(getApplicationContext());
-        DatabaseAction.changeUserGroupAndSubGroup(newGroup, newSubGroup);
-        updateData();
-        //Toast.makeText(SettingsActivity.this, "Группа изменена на " + gr, Toast.LENGTH_SHORT).show();
+        if (!newGroup.equals(group)) {
+            MainActivity.group = newGroup;
+            DatabaseAction.setContext(getApplicationContext());
+            DatabaseAction.changeUserGroupAndSubGroup(newGroup, newSubGroup);
+            updateData();
+            Toast.makeText(getApplicationContext(), "Группа бала измененна на " + group, Toast.LENGTH_SHORT).show();
+        }
     }
 }
