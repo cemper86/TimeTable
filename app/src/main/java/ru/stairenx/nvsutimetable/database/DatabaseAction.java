@@ -42,6 +42,15 @@ public class DatabaseAction {
         cupboard().withDatabase(sql).put(user);
     }
 
+    public static void changeUserGroupAndSubGroup(String mGroup, String mSubGroup){
+        DatabaseHelper dbHelper = new DatabaseHelper(getContext());
+        sql = dbHelper.getWritableDatabase();
+        UserTable user = (UserTable) cupboard().withDatabase(sql).get(UserTable.class, 1L);
+        user.myGroup=mGroup;
+        user.mySubGroup=mSubGroup;
+        cupboard().withDatabase(sql).put(user);
+    }
+
     public static void changeUserSubGroup(String subGroup){
         DatabaseHelper dbHelper = new DatabaseHelper(getContext());
         sql = dbHelper.getWritableDatabase();
