@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void updateTableFromDate(String group, CalendarDay date) {
-        new WebAction.getBook().execute(group, date.getDate().format(dateTimeFormatter));
+        new WebAction.getTimeTable().execute(group, date.getDate().format(dateTimeFormatter));
         if (date.getDay() == CalendarDay.today().getDay()) collapsingToolbarLayout.setTitle("На Сегодня");
         else if (date.getDay() - 1 == CalendarDay.today().getDay())
             collapsingToolbarLayout.setTitle("На Завтра");
