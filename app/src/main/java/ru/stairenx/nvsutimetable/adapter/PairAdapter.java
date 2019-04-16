@@ -125,7 +125,7 @@ public class PairAdapter  extends RecyclerView.Adapter<PairAdapter.PairViewHolde
 
     private String setSubgroup(String intSubgroup){
         String subgroup;
-        if(intSubgroup.equals("0")){
+        if(intSubgroup.equals("0") || intSubgroup.equals("null")){
             subgroup = "Общая пара";
         }else{
             subgroup = intSubgroup + " подгруппа";
