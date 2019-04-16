@@ -128,7 +128,8 @@
     <ImageView
         android:id="@+id/vector_animation"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:src="@drawable/vector_image_welcome"/>
 
 
 </LinearLayout>

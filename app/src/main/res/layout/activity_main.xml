@@ -18,12 +18,13 @@
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/toolbar_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/app_bar_height_collapse"
             android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorPrimary"
             app:expandedTitleMarginBottom="20dp"
             app:expandedTitleTextAppearance="@style/CollapsingToolbarExpandedCustom"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+            android:background="@drawable/ic_background"
             app:toolbarId="@+id/toolbar">
 
             <android.support.v7.widget.Toolbar
