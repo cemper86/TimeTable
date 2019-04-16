@@ -68,6 +68,21 @@ public class WebAction {
                 JSONObject obj = new JSONObject(json);
                 subgroupLink = getSubgroup(obj.optString(ConstantsJson.OBJ_POTOK));
                 subgroupDatabase = DatabaseAction.getUserSubgroup();
+
+                if(subgroupDatabase.equals("0")){
+                    MainActivity.data.add(new PairItem(
+                            obj.optString(ConstantsJson.OBJ_GRUP),
+                            obj.optString(ConstantsJson.OBJ_PAIR),
+                            getTime(obj.optString(ConstantsJson.OBJ_PAIR)),
+                            obj.optString(ConstantsJson.OBJ_DISCIPLINE),
+                            typePair(obj.optString(ConstantsJson.OBJ_VID)),
+                            obj.optString(ConstantsJson.OBJ_AUD),
+                            getSubgroup(obj.optString(ConstantsJson.OBJ_POTOK)),
+                            obj.optString(ConstantsJson.OBJ_TEACHER),
+                            obj.optString(ConstantsJson.OBJ_KORP)
+                    ));
+                }
+
                 if(subgroupLink.equals(subgroupDatabase) || subgroupLink.equals("0")) {
                     MainActivity.data.add(new PairItem(
                             obj.optString(ConstantsJson.OBJ_GRUP),
