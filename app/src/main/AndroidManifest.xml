@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="ru.stairenx.nvsutimetable">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -13,7 +14,8 @@
         android:roundIcon="@drawable/ic_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        tools:ignore="GoogleAppIndexingWarning">
 
         <activity android:name=".activity.SettingsActivity"/>
         <activity android:name=".activity.MainActivity"/>
@@ -27,7 +29,9 @@
         </activity>
         <activity android:name=".ProfileActivity">
             <meta-data android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activity.MainActivity"/>
+                android:value=".activity.MainActivity"
+                android:descendantFocusability="beforeDescendants"
+                android:focusableInTouchMode="true"/>
         </activity>
         <activity android:name=".activity.LoginActivity">
         </activity>

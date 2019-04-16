@@ -79,7 +79,8 @@ public class MainActivity extends AppCompatActivity {
     private EditText editTextGroup;
     private EditText editTextSubGroup;
     private TextView updateDateLast;
-    LinearLayout linearLayout;
+    private AppBarLayout appBarLayout;
+    private LinearLayout linearLayout;
     public static String group;
 
 
@@ -98,22 +99,8 @@ public class MainActivity extends AppCompatActivity {
         initEditTexts();
         initButtons();
         initMaterialCalendarView();
-        update();
         linearLayout = (LinearLayout) findViewById(R.id.linear_fast_settings);
-
-    }
-
-    private void updateData() {
-        buttonSettingsUser.setText(group);
-        calendarView.setSelectedDate(CalendarDay.from(currentDay.getDate()));
-        updateTableFromDate(group, currentDay);
-        updateDateLast.setText("");// pqwoe!
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        updateData();
+        updateDataFromCalendarDay(CalendarDay.today());
     }
 
     public static void update() {
@@ -127,15 +114,32 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void updateDataFromCalendarDay(CalendarDay day) {
+        buttonSettingsUser.setText(group);
+        calendarView.setSelectedDate(CalendarDay.from(day.getDate()));
+        calendarView.setCurrentDate(day);
+        updateTableFromDate(group, day);
+        updateDateLast.setText("");
+    }
+
+    public void updateTableFromDate(String group, CalendarDay date) {
+        new WebAction.getBook().execute(group, date.getDate().format(dateTimeFormatter));
+        if (date.getDay() == CalendarDay.today().getDay()) collapsingToolbarLayout.setTitle("На Сегодня");
+        else if (date.getDay() - 1 == CalendarDay.today().getDay())
+            collapsingToolbarLayout.setTitle("На Завтра");
+        else if (date.getDay() - 2 == CalendarDay.today().getDay())
+            collapsingToolbarLayout.setTitle("На Послезавтра");
+        else if (date.getDay() + 1 == CalendarDay.today().getDay())
+            collapsingToolbarLayout.setTitle("Вчера");
+        else{
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd MMMM");
+            collapsingToolbarLayout.setTitle("На " + date.getDate().format(dateTimeFormatter));
+        }
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_user) {
             return true;
         }
@@ -153,6 +157,18 @@ public class MainActivity extends AppCompatActivity {
         collapsingToolbarLayout.setTitleEnabled(true);
         collapsingToolbarLayout.setCollapsedTitleTypeface(TyperRoboto.ROBOTO_REGULAR());
         collapsingToolbarLayout.setExpandedTitleTypeface(TyperRoboto.ROBOTO_ITALIC());
+        appBarLayout = (AppBarLayout) findViewById(R.id.app_bar);
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
+                if (Math.abs(i)-appBarLayout.getTotalScrollRange() == 0) { //  Collapsed
+                    if(calendarView.getCalendarMode()!=CalendarMode.WEEKS)
+                        calendarView.state().edit().setCalendarDisplayMode(CalendarMode.WEEKS).commit();
+                    imageCalendarArrow.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary2));
+                    imageCalendarArrow.animate().rotation(0);
+                }
+            }
+        });
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
@@ -180,14 +196,14 @@ public class MainActivity extends AppCompatActivity {
                         checkBoxSubGroup.setText("");
                     } else {
                         editTextSubGroup.setText("");
-                        editTextSubGroup.setVisibility(View.INVISIBLE);
+                        editTextSubGroup.setVisibility(View.GONE);
                         checkBoxSubGroup.setChecked(false);
                         checkBoxSubGroup.setText("Указать \n подгруппу");
                     }
                     setSizeLinearLayout(LinearLayout.LayoutParams.MATCH_PARENT);
                 } else {
                     buttonSettingsUser.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.button_form_toolbar));
-                    buttonSettingsUser.setText(group);
+                    //buttonSettingsUser.setText(group);
                     buttonSettingsUser.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorWhite));
                     buttonSettingsUser.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_user, 0);
                     collapsingToolbarLayout.setTitleEnabled(true);
@@ -207,9 +223,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Расписание на сегодня", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-                calendarView.setSelectedDate(CalendarDay.from(LocalDate.now()));
-                calendarView.setCurrentDate(currentDay);
-                updateTableFromDate(group, currentDay);
+                updateDataFromCalendarDay(CalendarDay.today());
             }
         });
         imageCalendarArrow = (ImageView) findViewById(R.id.ImageCalendarArrow);
@@ -222,25 +236,11 @@ public class MainActivity extends AppCompatActivity {
                     editTextSubGroup.setVisibility(View.VISIBLE);
                     checkBoxSubGroup.setText("");
                 } else {
-                    editTextSubGroup.setVisibility(View.INVISIBLE);
+                    editTextSubGroup.setVisibility(View.GONE);
                     checkBoxSubGroup.setText("Указать \n подгруппу");
                 }
             }
         });
-    }
-
-    public void updateTableFromDate(String group, CalendarDay date) {
-        new WebAction.getBook().execute(group, date.getDate().format(dateTimeFormatter));
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd MMMM");
-        if (date.getDay() == currentDay.getDay()) collapsingToolbarLayout.setTitle("На Сегодня");
-        else if (date.getDay() - 1 == currentDay.getDay())
-            collapsingToolbarLayout.setTitle("На Завтра");
-        else if (date.getDay() - 2 == currentDay.getDay())
-            collapsingToolbarLayout.setTitle("На Послезавтра");
-        else if (date.getDay() + 1 == currentDay.getDay())
-            collapsingToolbarLayout.setTitle("Вчера");
-        else
-            collapsingToolbarLayout.setTitle("На " + date.getDate().format(dateTimeFormatter));
     }
 
     private void initMaterialCalendarView() {
@@ -252,8 +252,9 @@ public class MainActivity extends AppCompatActivity {
         calendarView.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
-                updateTableFromDate(group, date);
+                updateDataFromCalendarDay(date);
                 RecyclerView.startAnimation(animRecyclerView);
+                currentDay=date;
             }
         });
         calendarView.setOnTitleClickListener(new View.OnClickListener() {
@@ -268,9 +269,7 @@ public class MainActivity extends AppCompatActivity {
                     calendarView.state().edit().setCalendarDisplayMode(CalendarMode.WEEKS).commit();
                     imageCalendarArrow.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary2));
                 }
-
                 imageCalendarArrow.animate().rotationBy(180).setDuration(600).start();
-
             }
         });
     }
@@ -281,12 +280,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void saveInformation(String newGroup, String newSubGroup) {
-        if (!newGroup.equals(group)) {
             MainActivity.group = newGroup;
             DatabaseAction.setContext(getApplicationContext());
             DatabaseAction.changeUserGroupAndSubGroup(newGroup, newSubGroup);
-            updateData();
-            Toast.makeText(getApplicationContext(), "Группа бала измененна на " + group, Toast.LENGTH_SHORT).show();
-        }
+            updateDataFromCalendarDay(currentDay);
+            Toast.makeText(getApplicationContext(), "Изменения сохранены", Toast.LENGTH_SHORT).show();
     }
 }
