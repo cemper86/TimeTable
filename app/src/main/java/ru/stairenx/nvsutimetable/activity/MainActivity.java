@@ -1,14 +1,8 @@
 package ru.stairenx.nvsutimetable.activity;
 
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Animatable;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.transition.TransitionManager;
@@ -26,8 +20,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -35,32 +27,23 @@ import android.widget.Toast;
 
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.CalendarMode;
-import com.prolificinteractive.materialcalendarview.DayViewDecorator;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
-import com.prolificinteractive.materialcalendarview.OnDateLongClickListener;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 import com.prolificinteractive.materialcalendarview.format.DateFormatTitleFormatter;
-import com.prolificinteractive.materialcalendarview.format.TitleFormatter;
 import com.rhexgomez.typer.roboto.TyperRoboto;
 
-import org.threeten.bp.LocalDate;
 import org.threeten.bp.format.DateTimeFormatter;
-import org.w3c.dom.Text;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Vector;
 
+import nl.qbusict.cupboard.internal.convert.ConverterRegistry;
 import ru.stairenx.nvsutimetable.ConstantsNVSU;
 import ru.stairenx.nvsutimetable.R;
 import ru.stairenx.nvsutimetable.adapter.PairAdapter;
 import ru.stairenx.nvsutimetable.database.DatabaseAction;
 import ru.stairenx.nvsutimetable.item.PairItem;
 import ru.stairenx.nvsutimetable.server.WebAction;
-
 
 public class MainActivity extends AppCompatActivity {
 
@@ -82,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
     private AppBarLayout appBarLayout;
     private LinearLayout linearLayout;
     public static String group;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -162,10 +144,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
                 if (Math.abs(i)-appBarLayout.getTotalScrollRange() == 0) { //  Collapsed
-                    if(calendarView.getCalendarMode()!=CalendarMode.WEEKS)
+                    if(calendarView.getCalendarMode()!=CalendarMode.WEEKS){
                         calendarView.state().edit().setCalendarDisplayMode(CalendarMode.WEEKS).commit();
+                        collapsingToolbarLayout.getLayoutParams().height = (int) getResources().getDimension(R.dimen.app_bar_height_collapse);
+                    }
+                    calendarView.setVisibility(View.INVISIBLE);
                     imageCalendarArrow.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary2));
                     imageCalendarArrow.animate().rotation(0);
+                } else{
+                    calendarView.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -203,7 +190,6 @@ public class MainActivity extends AppCompatActivity {
                     setSizeLinearLayout(LinearLayout.LayoutParams.MATCH_PARENT);
                 } else {
                     buttonSettingsUser.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.button_form_toolbar));
-                    //buttonSettingsUser.setText(group);
                     buttonSettingsUser.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorWhite));
                     buttonSettingsUser.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_user, 0);
                     collapsingToolbarLayout.setTitleEnabled(true);
@@ -263,11 +249,13 @@ public class MainActivity extends AppCompatActivity {
                 ViewGroup coordinatorLayout = (ViewGroup) findViewById(R.id.main_container);
                 TransitionManager.beginDelayedTransition(coordinatorLayout);
                 if (calendarView.getCalendarMode() == CalendarMode.WEEKS) {
+                    collapsingToolbarLayout.getLayoutParams().height = (int) getResources().getDimension(R.dimen.app_bar_app_bar_height_expanded);
                     calendarView.state().edit().setCalendarDisplayMode(CalendarMode.MONTHS).commit();
                     imageCalendarArrow.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.colorFloatingActionButton));
                 } else {
                     calendarView.state().edit().setCalendarDisplayMode(CalendarMode.WEEKS).commit();
                     imageCalendarArrow.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary2));
+                    collapsingToolbarLayout.getLayoutParams().height = (int) getResources().getDimension(R.dimen.app_bar_height_collapse);
                 }
                 imageCalendarArrow.animate().rotationBy(180).setDuration(600).start();
             }
