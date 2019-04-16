@@ -92,7 +92,7 @@ public class PairAdapter  extends RecyclerView.Adapter<PairAdapter.PairViewHolde
         holder.teacher.setText(item.getTEACHER());
         holder.potok.setText(setSubgroup(item.getPOTOK()));
         holder.time.setText(item.getTIME());
-        holder.KORP.setText(" - " + item.getKORP());
+        holder.KORP.setText(" - " + item.getKORP() + "орпус");
         setBackgroundColor(holder);
     }
 

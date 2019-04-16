@@ -1,5 +1,7 @@
 package ru.stairenx.nvsutimetable.server;
 
+import android.util.Log;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -30,9 +32,12 @@ public class ConnectServer {
                 buffer.append(line);
             }
             resultJson = buffer.toString();
-        }catch (Exception e){}
+        }catch (Exception e){
+            Log.d("-----",e.getMessage());
+        }
         finally {
             httpURLConnection.disconnect();
+
         }
         return resultJson;
     }

@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#325C8C</color>
     <color name="colorPrimaryDark">#325C8C</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorAccent">#FFB8C3D3</color>
     <color name="colorFloatingActionButton">#284B6F</color>
     <color name="colorWhite">#FFFFFF</color>
 

@@ -56,7 +56,7 @@ public class WebAction {
     private static String getObject(String group, String date){
         String result = "";
         String link = LinkAPI.URL+LinkAPI.GROUP + group + LinkAPI.AND + LinkAPI.DATE + date;
-        Log.d("-----",link);
+        Log.d("-----","Запрос на "+link);
         List<String> jsonArray = token(ConnectServer.getJSON(link));
         String subgroupLink;
         String subgroupDatabase;
