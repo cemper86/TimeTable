@@ -71,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         group = getIntent().getExtras().getString("group");
+        group = "3702";
         RecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         RecyclerView.setHasFixedSize(true);
         LayoutManager = new LinearLayoutManager(this);

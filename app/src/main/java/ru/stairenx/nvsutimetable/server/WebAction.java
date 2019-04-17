@@ -23,8 +23,7 @@ public class WebAction {
         @Override
         protected String doInBackground(String... params) {
             MainActivity.data = new ArrayList<>();
-            String result_json = getObject(params[0], params[1]);
-           return result_json;
+            return getObject(params[0], params[1]);
         }
 
         @Override

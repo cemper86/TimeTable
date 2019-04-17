@@ -5,8 +5,14 @@ import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -14,37 +20,77 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import ru.stairenx.nvsutimetable.ConstantsNVSU;
 import ru.stairenx.nvsutimetable.R;
 import ru.stairenx.nvsutimetable.database.DatabaseAction;
+import ru.stairenx.nvsutimetable.fragments.StudentLoginFragment;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private LinearLayout layoutGroup;
     private ImageView imageView;
-    private EditText subgroup;
-    private CheckBox checkBox;
-    private Button submit;
-    private LinearLayout lCheck;
-    private Spinner faculty;
-    private Spinner group;
-    private String[] facultyArray = {"Факультет ->",ConstantsNVSU.facultet_gumanitar,ConstantsNVSU.facultet_inginer_tech,ConstantsNVSU.facultet_dop_edu,ConstantsNVSU.facultet_it,ConstantsNVSU.facultet_disign,ConstantsNVSU.facultet_pedagog,ConstantsNVSU.facultet_sport,ConstantsNVSU.facultet_eco,ConstantsNVSU.facultet_finance};
+    public static Button buttonStudent;
+    public static Button buttonTeacher;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_login);
-        initView();
-        initLayoutFaculty();
         imageView = findViewById(R.id.vector_animation);
         animateImageView(imageView);
+        initButtons();
         DatabaseAction.setContext(getApplicationContext());
-
+        loadFragment(new StudentLoginFragment());
     }
 
+    private void loadFragment(Fragment fragment) {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container, fragment)
+                .commit();
+    }
+
+    private static void animateImageView(ImageView imageView) {
+        final Drawable drawable = imageView.getDrawable();
+        if (drawable instanceof Animatable) {
+            Animatable animatable = ((Animatable) drawable);
+            animatable.start();
+        }
+    }
+
+    private void initButtons(){
+        buttonStudent = (Button) findViewById(R.id.button_login_student_select);
+        buttonTeacher = (Button) findViewById(R.id.button_login_teacher_select);
+        buttonStudent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(buttonStudent.getText().equals("Принять"));
+                    saveInformation(StudentLoginFragment.editTextGroup.getText().toString(),StudentLoginFragment.editTextSubGroup.getText().toString());
+            }
+        });
+        buttonTeacher.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Snackbar.make(v, "Скоро!", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+    }
+
+    private void saveInformation(String newGroup, String newSubGroup) {
+        if(StudentLoginFragment.editTextSubGroup.length() == 0 || !StudentLoginFragment.checkBoxSubGroup.isChecked())
+            newSubGroup="0";
+        DatabaseAction.setContext(getApplicationContext());
+        DatabaseAction.addUser("",newGroup,newSubGroup);
+        startActivity(new Intent(this, MainActivity.class).putExtra("group", newGroup));
+        finish();
+    }
+}
+
+/*
     private void initView(){
         faculty = findViewById(R.id.spinner_faculty);
         layoutGroup = findViewById(R.id.layout_spinner_group);
@@ -168,5 +214,4 @@ public class LoginActivity extends AppCompatActivity {
             animatable.start();
         }
     }
-
-}
+*/
