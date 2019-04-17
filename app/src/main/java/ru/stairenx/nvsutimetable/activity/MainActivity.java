@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,7 +50,7 @@ import ru.stairenx.nvsutimetable.server.WebAction;
 public class MainActivity extends AppCompatActivity {
 
     public static List<PairItem> data = new ArrayList<>();
-    private static RecyclerView RecyclerView;
+    public static RecyclerView RecyclerView;
     private RecyclerView.LayoutManager LayoutManager;
     private Toolbar toolbar;
     private Button buttonSettingsUser;
@@ -65,13 +67,15 @@ public class MainActivity extends AppCompatActivity {
     private AppBarLayout appBarLayout;
     private LinearLayout linearLayout;
     public static String group;
+    public static ProgressBar prBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         group = getIntent().getExtras().getString("group");
-        group = "3702";
+        prBar = findViewById(R.id.progressBar);
+        prBar.setVisibility(View.GONE);
         RecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         RecyclerView.setHasFixedSize(true);
         LayoutManager = new LinearLayoutManager(this);

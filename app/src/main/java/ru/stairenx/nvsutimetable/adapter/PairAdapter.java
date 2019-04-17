@@ -20,6 +20,7 @@ import ru.stairenx.nvsutimetable.item.PairItem;
 public class PairAdapter  extends RecyclerView.Adapter<PairAdapter.PairViewHolder> {
 
     private List<PairItem> data;
+    private static int LAYOUT = R.layout.item_pair;;
 
     private int colorLektciya = R.color.colorVidLekcy;
     private int colorPraktica = R.color.colorVidPr;
@@ -76,7 +77,7 @@ public class PairAdapter  extends RecyclerView.Adapter<PairAdapter.PairViewHolde
     @Override
     public PairViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.item_pair,viewGroup,false);
+                .inflate(LAYOUT,viewGroup,false);
         PairViewHolder viewHolder = new PairViewHolder(view);
         return viewHolder;
     }
@@ -125,7 +126,7 @@ public class PairAdapter  extends RecyclerView.Adapter<PairAdapter.PairViewHolde
 
     private String setSubgroup(String intSubgroup){
         String subgroup;
-        if(intSubgroup.equals("0")){
+        if(intSubgroup.equals("0") || intSubgroup.equals("null")){
             subgroup = "Общая пара";
         }else{
             subgroup = intSubgroup + " подгруппа";

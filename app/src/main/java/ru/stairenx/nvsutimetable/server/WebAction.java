@@ -2,6 +2,7 @@ package ru.stairenx.nvsutimetable.server;
 
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import ru.stairenx.nvsutimetable.ConstantsNVSU;
 import ru.stairenx.nvsutimetable.activity.MainActivity;
 import ru.stairenx.nvsutimetable.database.DatabaseAction;
 import ru.stairenx.nvsutimetable.item.PairItem;
@@ -19,16 +21,36 @@ import ru.stairenx.nvsutimetable.item.PairItem;
  */
 public class WebAction {
 
-    public static class getTimeTable extends AsyncTask<String,Void,String>{
+    public static class getTimeTable extends AsyncTask<String,Integer,String>{
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            MainActivity.RecyclerView.setVisibility(View.GONE);
+            MainActivity.prBar.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+            MainActivity.prBar.setProgress(values[0]);
+        }
+
         @Override
         protected String doInBackground(String... params) {
             MainActivity.data = new ArrayList<>();
-            return getObject(params[0], params[1]);
+            for(int i=0;i<100;i++){
+                publishProgress(i);
+            }
+            String result_json = getObject(params[0], params[1]);
+           return result_json;
         }
 
         @Override
         protected void onPostExecute(String json) {
             super.onPostExecute(json);
+            MainActivity.prBar.setVisibility(View.GONE);
+            MainActivity.RecyclerView.setVisibility(View.VISIBLE);
             MainActivity.update();
         }
     }
@@ -65,36 +87,68 @@ public class WebAction {
             String json = jsonArray.get(a);
             try{
                 JSONObject obj = new JSONObject(json);
-                subgroupLink = getSubgroup(obj.optString(ConstantsJson.OBJ_POTOK));
                 subgroupDatabase = DatabaseAction.getUserSubgroup();
 
-                if(subgroupDatabase.equals("0")){
-                    MainActivity.data.add(new PairItem(
-                            obj.optString(ConstantsJson.OBJ_GRUP),
-                            obj.optString(ConstantsJson.OBJ_PAIR),
-                            getTime(obj.optString(ConstantsJson.OBJ_PAIR)),
-                            obj.optString(ConstantsJson.OBJ_DISCIPLINE),
-                            typePair(obj.optString(ConstantsJson.OBJ_VID)),
-                            obj.optString(ConstantsJson.OBJ_AUD),
-                            getSubgroup(obj.optString(ConstantsJson.OBJ_POTOK)),
-                            obj.optString(ConstantsJson.OBJ_TEACHER),
-                            obj.optString(ConstantsJson.OBJ_KORP)
-                    ));
+                if(checkFacultyIT(group)){
+                    subgroupLink = getSubgroup(obj.optString(ConstantsJson.OBJ_POTOK));
+                    if(subgroupDatabase.equals("0")){
+                        MainActivity.data.add(new PairItem(
+                                obj.optString(ConstantsJson.OBJ_GRUP),
+                                obj.optString(ConstantsJson.OBJ_PAIR),
+                                getTime(obj.optString(ConstantsJson.OBJ_PAIR)),
+                                obj.optString(ConstantsJson.OBJ_DISCIPLINE),
+                                typePair(obj.optString(ConstantsJson.OBJ_VID)),
+                                obj.optString(ConstantsJson.OBJ_AUD),
+                                getSubgroup(obj.optString(ConstantsJson.OBJ_POTOK)),
+                                obj.optString(ConstantsJson.OBJ_TEACHER),
+                                obj.optString(ConstantsJson.OBJ_KORP)
+                        ));
+                    }
+
+                    if(subgroupLink.equals(subgroupDatabase) || subgroupLink.equals("0")) {
+                        MainActivity.data.add(new PairItem(
+                                obj.optString(ConstantsJson.OBJ_GRUP),
+                                obj.optString(ConstantsJson.OBJ_PAIR),
+                                getTime(obj.optString(ConstantsJson.OBJ_PAIR)),
+                                obj.optString(ConstantsJson.OBJ_DISCIPLINE),
+                                typePair(obj.optString(ConstantsJson.OBJ_VID)),
+                                obj.optString(ConstantsJson.OBJ_AUD),
+                                getSubgroup(obj.optString(ConstantsJson.OBJ_POTOK)),
+                                obj.optString(ConstantsJson.OBJ_TEACHER),
+                                obj.optString(ConstantsJson.OBJ_KORP)
+                        ));
+                    }
+                }else{
+                    subgroupLink = obj.optString(ConstantsJson.OBJ_SUBGRUP);
+                    if(subgroupDatabase.equals("0")){
+                        MainActivity.data.add(new PairItem(
+                                obj.optString(ConstantsJson.OBJ_GRUP),
+                                obj.optString(ConstantsJson.OBJ_PAIR),
+                                getTime(obj.optString(ConstantsJson.OBJ_PAIR)),
+                                obj.optString(ConstantsJson.OBJ_DISCIPLINE),
+                                typePair(obj.optString(ConstantsJson.OBJ_VID)),
+                                obj.optString(ConstantsJson.OBJ_AUD),
+                                subgroupLink,
+                                obj.optString(ConstantsJson.OBJ_TEACHER),
+                                obj.optString(ConstantsJson.OBJ_KORP)
+                        ));
+                    }
+
+                    if(subgroupLink.equals(subgroupDatabase) || subgroupLink.equals("0")) {
+                        MainActivity.data.add(new PairItem(
+                                obj.optString(ConstantsJson.OBJ_GRUP),
+                                obj.optString(ConstantsJson.OBJ_PAIR),
+                                getTime(obj.optString(ConstantsJson.OBJ_PAIR)),
+                                obj.optString(ConstantsJson.OBJ_DISCIPLINE),
+                                typePair(obj.optString(ConstantsJson.OBJ_VID)),
+                                obj.optString(ConstantsJson.OBJ_AUD),
+                                subgroupLink,
+                                obj.optString(ConstantsJson.OBJ_TEACHER),
+                                obj.optString(ConstantsJson.OBJ_KORP)
+                        ));
+                    }
                 }
 
-                if(subgroupLink.equals(subgroupDatabase) || subgroupLink.equals("0")) {
-                    MainActivity.data.add(new PairItem(
-                            obj.optString(ConstantsJson.OBJ_GRUP),
-                            obj.optString(ConstantsJson.OBJ_PAIR),
-                            getTime(obj.optString(ConstantsJson.OBJ_PAIR)),
-                            obj.optString(ConstantsJson.OBJ_DISCIPLINE),
-                            typePair(obj.optString(ConstantsJson.OBJ_VID)),
-                            obj.optString(ConstantsJson.OBJ_AUD),
-                            getSubgroup(obj.optString(ConstantsJson.OBJ_POTOK)),
-                            obj.optString(ConstantsJson.OBJ_TEACHER),
-                            obj.optString(ConstantsJson.OBJ_KORP)
-                    ));
-                }
                 a++;
             }catch (JSONException e){
                 e.getStackTrace();
@@ -171,5 +225,19 @@ public class WebAction {
             subgroup = "0";
         }
         return subgroup;
+    }
+
+    private static boolean checkFacultyIT(String group){
+        boolean check = false;
+        int q = 0;
+        for(int i = 0;i<ConstantsNVSU.ARRAY_FACULTET_IT.length-1;i++) {
+            if(group.equals(ConstantsNVSU.ARRAY_FACULTET_IT[i])){
+                q = 1;
+            }
+        }
+        if(q==1){
+            check = true;
+        }
+        return check;
     }
 }
