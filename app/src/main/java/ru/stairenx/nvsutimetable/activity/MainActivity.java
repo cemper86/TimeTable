@@ -216,6 +216,7 @@ public class MainActivity extends AppCompatActivity {
                 Snackbar.make(view, "Расписание на сегодня", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
                 updateDataFromCalendarDay(CalendarDay.today());
+                currentDay=CalendarDay.today();
             }
         });
         imageCalendarArrow = (ImageView) findViewById(R.id.ImageCalendarArrow);
