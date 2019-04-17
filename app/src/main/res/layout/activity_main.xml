@@ -158,6 +158,13 @@
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
+    <ProgressBar
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="200dp"
+        android:layout_gravity="center"
+        android:id="@+id/progressBar"/>
+
     <include layout="@layout/content_scrolling" />
 
     <android.support.design.widget.FloatingActionButton

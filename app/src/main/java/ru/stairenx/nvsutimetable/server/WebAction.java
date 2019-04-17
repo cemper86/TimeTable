@@ -2,6 +2,7 @@ package ru.stairenx.nvsutimetable.server;
 
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -20,10 +21,27 @@ import ru.stairenx.nvsutimetable.item.PairItem;
  */
 public class WebAction {
 
-    public static class getTimeTable extends AsyncTask<String,Void,String>{
+    public static class getTimeTable extends AsyncTask<String,Integer,String>{
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            MainActivity.RecyclerView.setVisibility(View.GONE);
+            MainActivity.prBar.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+            MainActivity.prBar.setProgress(values[0]);
+        }
+
         @Override
         protected String doInBackground(String... params) {
             MainActivity.data = new ArrayList<>();
+            for(int i=0;i<100;i++){
+                publishProgress(i);
+            }
             String result_json = getObject(params[0], params[1]);
            return result_json;
         }
@@ -31,6 +49,8 @@ public class WebAction {
         @Override
         protected void onPostExecute(String json) {
             super.onPostExecute(json);
+            MainActivity.prBar.setVisibility(View.GONE);
+            MainActivity.RecyclerView.setVisibility(View.VISIBLE);
             MainActivity.update();
         }
     }
