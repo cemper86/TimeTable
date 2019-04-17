@@ -9,6 +9,8 @@ public class ConstantsNVSU {
     public static String NONE = "none";
 
     public static PairItem ITEM_PLACEHOLDER = new PairItem("", "", "","Сегодня занятий нет", "", "", "", "","");
+    public static PairItem TEST = new PairItem("", "", "","TEST", "", "", "", "","");
+
 
     public static String facultet_gumanitar = "Гуманитарный Факультет";
     public static String facultet_inginer_tech = "Инженерно-технический факультет";
