@@ -201,7 +201,10 @@ public class MainActivity extends AppCompatActivity {
                     collapsingToolbarLayout.setTitleEnabled(true);
                     setSizeLinearLayout(0);
                     if (editTextGroup.length() > 3 && checkBoxSubGroup.isChecked())
-                        saveInformation(editTextGroup.getText().toString(), editTextSubGroup.getText().toString());
+                        if(editTextSubGroup.getText().toString().equals(""))
+                            saveInformation(editTextGroup.getText().toString(), "0");
+                        else
+                            saveInformation(editTextGroup.getText().toString(), editTextSubGroup.getText().toString());
                     else if (editTextGroup.length() > 3 && !checkBoxSubGroup.isChecked())
                         saveInformation(editTextGroup.getText().toString(), "0");
                     else
