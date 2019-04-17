@@ -67,15 +67,15 @@ public class MainActivity extends AppCompatActivity {
     private AppBarLayout appBarLayout;
     private LinearLayout linearLayout;
     public static String group;
-    public static ProgressBar prBar;
+    public static ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         group = getIntent().getExtras().getString("group");
-        prBar = findViewById(R.id.progressBar);
-        prBar.setVisibility(View.GONE);
+        progressBar = findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.GONE);
         RecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         RecyclerView.setHasFixedSize(true);
         LayoutManager = new LinearLayoutManager(this);
@@ -110,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void updateTableFromDate(String group, CalendarDay date) {
+        //RecyclerView.setVisibility(View.GONE);
         new WebAction.getTimeTable().execute(group, date.getDate().format(dateTimeFormatter));
         if (date.getDay() == CalendarDay.today().getDay()) collapsingToolbarLayout.setTitle("На Сегодня");
         else if (date.getDay() - 1 == CalendarDay.today().getDay())
@@ -244,7 +245,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
                 updateDataFromCalendarDay(date);
-                RecyclerView.startAnimation(animRecyclerView);
                 currentDay=date;
             }
         });

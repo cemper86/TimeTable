@@ -8,6 +8,13 @@
     android:fitsSystemWindows="true"
     tools:context=".activity.MainActivity">
 
+    <ProgressBar
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="50dp"
+        android:layout_gravity="bottom|center_horizontal"
+        android:id="@+id/progressBar"/>
+
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
@@ -158,12 +165,7 @@
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
-    <ProgressBar
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_marginTop="200dp"
-        android:layout_gravity="center"
-        android:id="@+id/progressBar"/>
+
 
     <include layout="@layout/content_scrolling" />
 

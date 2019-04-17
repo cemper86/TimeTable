@@ -27,29 +27,26 @@ public class WebAction {
         protected void onPreExecute() {
             super.onPreExecute();
             MainActivity.RecyclerView.setVisibility(View.GONE);
-            MainActivity.prBar.setVisibility(View.VISIBLE);
+            MainActivity.progressBar.setVisibility(View.VISIBLE);
         }
 
         @Override
         protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
-            MainActivity.prBar.setProgress(values[0]);
+            MainActivity.progressBar.setProgress(values[0]);
         }
 
         @Override
         protected String doInBackground(String... params) {
             MainActivity.data = new ArrayList<>();
-            for(int i=0;i<100;i++){
-                publishProgress(i);
-            }
-            String result_json = getObject(params[0], params[1]);
-           return result_json;
+            //--------тут был цикл, который отрабатывал.
+           return getObject(params[0], params[1]);
         }
 
         @Override
         protected void onPostExecute(String json) {
             super.onPostExecute(json);
-            MainActivity.prBar.setVisibility(View.GONE);
+            MainActivity.progressBar.setVisibility(View.GONE);
             MainActivity.RecyclerView.setVisibility(View.VISIBLE);
             MainActivity.update();
         }
