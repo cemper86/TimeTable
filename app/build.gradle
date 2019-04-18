@@ -26,11 +26,13 @@ dependencies {
     implementation 'com.android.support:design:28.0.0'
     implementation 'com.android.support:recyclerview-v7:28.0.0'
     implementation 'com.android.support:cardview-v7:28.0.0'
-    implementation 'nl.qbusict:cupboard:2.1.2'
+    implementation 'nl.qbusict:cupboard:2.2.0'
     implementation 'com.rhexgomez.typer:typer-roboto:2.0.0'
 
     implementation 'com.loopj.android:android-async-http:1.4.9'
     implementation 'com.github.prolificinteractive:material-calendarview:2.0.1'
+
+    implementation group: 'org.threeten', name: 'threetenbp', version: '1.3.8'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
