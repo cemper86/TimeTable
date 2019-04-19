@@ -76,76 +76,13 @@ public class WebAction {
         String link = LinkAPI.URL+LinkAPI.GROUP + group + LinkAPI.AND + LinkAPI.DATE + date;
         Log.d("-----","Запрос на "+link);
         List<String> jsonArray = token(ConnectServer.getJSON(link));
-        String subgroupLink;
-        String subgroupDatabase;
         int a = 0;
         //System.out.println("Размер массива: "+jsonArray.size());
         for(int i=0;i<jsonArray.size();i++){
             String json = jsonArray.get(a);
             try{
                 JSONObject obj = new JSONObject(json);
-                subgroupDatabase = DatabaseAction.getUserSubgroup();
-
-                if(checkFacultyIT(group)){
-                    subgroupLink = getSubgroup(obj.optString(ConstantsJson.OBJ_POTOK));
-                    if(subgroupDatabase.equals("0")){
-                        MainActivity.data.add(new PairItem(
-                                obj.optString(ConstantsJson.OBJ_GRUP),
-                                obj.optString(ConstantsJson.OBJ_PAIR),
-                                getTime(obj.optString(ConstantsJson.OBJ_PAIR)),
-                                obj.optString(ConstantsJson.OBJ_DISCIPLINE),
-                                typePair(obj.optString(ConstantsJson.OBJ_VID)),
-                                obj.optString(ConstantsJson.OBJ_AUD),
-                                getSubgroup(obj.optString(ConstantsJson.OBJ_POTOK)),
-                                obj.optString(ConstantsJson.OBJ_TEACHER),
-                                obj.optString(ConstantsJson.OBJ_KORP)
-                        ));
-                    }
-
-                    if(subgroupLink.equals(subgroupDatabase) || subgroupLink.equals("0")) {
-                        MainActivity.data.add(new PairItem(
-                                obj.optString(ConstantsJson.OBJ_GRUP),
-                                obj.optString(ConstantsJson.OBJ_PAIR),
-                                getTime(obj.optString(ConstantsJson.OBJ_PAIR)),
-                                obj.optString(ConstantsJson.OBJ_DISCIPLINE),
-                                typePair(obj.optString(ConstantsJson.OBJ_VID)),
-                                obj.optString(ConstantsJson.OBJ_AUD),
-                                getSubgroup(obj.optString(ConstantsJson.OBJ_POTOK)),
-                                obj.optString(ConstantsJson.OBJ_TEACHER),
-                                obj.optString(ConstantsJson.OBJ_KORP)
-                        ));
-                    }
-                }else{
-                    subgroupLink = obj.optString(ConstantsJson.OBJ_SUBGRUP);
-                    if(subgroupDatabase.equals("0")){
-                        MainActivity.data.add(new PairItem(
-                                obj.optString(ConstantsJson.OBJ_GRUP),
-                                obj.optString(ConstantsJson.OBJ_PAIR),
-                                getTime(obj.optString(ConstantsJson.OBJ_PAIR)),
-                                obj.optString(ConstantsJson.OBJ_DISCIPLINE),
-                                typePair(obj.optString(ConstantsJson.OBJ_VID)),
-                                obj.optString(ConstantsJson.OBJ_AUD),
-                                subgroupLink,
-                                obj.optString(ConstantsJson.OBJ_TEACHER),
-                                obj.optString(ConstantsJson.OBJ_KORP)
-                        ));
-                    }
-
-                    if(subgroupLink.equals(subgroupDatabase) || subgroupLink.equals("0")) {
-                        MainActivity.data.add(new PairItem(
-                                obj.optString(ConstantsJson.OBJ_GRUP),
-                                obj.optString(ConstantsJson.OBJ_PAIR),
-                                getTime(obj.optString(ConstantsJson.OBJ_PAIR)),
-                                obj.optString(ConstantsJson.OBJ_DISCIPLINE),
-                                typePair(obj.optString(ConstantsJson.OBJ_VID)),
-                                obj.optString(ConstantsJson.OBJ_AUD),
-                                subgroupLink,
-                                obj.optString(ConstantsJson.OBJ_TEACHER),
-                                obj.optString(ConstantsJson.OBJ_KORP)
-                        ));
-                    }
-                }
-
+                addPairOfList(obj);
                 a++;
             }catch (JSONException e){
                 e.getStackTrace();
@@ -236,5 +173,32 @@ public class WebAction {
             check = true;
         }
         return check;
+    }
+
+    private static void addPairOfList(JSONObject obj){
+        String group,pair,time,discipline,type,aud,subgroup,teacher,korp;
+        String dbSubgroup = DatabaseAction.getUserSubgroup();
+        String linkSubgroup = obj.optString(ConstantsJson.OBJ_SUBGRUP);
+        if(linkSubgroup.equals("null")){
+            linkSubgroup = getSubgroup(obj.optString(ConstantsJson.OBJ_POTOK));
+        }
+
+        if(dbSubgroup.equals(linkSubgroup) || dbSubgroup.equals("0") || linkSubgroup.equals("0")){
+            group = obj.optString(ConstantsJson.OBJ_GRUP);
+            pair = obj.optString(ConstantsJson.OBJ_PAIR);
+            time = getTime(obj.optString(ConstantsJson.OBJ_PAIR));
+            discipline = obj.optString(ConstantsJson.OBJ_DISCIPLINE);
+            type = typePair(obj.optString(ConstantsJson.OBJ_VID));
+            aud = obj.optString(ConstantsJson.OBJ_AUD);
+            subgroup = linkSubgroup;
+            teacher = obj.optString(ConstantsJson.OBJ_TEACHER);
+            korp = obj.optString(ConstantsJson.OBJ_KORP);
+
+            PairItem item = new PairItem(group,pair,time,discipline,type,aud,subgroup,teacher,korp);
+            MainActivity.data.add(item);
+            Log.d("-----","Фильтрация по подгруппам и общие пары");
+        }else{
+            Log.d("-----","Подгруппа не подходит");
+        }
     }
 }
