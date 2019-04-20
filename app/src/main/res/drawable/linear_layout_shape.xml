@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <shape>
-            <solid android:color="@color/colorFloatingActionButton"/>
+            <solid android:color="#33B9E7FF"/>
             <corners
                 android:radius="30dp"
                 />

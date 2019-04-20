@@ -6,23 +6,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".activity.MainActivity"
-    >
+    tools:context=".activity.MainActivity">
 
     <ProgressBar
+        android:id="@+id/progressBar"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginBottom="50dp"
         android:layout_gravity="bottom|center_horizontal"
-        android:id="@+id/progressBar"
-        />
+        android:layout_marginBottom="50dp" />
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:theme="@style/AppTheme.AppBarOverlay"
+        android:background="@drawable/collapsing_toolbar_layout">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/toolbar_layout"
@@ -33,8 +32,7 @@
             app:expandedTitleMarginBottom="20dp"
             app:expandedTitleTextAppearance="@style/CollapsingToolbarExpandedCustom"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
-            app:toolbarId="@+id/toolbar"
-            android:background="#00FFFFFF">
+            app:toolbarId="@+id/toolbar">
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -58,33 +56,33 @@
 
             <LinearLayout
                 android:id="@+id/linear_fast_settings"
-                android:layout_width="10dp"
+                android:layout_width="0dp"
                 android:layout_height="?attr/actionBarSize"
                 android:layout_gravity="end"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
                 android:background="@drawable/linear_layout_shape"
+                android:focusableInTouchMode="true"
                 android:orientation="horizontal"
                 app:layout_collapseMode="pin"
-                android:focusableInTouchMode="true">
+                android:visibility="visible">
 
                 <EditText
                     android:id="@+id/edit_text_group"
-                    android:inputType="number"
                     android:layout_width="100dp"
-                    android:layout_height="40dp"
+                    android:layout_height="60dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginLeft="0dp"
                     android:background="@drawable/shape_radius_edit_text_settings_group"
                     android:gravity="center"
                     android:hint="Группа"
-                    android:maxLength="4"
-                    android:textColor="@color/colorFloatingActionButton"
-                    android:textColorHint="@color/colorFloatingActionButton"
-                    android:textSize="16sp"
                     android:imeOptions="actionDone"
-                    />
+                    android:inputType="number"
+                    android:maxLength="4"
+                    android:textColor="@color/colorWhite"
+                    android:textColorHint="@color/colorWhite"
+                    android:textSize="16sp" />
 
                 <CheckBox
                     android:id="@+id/check_subgroup_toolbar"
@@ -98,19 +96,19 @@
 
                 <EditText
                     android:id="@+id/edit_text_subgroup"
-                    android:inputType="number"
                     android:layout_width="100dp"
-                    android:layout_height="40dp"
+                    android:layout_height="60dp"
                     android:layout_gravity="center_vertical"
                     android:background="@drawable/shape_radius_edit_text_settings_group"
                     android:gravity="center"
                     android:hint="Подгруппа"
-                    android:textColor="@color/colorFloatingActionButton"
-                    android:textColorHint="@color/colorFloatingActionButton"
-                    android:textSize="14sp"
+                    android:imeOptions="actionDone"
+                    android:inputType="number"
                     android:maxLength="1"
-                    android:visibility="invisible"
-                    android:imeOptions="actionDone"/>
+                    android:textColor="@color/colorWhite"
+                    android:textColorHint="@color/colorWhite"
+                    android:textSize="14sp"
+                    android:visibility="invisible" />
             </LinearLayout>
 
             <Button
@@ -130,7 +128,7 @@
                 android:text="@string/user_group"
                 android:textAllCaps="false"
                 android:textSize="20sp"
-                app:layout_collapseMode="pin"/>
+                app:layout_collapseMode="pin" />
 
             <ImageView
                 android:id="@+id/ImageCalendarArrow"
@@ -139,7 +137,7 @@
                 android:layout_gravity="start"
                 android:layout_marginStart="90dp"
                 android:layout_marginLeft="90dp"
-                android:layout_marginTop="91dp"
+                android:layout_marginTop="95dp"
                 android:background="@null"
                 android:transformPivotX="9dp"
                 android:transformPivotY="8dp"
@@ -147,27 +145,24 @@
                 tools:ignore="VectorDrawableCompat" />
 
             <com.prolificinteractive.materialcalendarview.MaterialCalendarView
-                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/calendarView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="80dp"
+                android:layout_marginTop="85dp"
                 android:layout_marginBottom="35dp"
                 app:layout_collapseMode="none"
                 app:mcv_calendarMode="week"
                 app:mcv_dateTextAppearance="@color/colorWhite"
                 app:mcv_leftArrow="@drawable/ic_arrow_selector_months_left"
                 app:mcv_rightArrow="@drawable/ic_arrow_selector_months_right"
-                app:mcv_selectionColor="@color/colorFloatingActionButton"
+                app:mcv_selectionColor="#33B9E7FF"
                 app:mcv_selectionMode="single"
                 app:mcv_showOtherDates="none"
                 app:mcv_showWeekDays="true"
-                app:mcv_tileHeight="40dp"
-                />
+                app:mcv_tileHeight="40dp" />
 
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
-
 
 
     <include layout="@layout/content_scrolling" />
@@ -177,11 +172,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"
-        app:backgroundTint="@color/colorFloatingActionButton"
+        app:backgroundTint="#F72D547E"
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|end"
         app:srcCompat="@drawable/ic_today"
-        tools:ignore="VectorDrawableCompat" />
+        tools:ignore="VectorDrawableCompat"
+        android:visibility="visible"/>
 
 
 </android.support.design.widget.CoordinatorLayout>

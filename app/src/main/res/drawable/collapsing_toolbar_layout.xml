@@ -9,10 +9,7 @@
                 android:type="linear"
                 android:angle="90"
                 />
-            <corners
-                android:topLeftRadius="10dp"
-                android:bottomLeftRadius="10dp"
-                />
+
         </shape>
     </item>
 </selector>

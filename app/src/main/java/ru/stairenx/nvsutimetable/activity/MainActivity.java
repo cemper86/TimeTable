@@ -90,6 +90,12 @@ public class MainActivity extends AppCompatActivity {
         updateDataFromCalendarDay(CalendarDay.today());
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateDataFromCalendarDay(currentDay);
+    }
+
     public static void update() {
         if (data.size() != 0) {
             PairAdapter adapter = new PairAdapter(data);
@@ -110,7 +116,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void updateTableFromDate(String group, CalendarDay date) {
-        //RecyclerView.setVisibility(View.GONE);
         new WebAction.getTimeTable().execute(group, date.getDate().format(dateTimeFormatter));
         if (date.getDay() == CalendarDay.today().getDay()) collapsingToolbarLayout.setTitle("На Сегодня");
         else if (date.getDay() - 1 == CalendarDay.today().getDay())
@@ -219,7 +224,7 @@ public class MainActivity extends AppCompatActivity {
                 Snackbar.make(view, "Расписание на сегодня", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
                 updateDataFromCalendarDay(CalendarDay.today());
-                currentDay=CalendarDay.today();
+                currentDay = CalendarDay.today();
             }
         });
         imageCalendarArrow = (ImageView) findViewById(R.id.ImageCalendarArrow);
@@ -248,8 +253,8 @@ public class MainActivity extends AppCompatActivity {
         calendarView.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
+                currentDay = date;
                 updateDataFromCalendarDay(date);
-                currentDay=date;
             }
         });
         calendarView.setOnTitleClickListener(new View.OnClickListener() {

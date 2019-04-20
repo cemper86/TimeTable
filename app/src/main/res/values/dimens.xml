@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="app_bar_height_collapse">262dp</dimen>
-    <dimen name="app_bar_app_bar_height_expanded">412dp</dimen>
+    <dimen name="app_bar_height_collapse">260dp</dimen>
+    <dimen name="app_bar_app_bar_height_expanded">415dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="text_margin">16dp</dimen>
     <dimen name="padding_right_button_toolbar_settings">8dp</dimen>

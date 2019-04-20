@@ -7,8 +7,8 @@
                 android:color="@color/colorVidLekcy"
                 />
             <corners
-                android:topLeftRadius="10dp"
-                android:bottomLeftRadius="10dp"
+                android:topLeftRadius="0dp"
+                android:bottomLeftRadius="0dp"
                 />
         </shape>
     </item>
