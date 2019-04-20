@@ -10,7 +10,7 @@
                 android:bottomRightRadius="50dp"
                 android:topRightRadius="50dp"/>
             <stroke
-                android:color="@color/colorFloatingActionButton"
+                android:color="@color/colorPrimary"
                 android:width="5dp"
                 />
         </shape>

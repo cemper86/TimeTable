@@ -6,14 +6,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".activity.MainActivity">
+    tools:context=".activity.MainActivity"
+    >
 
     <ProgressBar
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginBottom="50dp"
         android:layout_gravity="bottom|center_horizontal"
-        android:id="@+id/progressBar"/>
+        android:id="@+id/progressBar"
+        />
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
@@ -31,7 +33,8 @@
             app:expandedTitleMarginBottom="20dp"
             app:expandedTitleTextAppearance="@style/CollapsingToolbarExpandedCustom"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
-            app:toolbarId="@+id/toolbar">
+            app:toolbarId="@+id/toolbar"
+            android:background="#00FFFFFF">
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -40,7 +43,7 @@
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
                 app:subtitle=""
-                app:title="" />
+                app:title=""/>
 
             <TextView
                 android:id="@+id/update_date_last"
@@ -159,7 +162,8 @@
                 app:mcv_selectionMode="single"
                 app:mcv_showOtherDates="none"
                 app:mcv_showWeekDays="true"
-                app:mcv_tileHeight="40dp" />
+                app:mcv_tileHeight="40dp"
+                />
 
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
