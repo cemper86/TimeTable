@@ -1,5 +1,8 @@
 package ru.stairenx.nvsutimetable.fragments;
 
+import android.content.Intent;
+import android.graphics.drawable.Animatable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,24 +12,34 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import ru.stairenx.nvsutimetable.activity.LoginActivity;
 import ru.stairenx.nvsutimetable.R;
+import ru.stairenx.nvsutimetable.activity.MainActivity;
+import ru.stairenx.nvsutimetable.database.DatabaseAction;
 
 public class StudentLoginFragment extends Fragment {
     private static  final int LAYOUT = R.layout.fragment_student_login;
     private View view;
-    public static EditText editTextGroup;
-    public static EditText editTextSubGroup;
-    public static CheckBox checkBoxSubGroup;
+    public EditText editTextGroup;
+    public EditText editTextSubGroup;
+    public CheckBox checkBoxSubGroup;
+    public ImageButton buttonStudent;
+    private ImageView imageView;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(LAYOUT, container, false);
         initEditTexts();
+        initButtons();
+        imageView = view.findViewById(R.id.vector_animation);
+        animateImageView(imageView);
         return view;
     }
 
@@ -46,11 +59,10 @@ public class StudentLoginFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(editTextGroup.length() > 3){
-                    LoginActivity.buttonStudent.setText("Принять");
-                }
+                if(editTextGroup.length() == 4)
+                    buttonStudent.setVisibility(View.VISIBLE);
                 else
-                    LoginActivity.buttonStudent.setText("СТУДЕНТ");
+                    buttonStudent.setVisibility(View.INVISIBLE);
             }
         });
         checkBoxSubGroup = (CheckBox) view.findViewById(R.id.check_subgroup_login_student);
@@ -66,5 +78,33 @@ public class StudentLoginFragment extends Fragment {
                 }
             }
         });
+    }
+
+    private void initButtons(){
+        buttonStudent = (ImageButton) view.findViewById(R.id.button_login_student_select);
+        buttonStudent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveInformation(editTextGroup.getText().toString(), editTextSubGroup.getText().toString());
+            }
+        });
+    }
+
+    private void saveInformation(String newGroup, String newSubGroup) {
+        if(editTextSubGroup.length() == 0 || !checkBoxSubGroup.isChecked())
+            newSubGroup="0";
+        DatabaseAction.setContext(view.getContext());
+        DatabaseAction.addUser("",newGroup,newSubGroup);
+        MainActivity.group = newGroup;
+        MainActivity.subGroup = newSubGroup;
+        startActivity(new Intent(view.getContext(), MainActivity.class));
+    }
+
+    private static void animateImageView(ImageView imageView) {
+        final Drawable drawable = imageView.getDrawable();
+        if (drawable instanceof Animatable) {
+            Animatable animatable = ((Animatable) drawable);
+            animatable.start();
+        }
     }
 }

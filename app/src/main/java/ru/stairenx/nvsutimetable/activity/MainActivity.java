@@ -1,5 +1,8 @@
 package ru.stairenx.nvsutimetable.activity;
 
+import android.annotation.SuppressLint;
+import android.graphics.Color;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -16,6 +19,8 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -89,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
         initMaterialCalendarView();
         linearLayout = (LinearLayout) findViewById(R.id.linear_fast_settings);
         updateDataFromCalendarDay(CalendarDay.today());
+        statusBarChangeOnSDK();
     }
 
     @Override
@@ -289,5 +295,13 @@ public class MainActivity extends AppCompatActivity {
     private void setSizeLinearLayout(int size) {
         linearLayout.getLayoutParams().width = size;
         linearLayout.requestLayout();
+    }
+
+    @SuppressLint("NewApi")
+    private void statusBarChangeOnSDK() { //Определение SDK платформы, чтобы сделать статус бар прозрачным для этой активности + белый шрифт статус бара.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            getWindow().setStatusBarColor(Color.parseColor("#00000000"));
+        }
     }
 }

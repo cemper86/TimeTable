@@ -1,65 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:background="@color/colorPrimary">
-
-    <ImageView
-        android:id="@+id/vector_animation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:adjustViewBounds="true"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_background_login"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="@drawable/shape_background_shape"/>
+    android:background="@drawable/gradient_background_shape"
+    android:orientation="vertical">
 
     <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/vector_animation"
-        android:layout_above="@id/bottom_navigation_login"
         android:layout_marginTop="0dp"
         android:layout_marginBottom="0dp"
         app:layout_constraintTop_toBottomOf="@+id/vector_animation"
         tools:layout_editor_absoluteX="0dp" />
 
-    <LinearLayout
-        android:id="@+id/bottom_navigation_login"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="8dp"
-        android:background="@color/colorPrimary"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:layout_alignParentRight="true">
-
-        <Button
-            android:id="@+id/button_login_student_select"
-            android:layout_width="150dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/shape_button_login_student_on"
-            android:text="Студент"
-            android:textColor="@color/colorWhite"/>
-
-        <Button
-            android:id="@+id/button_login_teacher_select"
-            android:layout_width="150dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/shape_button_login_teacher_off"
-            android:text="Преподаватель"
-            android:textColor="@color/colorFloatingActionButton"/>
-
-    </LinearLayout>
-
-</RelativeLayout>
+</LinearLayout>

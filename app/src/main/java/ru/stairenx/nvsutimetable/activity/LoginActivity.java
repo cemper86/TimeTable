@@ -3,6 +3,7 @@ package ru.stairenx.nvsutimetable.activity;
 import android.content.Intent;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -12,6 +13,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -31,20 +34,13 @@ import ru.stairenx.nvsutimetable.fragments.StudentLoginFragment;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private ImageView imageView;
-    public static Button buttonStudent;
-    public static Button buttonTeacher;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_login);
-        imageView = findViewById(R.id.vector_animation);
-        animateImageView(imageView);
-        initButtons();
         DatabaseAction.setContext(getApplicationContext());
         loadFragment(new StudentLoginFragment());
+        statusBarChangeOnSDK();
     }
 
     private void loadFragment(Fragment fragment) {
@@ -53,42 +49,12 @@ public class LoginActivity extends AppCompatActivity {
                 .commit();
     }
 
-    private static void animateImageView(ImageView imageView) {
-        final Drawable drawable = imageView.getDrawable();
-        if (drawable instanceof Animatable) {
-            Animatable animatable = ((Animatable) drawable);
-            animatable.start();
+    private void statusBarChangeOnSDK() { //Определение SDK платформы, чтобы сделать статус бар прозрачным для этой активности + белый шрифт статус бара.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Window w = getWindow();
+            w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
         }
-    }
-
-    private void initButtons(){
-        buttonStudent = (Button) findViewById(R.id.button_login_student_select);
-        buttonTeacher = (Button) findViewById(R.id.button_login_teacher_select);
-        buttonStudent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(buttonStudent.getText().equals("Принять"));
-                    saveInformation(StudentLoginFragment.editTextGroup.getText().toString(),StudentLoginFragment.editTextSubGroup.getText().toString());
-            }
-        });
-        buttonTeacher.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Snackbar.make(v, "Скоро!", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-    }
-
-    private void saveInformation(String newGroup, String newSubGroup) {
-        if(StudentLoginFragment.editTextSubGroup.length() == 0 || !StudentLoginFragment.checkBoxSubGroup.isChecked())
-            newSubGroup="0";
-        DatabaseAction.setContext(getApplicationContext());
-        DatabaseAction.addUser("",newGroup,newSubGroup);
-        MainActivity.group = newGroup;
-        MainActivity.subGroup = newSubGroup;
-        startActivity(new Intent(this, MainActivity.class));
-        finish();
     }
 }
 

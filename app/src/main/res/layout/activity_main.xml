@@ -13,7 +13,7 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="50dp" />
+        android:layout_marginBottom="50dp"/>
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
@@ -172,7 +172,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"
-        app:backgroundTint="#F72D547E"
+        app:backgroundTint="#F7688DAF"
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|end"
         app:srcCompat="@drawable/ic_today"

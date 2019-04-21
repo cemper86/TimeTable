@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">НВГУ Расписание</string>
+    <string name="app_name">Расписание НВГУ Beta</string>
     <string name="user">Пользователь</string>
     <string name="user_group">Ваша группа</string>
     <string name="toolbar_settings">Настройки</string>
