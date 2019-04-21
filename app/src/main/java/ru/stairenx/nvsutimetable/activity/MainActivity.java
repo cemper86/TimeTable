@@ -44,6 +44,7 @@ import ru.stairenx.nvsutimetable.ConstantsNVSU;
 import ru.stairenx.nvsutimetable.R;
 import ru.stairenx.nvsutimetable.adapter.PairAdapter;
 import ru.stairenx.nvsutimetable.database.DatabaseAction;
+import ru.stairenx.nvsutimetable.database.DatabaseActionTask;
 import ru.stairenx.nvsutimetable.item.PairItem;
 import ru.stairenx.nvsutimetable.server.WebAction;
 
@@ -67,13 +68,13 @@ public class MainActivity extends AppCompatActivity {
     private AppBarLayout appBarLayout;
     private LinearLayout linearLayout;
     public static String group;
+    public static String subGroup;
     public static ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        group = getIntent().getExtras().getString("group");
         progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(View.GONE);
         RecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
@@ -128,6 +129,15 @@ public class MainActivity extends AppCompatActivity {
             DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd MMMM");
             collapsingToolbarLayout.setTitle("На " + date.getDate().format(dateTimeFormatter));
         }
+    }
+
+    private void saveInformation(String newGroup, String newSubGroup) {
+        MainActivity.group = newGroup;
+        MainActivity.subGroup = newSubGroup;
+        DatabaseAction.setContext(getApplicationContext());
+        new DatabaseActionTask.changeUserGroupAndSubGroupTask().execute(newGroup, newSubGroup);
+        updateDataFromCalendarDay(currentDay);
+        Toast.makeText(getApplicationContext(), "Изменения сохранены", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -279,13 +289,5 @@ public class MainActivity extends AppCompatActivity {
     private void setSizeLinearLayout(int size) {
         linearLayout.getLayoutParams().width = size;
         linearLayout.requestLayout();
-    }
-
-    private void saveInformation(String newGroup, String newSubGroup) {
-            MainActivity.group = newGroup;
-            DatabaseAction.setContext(getApplicationContext());
-            DatabaseAction.changeUserGroupAndSubGroup(newGroup, newSubGroup);
-            updateDataFromCalendarDay(currentDay);
-            Toast.makeText(getApplicationContext(), "Изменения сохранены", Toast.LENGTH_SHORT).show();
     }
 }

@@ -39,7 +39,6 @@ public class WebAction {
         @Override
         protected String doInBackground(String... params) {
             MainActivity.data = new ArrayList<>();
-            //--------тут был цикл, который отрабатывал.
            return getObject(params[0], params[1]);
         }
 
@@ -177,7 +176,7 @@ public class WebAction {
 
     private static void addPairOfList(JSONObject obj){
         String group,pair,time,discipline,type,aud,subgroup,teacher,korp;
-        String dbSubgroup = DatabaseAction.getUserSubgroup();
+        String dbSubgroup = MainActivity.subGroup;
         String linkSubgroup = obj.optString(ConstantsJson.OBJ_SUBGRUP);
         if(linkSubgroup.equals("null")){
             linkSubgroup = getSubgroup(obj.optString(ConstantsJson.OBJ_POTOK));

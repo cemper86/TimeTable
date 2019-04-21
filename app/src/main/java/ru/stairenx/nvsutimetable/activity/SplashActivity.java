@@ -22,13 +22,15 @@ public class SplashActivity extends AppCompatActivity {
     private void getUserGroup(){
         DatabaseAction.setContext(getApplicationContext());
         String group = DatabaseAction.getUserGroup();
+        String subGroup = DatabaseAction.getUserSubgroup();
+        intent = new Intent(this, MainActivity.class);
         if(!group.equals(ConstantsNVSU.NONE)){
-            intent = new Intent(this, MainActivity.class);
-            intent.putExtra("group", group);
+            MainActivity.group = group;
+            MainActivity.subGroup = subGroup;
+            startActivity(new Intent(this, MainActivity.class));
         }else{
-            intent = new Intent(this, LoginActivity.class);
+            startActivity(new Intent(this, LoginActivity.class));
         }
-        startActivity(intent);
         this.finish();
     }
 

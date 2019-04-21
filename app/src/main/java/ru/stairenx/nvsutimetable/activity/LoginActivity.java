@@ -85,7 +85,9 @@ public class LoginActivity extends AppCompatActivity {
             newSubGroup="0";
         DatabaseAction.setContext(getApplicationContext());
         DatabaseAction.addUser("",newGroup,newSubGroup);
-        startActivity(new Intent(this, MainActivity.class).putExtra("group", newGroup));
+        MainActivity.group = newGroup;
+        MainActivity.subGroup = newSubGroup;
+        startActivity(new Intent(this, MainActivity.class));
         finish();
     }
 }
