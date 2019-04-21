@@ -93,7 +93,6 @@ public class MainActivity extends AppCompatActivity {
         initButtons();
         initMaterialCalendarView();
         linearLayout = (LinearLayout) findViewById(R.id.linear_fast_settings);
-        updateDataFromCalendarDay(CalendarDay.today());
         statusBarChangeOnSDK();
     }
 
