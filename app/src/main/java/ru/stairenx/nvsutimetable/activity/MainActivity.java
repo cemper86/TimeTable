@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private Button buttonSettingsUser;
     private MaterialCalendarView calendarView;
-    private CalendarDay currentDay = CalendarDay.today();
+    private CalendarDay currentDay;
     private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd_MM_yyyy");
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private ImageView imageCalendarArrow;
@@ -80,6 +80,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if (savedInstanceState != null)
+            currentDay = CalendarDay.from(savedInstanceState.getInt("Year"),savedInstanceState.getInt("Month"),savedInstanceState.getInt("Day"));
+        else
+            currentDay = CalendarDay.today();
         progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(View.GONE);
         RecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
@@ -94,12 +98,21 @@ public class MainActivity extends AppCompatActivity {
         initMaterialCalendarView();
         linearLayout = (LinearLayout) findViewById(R.id.linear_fast_settings);
         statusBarChangeOnSDK();
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         updateDataFromCalendarDay(currentDay);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt("Day", currentDay.getDay());
+        outState.putInt("Month", currentDay.getMonth());
+        outState.putInt("Year", currentDay.getYear());
+        super.onSaveInstanceState(outState);
     }
 
     public static void update() {
