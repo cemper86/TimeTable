@@ -3,7 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="#00FFFFFF">
 
     <ImageView
@@ -101,15 +100,15 @@
 
     <ImageButton
         android:id="@+id/button_login_student_select"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:background="#00FFFFFF"
         android:gravity="center"
-        android:scaleType="centerCrop"
+        android:scaleType="fitCenter"
         android:src="@drawable/ic_next"
+        android:layout_below="@id/edit_text_subgroup_login_student"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="30dp"
         android:visibility="invisible"/>
 
 </RelativeLayout>
