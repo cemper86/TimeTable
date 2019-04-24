@@ -62,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
     private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd_MM_yyyy");
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private ImageView imageCalendarArrow;
-    private Animation animRecyclerView;
     private CheckBox checkBoxSubGroup;
     private EditText editTextGroup;
     private EditText editTextSubGroup;
@@ -88,8 +87,6 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView.setHasFixedSize(true);
         LayoutManager = new LinearLayoutManager(this);
         RecyclerView.setLayoutManager(LayoutManager);
-        animRecyclerView = AnimationUtils.loadAnimation(this, R.anim.translate_list);
-        RecyclerView.startAnimation(animRecyclerView);
         initToolbarAndSnackBar();
         initEditTexts();
         initButtons();

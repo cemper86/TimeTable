@@ -17,10 +17,10 @@ import java.util.List;
 import ru.stairenx.nvsutimetable.R;
 import ru.stairenx.nvsutimetable.item.PairItem;
 
-public class PairAdapter  extends RecyclerView.Adapter<PairAdapter.PairViewHolder> {
+public class PairAdapter extends RecyclerView.Adapter<PairAdapter.PairViewHolder> {
 
     private List<PairItem> data;
-    private static int LAYOUT = R.layout.item_pair;;
+    private static int LAYOUT = R.layout.item_pair;
 
     private int colorLektciya = R.color.colorVidLekcy;
     private int colorPraktica = R.color.colorVidPr;
@@ -41,20 +41,20 @@ public class PairAdapter  extends RecyclerView.Adapter<PairAdapter.PairViewHolde
         this.data = data;
     }
 
-    static class PairViewHolder extends RecyclerView.ViewHolder{
+    class PairViewHolder extends RecyclerView.ViewHolder{
 
-        CardView cardView;
-        TextView group;
-        TextView pair;
-        TextView discipline;
-        TextView vid;
-        TextView aud;
-        TextView teacher;
-        TextView potok;
-        TextView time;
-        TextView KORP;
-        ImageView imgPairType;
-        Context context;
+        private CardView cardView;
+        private TextView group;
+        private TextView pair;
+        private TextView discipline;
+        private TextView vid;
+        private TextView aud;
+        private TextView teacher;
+        private TextView potok;
+        private TextView time;
+        private TextView KORP;
+        private ImageView imgPairType;
+        private Context context;
 
         private PairViewHolder(View itemView) {
             super(itemView);

@@ -193,7 +193,6 @@ public class WebAction {
         if(linkSubgroup.equals("null")){
             linkSubgroup = getSubgroup(obj.optString(ConstantsJson.OBJ_POTOK));
         }
-
         if(dbSubgroup.equals(linkSubgroup) || dbSubgroup.equals("0") || linkSubgroup.equals("0")){
             group = obj.optString(ConstantsJson.OBJ_GRUP);
             pair = obj.optString(ConstantsJson.OBJ_PAIR);
