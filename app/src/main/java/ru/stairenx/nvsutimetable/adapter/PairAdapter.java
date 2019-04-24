@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -43,6 +44,7 @@ public class PairAdapter extends RecyclerView.Adapter<PairAdapter.PairViewHolder
 
     class PairViewHolder extends RecyclerView.ViewHolder{
 
+        private LinearLayout itemPair;
         private CardView cardView;
         private TextView group;
         private TextView pair;
@@ -59,6 +61,7 @@ public class PairAdapter extends RecyclerView.Adapter<PairAdapter.PairViewHolder
         private PairViewHolder(View itemView) {
             super(itemView);
             context = itemView.getContext().getApplicationContext();
+            itemPair = itemView.findViewById(R.id.linear_layout_item_pair);
             cardView = itemView.findViewById(R.id.cardView);
             imgPairType = itemView.findViewById(R.id.imageViewPair);
             group = itemView.findViewById(R.id.group);
