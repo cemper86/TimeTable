@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static List<PairItem> data = new ArrayList<>();
     public static RecyclerView RecyclerView;
+    public static ImageView errorCat;
     private RecyclerView.LayoutManager LayoutManager;
     private Toolbar toolbar;
     private Button buttonSettingsUser;
@@ -87,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView.setHasFixedSize(true);
         LayoutManager = new LinearLayoutManager(this);
         RecyclerView.setLayoutManager(LayoutManager);
+        errorCat = findViewById(R.id.error_cat);
         initToolbarAndSnackBar();
         initEditTexts();
         initButtons();
@@ -110,14 +112,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static void update() {
-        if (data.size() != 0) {
-            PairAdapter adapter = new PairAdapter(data);
-            RecyclerView.setAdapter(adapter);
-        } else {
-            data.add(ConstantsNVSU.ITEM_PLACEHOLDER);
-            PairAdapter adapter = new PairAdapter(data);
-            RecyclerView.setAdapter(adapter);
-        }
+        PairAdapter adapter = new PairAdapter(data);
+        RecyclerView.setAdapter(adapter);
     }
 
     private void updateDataFromCalendarDay(CalendarDay day) {

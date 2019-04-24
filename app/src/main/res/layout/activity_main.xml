@@ -8,6 +8,16 @@
     android:fitsSystemWindows="true"
     tools:context=".activity.MainActivity">
 
+    <ImageView
+        android:id="@+id/error_cat"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_gravity="bottom|center_horizontal"
+        android:src="@drawable/ic_404"
+        android:scaleType="centerInside"
+        android:layout_marginBottom="50dp"
+        android:visibility="gone"/>
+
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="100dp"

@@ -21,19 +21,17 @@ import ru.stairenx.nvsutimetable.item.PairItem;
  */
 public class WebAction {
 
+    private static List<PairItem> isSuitableList = new ArrayList<PairItem>();
+    private static List<PairItem> isNotSuitableList = new ArrayList<PairItem>();
+
     public class getTimeTableTask extends AsyncTask<String,Integer,String>{
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             MainActivity.RecyclerView.setVisibility(View.GONE);
+            MainActivity.errorCat.setVisibility(View.GONE);
             MainActivity.progressBar.setVisibility(View.VISIBLE);
-        }
-
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-            super.onProgressUpdate(values);
-            MainActivity.progressBar.setProgress(values[0]);
         }
 
         @Override
@@ -46,8 +44,12 @@ public class WebAction {
         protected void onPostExecute(String json) {
             super.onPostExecute(json);
             MainActivity.progressBar.setVisibility(View.GONE);
-            MainActivity.RecyclerView.setVisibility(View.VISIBLE);
-            MainActivity.update();
+            if(!json.equals("404")){
+                MainActivity.RecyclerView.setVisibility(View.VISIBLE);
+                MainActivity.update();
+            } else {
+                MainActivity.errorCat.setVisibility(View.VISIBLE);
+            }
         }
 
         @Override
@@ -84,9 +86,14 @@ public class WebAction {
 
     private static String getObject(String group, String date){
         String result = "";
+        isSuitableList.clear();
+        isNotSuitableList.clear();
         String link = LinkAPI.URL+LinkAPI.GROUP + group + LinkAPI.AND + LinkAPI.DATE + date;
         Log.d("-----","Запрос на "+link);
-        List<String> jsonArray = token(ConnectServer.getJSON(link));
+        String resultJson = ConnectServer.getJSON(link);
+        if(resultJson.equals("404"))
+            return resultJson;
+        List<String> jsonArray = token(resultJson);
         int a = 0;
         //System.out.println("Размер массива: "+jsonArray.size());
         for(int i=0;i<jsonArray.size();i++){
@@ -99,6 +106,15 @@ public class WebAction {
                 e.getStackTrace();
             }
         }
+        if(isSuitableList.isEmpty() & isNotSuitableList.isEmpty()){
+            MainActivity.data.add(ConstantsNVSU.ITEM_PLACEHOLDER);
+        }else{
+            if(!isSuitableList.isEmpty())
+                MainActivity.data.addAll(isSuitableList);
+            if(!isNotSuitableList.isEmpty())
+                MainActivity.data.addAll(isNotSuitableList);
+        }
+
         return result;
     }
 
@@ -193,21 +209,20 @@ public class WebAction {
         if(linkSubgroup.equals("null")){
             linkSubgroup = getSubgroup(obj.optString(ConstantsJson.OBJ_POTOK));
         }
+        group = obj.optString(ConstantsJson.OBJ_GRUP);
+        pair = obj.optString(ConstantsJson.OBJ_PAIR);
+        time = getTime(obj.optString(ConstantsJson.OBJ_PAIR));
+        discipline = obj.optString(ConstantsJson.OBJ_DISCIPLINE);
+        type = typePair(obj.optString(ConstantsJson.OBJ_VID));
+        aud = obj.optString(ConstantsJson.OBJ_AUD);
+        subgroup = linkSubgroup;
+        teacher = obj.optString(ConstantsJson.OBJ_TEACHER);
+        korp = obj.optString(ConstantsJson.OBJ_KORP);
         if(dbSubgroup.equals(linkSubgroup) || dbSubgroup.equals("0") || linkSubgroup.equals("0")){
-            group = obj.optString(ConstantsJson.OBJ_GRUP);
-            pair = obj.optString(ConstantsJson.OBJ_PAIR);
-            time = getTime(obj.optString(ConstantsJson.OBJ_PAIR));
-            discipline = obj.optString(ConstantsJson.OBJ_DISCIPLINE);
-            type = typePair(obj.optString(ConstantsJson.OBJ_VID));
-            aud = obj.optString(ConstantsJson.OBJ_AUD);
-            subgroup = linkSubgroup;
-            teacher = obj.optString(ConstantsJson.OBJ_TEACHER);
-            korp = obj.optString(ConstantsJson.OBJ_KORP);
-
-            PairItem item = new PairItem(group,pair,time,discipline,type,aud,subgroup,teacher,korp);
-            MainActivity.data.add(item);
+            isSuitableList.add(new PairItem(group,pair,time,discipline,type,aud,subgroup,teacher,korp,true));
             Log.d("-----","Фильтрация по подгруппам и общие пары");
         }else{
+            isNotSuitableList.add(new PairItem(group,pair,time,discipline,type,aud,subgroup,teacher,korp,false));
             Log.d("-----","Подгруппа не подходит");
         }
     }

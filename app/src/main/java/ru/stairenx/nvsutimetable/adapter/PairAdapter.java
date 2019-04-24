@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import ru.stairenx.nvsutimetable.ConstantsNVSU;
 import ru.stairenx.nvsutimetable.R;
 import ru.stairenx.nvsutimetable.item.PairItem;
 
@@ -44,7 +45,6 @@ public class PairAdapter extends RecyclerView.Adapter<PairAdapter.PairViewHolder
 
     class PairViewHolder extends RecyclerView.ViewHolder{
 
-        private LinearLayout itemPair;
         private CardView cardView;
         private TextView group;
         private TextView pair;
@@ -61,7 +61,6 @@ public class PairAdapter extends RecyclerView.Adapter<PairAdapter.PairViewHolder
         private PairViewHolder(View itemView) {
             super(itemView);
             context = itemView.getContext().getApplicationContext();
-            itemPair = itemView.findViewById(R.id.linear_layout_item_pair);
             cardView = itemView.findViewById(R.id.cardView);
             imgPairType = itemView.findViewById(R.id.imageViewPair);
             group = itemView.findViewById(R.id.group);
@@ -98,6 +97,22 @@ public class PairAdapter extends RecyclerView.Adapter<PairAdapter.PairViewHolder
         holder.time.setText(item.getTIME());
         holder.KORP.setText(" - " + item.getKORP() + "орпус");
         setBackgroundColor(holder);
+        if(!item.isSuitable()) {
+            holder.cardView.setAlpha(0.50f);
+            holder.cardView.setCardElevation(0f);
+            holder.imgPairType.setBackground(ContextCompat.getDrawable(holder.context, R.color.colorItemPairNotSuitable));
+        }
+        if(item == ConstantsNVSU.ITEM_PLACEHOLDER){
+            holder.group.setVisibility(View.GONE);
+            holder.imgPairType.setVisibility(View.GONE);
+            holder.pair.setVisibility(View.GONE);
+            holder.vid.setVisibility(View.GONE);
+            holder.aud.setVisibility(View.GONE);
+            holder.teacher.setVisibility(View.GONE);
+            holder.potok.setVisibility(View.GONE);
+            holder.time.setVisibility(View.GONE);
+            holder.KORP.setVisibility(View.GONE);
+        }
     }
 
     @Override

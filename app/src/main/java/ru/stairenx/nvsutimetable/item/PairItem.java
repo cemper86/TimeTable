@@ -14,8 +14,8 @@ public class PairItem {
     private String POTOK;
     private String SUBGRUP;
     private String DATEZAN;
-
     private String TIME;
+    private boolean isSuitable;
 
     public PairItem(String GRUP, String PAIR, String DISCIPLINE, String VID, String AUD, String TEACHER) {
         this.GRUP = GRUP;
@@ -28,7 +28,7 @@ public class PairItem {
 
 
 
-    public PairItem(String GRUP, String PAIR, String TIME, String DISCIPLINE, String VID, String AUD,String POTOK, String TEACHER, String KORP) {
+    public PairItem(String GRUP, String PAIR, String TIME, String DISCIPLINE, String VID, String AUD,String POTOK, String TEACHER, String KORP, boolean isSuitable) {
         this.GRUP = GRUP;
         this.PAIR = PAIR;
         this.TIME = TIME;
@@ -38,6 +38,7 @@ public class PairItem {
         this.POTOK = POTOK;
         this.TEACHER = TEACHER;
         this.KORP = KORP;
+        this.isSuitable = isSuitable;
     }
 
 
@@ -159,5 +160,9 @@ public class PairItem {
 
     public void setDATEZAN(String DATEZAN) {
         this.DATEZAN = DATEZAN;
+    }
+
+    public boolean isSuitable(){
+        return isSuitable;
     }
 }

@@ -33,11 +33,11 @@ public class ConnectServer {
             }
             resultJson = buffer.toString();
         }catch (Exception e){
-            Log.d("-----",e.getMessage());
+            Log.e("-----","отсвуствует интернет подключение!");
+            return "404";
         }
         finally {
             httpURLConnection.disconnect();
-
         }
         return resultJson;
     }
