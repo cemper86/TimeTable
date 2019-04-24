@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
     public static String group;
     public static String subGroup;
     public static ProgressBar progressBar;
+    private List<WebAction.getTimeTableTask> WebActionTask = new ArrayList<WebAction.getTimeTableTask>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,7 +132,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void updateTableFromDate(String group, CalendarDay date) {
-        new WebAction.getTimeTable().execute(group, date.getDate().format(dateTimeFormatter));
+        if(!WebActionTask.isEmpty()){
+            WebActionTask.get(0).cancel(true);
+            WebActionTask.clear();
+        }
+        WebActionTask.add(new WebAction().getTimeTableCreateTask(group, date.getDate().format(dateTimeFormatter)));
         if (date.getDay() == CalendarDay.today().getDay()) collapsingToolbarLayout.setTitle("На Сегодня");
         else if (date.getDay() - 1 == CalendarDay.today().getDay())
             collapsingToolbarLayout.setTitle("На Завтра");

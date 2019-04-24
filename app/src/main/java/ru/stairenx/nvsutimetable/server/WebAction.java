@@ -21,7 +21,7 @@ import ru.stairenx.nvsutimetable.item.PairItem;
  */
 public class WebAction {
 
-    public static class getTimeTable extends AsyncTask<String,Integer,String>{
+    public class getTimeTableTask extends AsyncTask<String,Integer,String>{
 
         @Override
         protected void onPreExecute() {
@@ -49,6 +49,18 @@ public class WebAction {
             MainActivity.RecyclerView.setVisibility(View.VISIBLE);
             MainActivity.update();
         }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+            Log.e("---------------------", "Обьект отменен!");
+        }
+    }
+
+    public getTimeTableTask getTimeTableCreateTask(String group, String date){
+        getTimeTableTask Task = new getTimeTableTask();
+        Task.execute(group, date);
+        return Task;
     }
 
     public static List<String> token(String json){
