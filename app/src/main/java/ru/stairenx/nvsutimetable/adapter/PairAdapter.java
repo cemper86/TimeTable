@@ -6,6 +6,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -112,6 +113,7 @@ public class PairAdapter extends RecyclerView.Adapter<PairAdapter.PairViewHolder
             holder.potok.setVisibility(View.GONE);
             holder.time.setVisibility(View.GONE);
             holder.KORP.setVisibility(View.GONE);
+            holder.discipline.setGravity(Gravity.CENTER);
         }
     }
 

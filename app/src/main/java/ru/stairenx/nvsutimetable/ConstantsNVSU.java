@@ -8,7 +8,7 @@ public class ConstantsNVSU {
 
     public static String NONE = "none";
 
-    public static PairItem ITEM_PLACEHOLDER = new PairItem("", "", "","Сегодня занятий нет", "", "", "", "","",true);
+    public static PairItem ITEM_PLACEHOLDER = new PairItem("", "", "","Занятий нет", "", "", "", "","",true);
     public static PairItem TEST = new PairItem("", "", "","TEST", "", "", "", "","",true);
 
 

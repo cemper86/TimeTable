@@ -270,6 +270,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initMaterialCalendarView() {
         calendarView = (MaterialCalendarView) findViewById(R.id.calendarView);
+        calendarView.setDynamicHeightEnabled(true);
         calendarView.setHeaderTextAppearance(R.style.MaterialCalendarViewHeaderText);
         calendarView.setWeekDayTextAppearance(R.style.MaterialCalendarViewWeekDayText);
         calendarView.setDateTextAppearance(R.style.MaterialCalendarViewDateText);
@@ -287,13 +288,11 @@ public class MainActivity extends AppCompatActivity {
                 ViewGroup coordinatorLayout = (ViewGroup) findViewById(R.id.main_container);
                 TransitionManager.beginDelayedTransition(coordinatorLayout);
                 if (calendarView.getCalendarMode() == CalendarMode.WEEKS) {
-                    collapsingToolbarLayout.getLayoutParams().height = (int) getResources().getDimension(R.dimen.app_bar_app_bar_height_expanded);
                     calendarView.state().edit().setCalendarDisplayMode(CalendarMode.MONTHS).commit();
                     imageCalendarArrow.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.colorFloatingActionButton));
                 } else {
                     calendarView.state().edit().setCalendarDisplayMode(CalendarMode.WEEKS).commit();
                     imageCalendarArrow.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary2));
-                    collapsingToolbarLayout.getLayoutParams().height = (int) getResources().getDimension(R.dimen.app_bar_height_collapse);
                 }
                 imageCalendarArrow.animate().rotationBy(180).setDuration(600).start();
             }
