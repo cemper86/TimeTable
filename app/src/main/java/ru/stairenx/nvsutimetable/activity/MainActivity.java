@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         if (savedInstanceState != null)
-            currentDay = CalendarDay.from(savedInstanceState.getInt("Year"),savedInstanceState.getInt("Month"),savedInstanceState.getInt("Day"));
+            currentDay = CalendarDay.from(savedInstanceState.getInt("Year"), savedInstanceState.getInt("Month"), savedInstanceState.getInt("Day"));
         else
             currentDay = CalendarDay.today();
         progressBar = findViewById(R.id.progressBar);
@@ -125,19 +125,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void updateTableFromDate(String group, CalendarDay date) {
-        if(!WebActionTask.isEmpty()){
+        if (!WebActionTask.isEmpty()) {
             WebActionTask.get(0).cancel(true);
             WebActionTask.clear();
         }
         WebActionTask.add(new WebAction().getTimeTableCreateTask(group, date.getDate().format(dateTimeFormatter)));
-        if (date.getDay() == CalendarDay.today().getDay()) collapsingToolbarLayout.setTitle("На Сегодня");
-        else if (date.getDay() - 1 == CalendarDay.today().getDay())
-            collapsingToolbarLayout.setTitle("На Завтра");
-        else if (date.getDay() - 2 == CalendarDay.today().getDay())
-            collapsingToolbarLayout.setTitle("На Послезавтра");
-        else if (date.getDay() + 1 == CalendarDay.today().getDay())
-            collapsingToolbarLayout.setTitle("Вчера");
-        else{
+        if (date.getMonth() == CalendarDay.today().getMonth() & date.getYear() == CalendarDay.today().getYear()) {
+            if (date.getDay() == CalendarDay.today().getDay())
+                collapsingToolbarLayout.setTitle("На Сегодня");
+            else if (date.getDay() - 1 == CalendarDay.today().getDay())
+                collapsingToolbarLayout.setTitle("На Завтра");
+            else if (date.getDay() - 2 == CalendarDay.today().getDay())
+                collapsingToolbarLayout.setTitle("На Послезавтра");
+            else if (date.getDay() + 1 == CalendarDay.today().getDay())
+                collapsingToolbarLayout.setTitle("Вчера");
+        }else {
             DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd MMMM");
             collapsingToolbarLayout.setTitle("На " + date.getDate().format(dateTimeFormatter));
         }
@@ -176,15 +178,15 @@ public class MainActivity extends AppCompatActivity {
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
-                if (Math.abs(i)-appBarLayout.getTotalScrollRange() == 0) { //  Collapsed
-                    if(calendarView.getCalendarMode()!=CalendarMode.WEEKS){
+                if (Math.abs(i) - appBarLayout.getTotalScrollRange() == 0) { //  Collapsed
+                    if (calendarView.getCalendarMode() != CalendarMode.WEEKS) {
                         calendarView.state().edit().setCalendarDisplayMode(CalendarMode.WEEKS).commit();
                         collapsingToolbarLayout.getLayoutParams().height = (int) getResources().getDimension(R.dimen.app_bar_height_collapse);
                     }
                     calendarView.setVisibility(View.INVISIBLE);
                     imageCalendarArrow.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary2));
                     imageCalendarArrow.animate().rotation(0);
-                } else{
+                } else {
                     calendarView.setVisibility(View.VISIBLE);
                 }
             }
@@ -228,7 +230,7 @@ public class MainActivity extends AppCompatActivity {
                     collapsingToolbarLayout.setTitleEnabled(true);
                     setSizeLinearLayout(0);
                     if (editTextGroup.length() > 3 && checkBoxSubGroup.isChecked())
-                        if(editTextSubGroup.getText().toString().equals(""))
+                        if (editTextSubGroup.getText().toString().equals(""))
                             saveInformation(editTextGroup.getText().toString(), "0");
                         else
                             saveInformation(editTextGroup.getText().toString(), editTextSubGroup.getText().toString());

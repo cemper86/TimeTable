@@ -12,7 +12,7 @@
     android:layout_marginLeft="8dp"
     android:layout_marginEnd="8dp"
     android:layout_marginRight="8dp"
-    app:cardCornerRadius="10dp"
+    app:cardCornerRadius="@dimen/shape_radius_item_pair"
     app:cardBackgroundColor="#F1F2F5"
     app:cardElevation="2dp">
 
@@ -31,10 +31,10 @@
                 android:id="@+id/imageViewPair"
                 android:layout_width="10dp"
                 android:layout_height="match_parent"
-                android:background="@color/colorPrimary"
+                android:background="@drawable/shape_image_left"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"/>
 
             <TextView
                 android:id="@+id/pair"
