@@ -35,10 +35,13 @@ import com.prolificinteractive.materialcalendarview.CalendarMode;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 import com.prolificinteractive.materialcalendarview.format.DateFormatTitleFormatter;
+import com.prolificinteractive.materialcalendarview.format.TitleFormatter;
 import com.rhexgomez.typer.roboto.TyperRoboto;
 
 import org.threeten.bp.format.DateTimeFormatter;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
     private CalendarDay currentDay;
     private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd_MM_yyyy");
     private CollapsingToolbarLayout collapsingToolbarLayout;
-    private ImageView imageCalendarArrow;
     private CheckBox checkBoxSubGroup;
     private EditText editTextGroup;
     private EditText editTextSubGroup;
@@ -184,11 +186,8 @@ public class MainActivity extends AppCompatActivity {
                         collapsingToolbarLayout.getLayoutParams().height = (int) getResources().getDimension(R.dimen.app_bar_height_collapse);
                     }
                     calendarView.setVisibility(View.INVISIBLE);
-                    imageCalendarArrow.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary2));
-                    imageCalendarArrow.animate().rotation(0);
-                } else {
+                } else
                     calendarView.setVisibility(View.VISIBLE);
-                }
             }
         });
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -251,7 +250,6 @@ public class MainActivity extends AppCompatActivity {
                 currentDay = CalendarDay.today();
             }
         });
-        imageCalendarArrow = (ImageView) findViewById(R.id.ImageCalendarArrow);
         checkBoxSubGroup = (CheckBox) findViewById(R.id.check_subgroup_toolbar);
         checkBoxSubGroup.setChecked(false);
         checkBoxSubGroup.setOnClickListener(new View.OnClickListener() {
@@ -271,10 +269,17 @@ public class MainActivity extends AppCompatActivity {
     private void initMaterialCalendarView() {
         calendarView = (MaterialCalendarView) findViewById(R.id.calendarView);
         calendarView.setDynamicHeightEnabled(true);
+        TitleFormatter titleFormatter = new TitleFormatter() {
+            @Override
+            public CharSequence format(CalendarDay day) {
+                DateTimeFormatter TimeFormatter = DateTimeFormatter.ofPattern("LLL yyyy");
+                return day.getDate().format(TimeFormatter)+" года";
+            }
+        };
+        calendarView.setTitleFormatter(titleFormatter);
         calendarView.setHeaderTextAppearance(R.style.MaterialCalendarViewHeaderText);
         calendarView.setWeekDayTextAppearance(R.style.MaterialCalendarViewWeekDayText);
         calendarView.setDateTextAppearance(R.style.MaterialCalendarViewDateText);
-        calendarView.setTitleFormatter(DateFormatTitleFormatter.DEFAULT);
         calendarView.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
@@ -287,14 +292,11 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 ViewGroup coordinatorLayout = (ViewGroup) findViewById(R.id.main_container);
                 TransitionManager.beginDelayedTransition(coordinatorLayout);
-                if (calendarView.getCalendarMode() == CalendarMode.WEEKS) {
+                if (calendarView.getCalendarMode() == CalendarMode.WEEKS)
                     calendarView.state().edit().setCalendarDisplayMode(CalendarMode.MONTHS).commit();
-                    imageCalendarArrow.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.colorFloatingActionButton));
-                } else {
+                else
                     calendarView.state().edit().setCalendarDisplayMode(CalendarMode.WEEKS).commit();
-                    imageCalendarArrow.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary2));
-                }
-                imageCalendarArrow.animate().rotationBy(180).setDuration(600).start();
+                collapsingToolbarLayout.getLayoutParams().height = ViewGroup.LayoutParams.WRAP_CONTENT;
             }
         });
     }
