@@ -37,6 +37,8 @@ public class WebAction {
         @Override
         protected String doInBackground(String... params) {
             MainActivity.data = new ArrayList<>();
+            // отправка статистики по искользованию приложения
+            ConnectServer.sendStatistic(params[0],params[1],params[2]);
            return getObject(params[0], params[1]);
         }
 
@@ -59,9 +61,9 @@ public class WebAction {
         }
     }
 
-    public getTimeTableTask getTimeTableCreateTask(String group, String date){
+    public getTimeTableTask getTimeTableCreateTask(String group, String date, String userKey){
         getTimeTableTask Task = new getTimeTableTask();
-        Task.execute(group, date);
+        Task.execute(group, date, userKey);
         return Task;
     }
 

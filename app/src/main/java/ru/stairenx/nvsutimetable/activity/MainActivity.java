@@ -3,6 +3,7 @@ package ru.stairenx.nvsutimetable.activity;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Build;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -15,6 +16,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,12 +76,14 @@ public class MainActivity extends AppCompatActivity {
     public static String group;
     public static String subGroup;
     public static ProgressBar progressBar;
+    public static String userKey;
     private List<WebAction.getTimeTableTask> WebActionTask = new ArrayList<WebAction.getTimeTableTask>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        userKey = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
         if (savedInstanceState != null)
             currentDay = CalendarDay.from(savedInstanceState.getInt("Year"), savedInstanceState.getInt("Month"), savedInstanceState.getInt("Day"));
         else
@@ -131,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
             WebActionTask.get(0).cancel(true);
             WebActionTask.clear();
         }
-        WebActionTask.add(new WebAction().getTimeTableCreateTask(group, date.getDate().format(dateTimeFormatter)));
+        WebActionTask.add(new WebAction().getTimeTableCreateTask(group, date.getDate().format(dateTimeFormatter), userKey));
         if (date.getMonth() == CalendarDay.today().getMonth() & date.getYear() == CalendarDay.today().getYear()) {
             if (date.getDay() == CalendarDay.today().getDay())
                 collapsingToolbarLayout.setTitle("На Сегодня");
