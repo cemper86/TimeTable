@@ -136,18 +136,23 @@ public class MainActivity extends AppCompatActivity {
             WebActionTask.clear();
         }
         WebActionTask.add(new WebAction().getTimeTableCreateTask(group, date.getDate().format(dateTimeFormatter), userKey));
-        if (date.getMonth() == CalendarDay.today().getMonth() & date.getYear() == CalendarDay.today().getYear()) {
-            if (date.getDay() == CalendarDay.today().getDay())
-                collapsingToolbarLayout.setTitle("На Сегодня");
-            else if (date.getDay() - 1 == CalendarDay.today().getDay())
-                collapsingToolbarLayout.setTitle("На Завтра");
-            else if (date.getDay() - 2 == CalendarDay.today().getDay())
-                collapsingToolbarLayout.setTitle("На Послезавтра");
-            else if (date.getDay() + 1 == CalendarDay.today().getDay())
+        switch (CalendarDay.today().getDay() - date.getDay()){
+            case 1:
                 collapsingToolbarLayout.setTitle("Вчера");
-        }else {
-            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd MMMM");
-            collapsingToolbarLayout.setTitle("На " + date.getDate().format(dateTimeFormatter));
+                break;
+            case 0:
+                collapsingToolbarLayout.setTitle("На Сегодня");
+                break;
+            case -1:
+                collapsingToolbarLayout.setTitle("На Завтра");
+                break;
+            case -2:
+                collapsingToolbarLayout.setTitle("На Послезавтра");
+                break;
+            default:
+                DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd MMMM");
+                collapsingToolbarLayout.setTitle("На " + date.getDate().format(dateTimeFormatter));
+                break;
         }
     }
 
