@@ -106,6 +106,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        if(group == null | subGroup == null){
+            DatabaseAction.setContext(getApplicationContext());
+            group = DatabaseAction.getUserGroup();
+            subGroup = DatabaseAction.getUserSubgroup();
+        }
         updateDataFromCalendarDay(currentDay);
     }
 
@@ -136,24 +141,35 @@ public class MainActivity extends AppCompatActivity {
             WebActionTask.clear();
         }
         WebActionTask.add(new WebAction().getTimeTableCreateTask(group, date.getDate().format(dateTimeFormatter), userKey));
-        switch (CalendarDay.today().getDay() - date.getDay()){
-            case 1:
-                collapsingToolbarLayout.setTitle("Вчера");
-                break;
-            case 0:
-                collapsingToolbarLayout.setTitle("На Сегодня");
-                break;
-            case -1:
-                collapsingToolbarLayout.setTitle("На Завтра");
-                break;
-            case -2:
-                collapsingToolbarLayout.setTitle("На Послезавтра");
-                break;
-            default:
-                DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd MMMM");
-                collapsingToolbarLayout.setTitle("На " + date.getDate().format(dateTimeFormatter));
-                break;
+        if (CalendarDay.today().getMonth() == date.getMonth() & CalendarDay.today().getYear() == date.getYear()) {
+            switch (CalendarDay.today().getDay() - date.getDay()) {
+                case 1:
+                    collapsingToolbarLayout.setTitle("Вчера");
+                    break;
+                case 0:
+                    collapsingToolbarLayout.setTitle("На Сегодня");
+                    break;
+                case -1:
+                    collapsingToolbarLayout.setTitle("На Завтра");
+                    break;
+                case -2:
+                    collapsingToolbarLayout.setTitle("На Послезавтра");
+                    break;
+                default:
+                    DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd MMMM");
+                    collapsingToolbarLayout.setTitle("На " + date.getDate().format(dateTimeFormatter));
+                    break;
+            }
         }
+        else {
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd MMMM");
+            collapsingToolbarLayout.setTitle("На " + date.getDate().format(dateTimeFormatter));
+        }
+
+    }
+
+    private void updateTitleCollapsingToolbarFromDate(CalendarDay day) {
+
     }
 
     private void saveInformation(String newGroup, String newSubGroup) {
@@ -282,7 +298,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public CharSequence format(CalendarDay day) {
                 DateTimeFormatter TimeFormatter = DateTimeFormatter.ofPattern("LLL yyyy");
-                return day.getDate().format(TimeFormatter)+" года";
+                return day.getDate().format(TimeFormatter) + " года";
             }
         };
         calendarView.setTitleFormatter(titleFormatter);

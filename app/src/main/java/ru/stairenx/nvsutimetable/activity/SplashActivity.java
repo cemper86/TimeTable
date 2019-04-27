@@ -11,8 +11,6 @@ import ru.stairenx.nvsutimetable.database.DatabaseAction;
 
 public class SplashActivity extends AppCompatActivity {
 
-    private Intent intent;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,7 +21,6 @@ public class SplashActivity extends AppCompatActivity {
         DatabaseAction.setContext(getApplicationContext());
         String group = DatabaseAction.getUserGroup();
         String subGroup = DatabaseAction.getUserSubgroup();
-        intent = new Intent(this, MainActivity.class);
         if(!group.equals(ConstantsNVSU.NONE)){
             MainActivity.group = group;
             MainActivity.subGroup = subGroup;
