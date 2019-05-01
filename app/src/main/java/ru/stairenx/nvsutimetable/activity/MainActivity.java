@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
         calendarView.setSelectedDate(CalendarDay.from(day.getDate()));
         calendarView.setCurrentDate(day);
         updateTableFromDate(group, day);
-        updateDateLast.setText("");
+        //updateDateLast.setText(calendarView.getSelectedDate().getDate().getMonth().toString());
     }
 
     public void updateTableFromDate(String group, CalendarDay date) {
