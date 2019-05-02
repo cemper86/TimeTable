@@ -48,7 +48,7 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin"
+                app:layout_collapseMode="parallax"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
                 app:subtitle=""
                 app:title=""/>
@@ -146,16 +146,32 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="85dp"
                 android:layout_marginBottom="35dp"
-                app:layout_collapseMode="none"
+                app:layout_collapseMode="parallax"
+                app:layout_collapseParallaxMultiplier="0.5"
                 app:mcv_calendarMode="week"
                 app:mcv_dateTextAppearance="@color/colorWhite"
                 app:mcv_leftArrow="@drawable/ic_arrow_selector_months_left"
                 app:mcv_rightArrow="@drawable/ic_arrow_selector_months_right"
                 app:mcv_selectionColor="#33B9E7FF"
                 app:mcv_selectionMode="single"
+                app:mcv_titleAnimationOrientation="horizontal"
                 app:mcv_showOtherDates="none"
                 app:mcv_showWeekDays="true"
                 app:mcv_tileHeight="40dp" />
+
+            <ImageButton
+                android:id="@+id/arrow_state_action_calendar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_calendar_action_state"
+                android:background="@null"
+                android:layout_gravity="bottom|end|right"
+                android:layout_marginRight="75dp"
+                android:layout_marginEnd="75dp"
+                android:layout_marginBottom="12dp"
+                android:rotation="90"
+                app:layout_collapseMode="parallax"
+                app:layout_collapseParallaxMultiplier="0.5"/>
 
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
@@ -167,7 +183,8 @@
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/fab_margin"
+        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
         app:backgroundTint="#F7688DAF"
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|end"

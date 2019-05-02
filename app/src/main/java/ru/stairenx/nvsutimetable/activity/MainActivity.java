@@ -1,6 +1,9 @@
 package ru.stairenx.nvsutimetable.activity;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
 import android.provider.Settings;
@@ -46,6 +49,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import ru.stairenx.nvsutimetable.ConstantsNVSU;
 import ru.stairenx.nvsutimetable.R;
@@ -78,6 +82,11 @@ public class MainActivity extends AppCompatActivity {
     public static ProgressBar progressBar;
     public static String userKey;
     private List<WebAction.getTimeTableTask> WebActionTask = new ArrayList<WebAction.getTimeTableTask>();
+    private ImageView arrowStateCalendar;
+    private boolean arrowCalendarAnimationIsRunning = false;
+
+    private final String CALENDAR_IS_COLLAPSING = "(Раскрыть)";
+    private final String CALENDAR_IS_EXPANDED = "(Скрыть)";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if(group == null | subGroup == null){
+        if (group == null | subGroup == null) {
             DatabaseAction.setContext(getApplicationContext());
             group = DatabaseAction.getUserGroup();
             subGroup = DatabaseAction.getUserSubgroup();
@@ -160,15 +169,10 @@ public class MainActivity extends AppCompatActivity {
                     collapsingToolbarLayout.setTitle("На " + date.getDate().format(dateTimeFormatter));
                     break;
             }
-        }
-        else {
+        } else {
             DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd MMMM");
             collapsingToolbarLayout.setTitle("На " + date.getDate().format(dateTimeFormatter));
         }
-
-    }
-
-    private void updateTitleCollapsingToolbarFromDate(CalendarDay day) {
 
     }
 
@@ -211,8 +215,12 @@ public class MainActivity extends AppCompatActivity {
                         collapsingToolbarLayout.getLayoutParams().height = (int) getResources().getDimension(R.dimen.app_bar_height_collapse);
                     }
                     calendarView.setVisibility(View.INVISIBLE);
-                } else
+                    arrowStateCalendar.setVisibility(View.INVISIBLE);
+                    arrowStateCalendar.setRotation(90f);
+                } else {
                     calendarView.setVisibility(View.VISIBLE);
+                    arrowStateCalendar.setVisibility(View.VISIBLE);
+                }
             }
         });
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -289,19 +297,53 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        arrowStateCalendar = findViewById(R.id.arrow_state_action_calendar);
+        arrowStateCalendar.animate().setListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                arrowCalendarAnimationIsRunning = true;
+                collapsingToolbarLayout.setTitleEnabled(false);
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                arrowCalendarAnimationIsRunning = false;
+                collapsingToolbarLayout.setTitleEnabled(true);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        arrowStateCalendar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!arrowCalendarAnimationIsRunning) {
+                    ViewGroup coordinatorLayout = (ViewGroup) findViewById(R.id.main_container);
+                    TransitionManager.beginDelayedTransition(coordinatorLayout);
+                    if (calendarView.getCalendarMode() == CalendarMode.WEEKS) {
+                        calendarView.state().edit().setCalendarDisplayMode(CalendarMode.MONTHS).commit();
+                    } else {
+                        calendarView.state().edit().setCalendarDisplayMode(CalendarMode.WEEKS).commit();
+                    }
+                    arrowStateCalendar.animate().rotationBy(540f).setDuration(700).start();
+                    collapsingToolbarLayout.getLayoutParams().height = ViewGroup.LayoutParams.WRAP_CONTENT;
+                }
+            }
+        });
+
     }
 
     private void initMaterialCalendarView() {
         calendarView = (MaterialCalendarView) findViewById(R.id.calendarView);
         calendarView.setDynamicHeightEnabled(true);
-        TitleFormatter titleFormatter = new TitleFormatter() {
-            @Override
-            public CharSequence format(CalendarDay day) {
-                DateTimeFormatter TimeFormatter = DateTimeFormatter.ofPattern("LLL yyyy");
-                return day.getDate().format(TimeFormatter) + " года";
-            }
-        };
-        calendarView.setTitleFormatter(titleFormatter);
+        calendarView.setTitleMonths(new CharSequence[]{"Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"});
         calendarView.setHeaderTextAppearance(R.style.MaterialCalendarViewHeaderText);
         calendarView.setWeekDayTextAppearance(R.style.MaterialCalendarViewWeekDayText);
         calendarView.setDateTextAppearance(R.style.MaterialCalendarViewDateText);
@@ -310,18 +352,6 @@ public class MainActivity extends AppCompatActivity {
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
                 currentDay = date;
                 updateDataFromCalendarDay(date);
-            }
-        });
-        calendarView.setOnTitleClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ViewGroup coordinatorLayout = (ViewGroup) findViewById(R.id.main_container);
-                TransitionManager.beginDelayedTransition(coordinatorLayout);
-                if (calendarView.getCalendarMode() == CalendarMode.WEEKS)
-                    calendarView.state().edit().setCalendarDisplayMode(CalendarMode.MONTHS).commit();
-                else
-                    calendarView.state().edit().setCalendarDisplayMode(CalendarMode.WEEKS).commit();
-                collapsingToolbarLayout.getLayoutParams().height = ViewGroup.LayoutParams.WRAP_CONTENT;
             }
         });
     }
