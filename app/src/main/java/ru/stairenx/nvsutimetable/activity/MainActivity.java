@@ -39,11 +39,13 @@ import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.CalendarMode;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
+import com.prolificinteractive.materialcalendarview.OnMonthChangedListener;
 import com.prolificinteractive.materialcalendarview.format.DateFormatTitleFormatter;
 import com.prolificinteractive.materialcalendarview.format.TitleFormatter;
 import com.rhexgomez.typer.roboto.TyperRoboto;
 
 import org.threeten.bp.format.DateTimeFormatter;
+import org.w3c.dom.Text;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -84,6 +86,9 @@ public class MainActivity extends AppCompatActivity {
     private List<WebAction.getTimeTableTask> WebActionTask = new ArrayList<WebAction.getTimeTableTask>();
     private ImageView arrowStateCalendar;
     private boolean arrowCalendarAnimationIsRunning = false;
+    private TextView textViewMonthCalendar;
+    private TextView actionStateTextCalendar;
+    private TextView textYearCalendar;
 
     private final String CALENDAR_IS_COLLAPSING = "(Раскрыть)";
     private final String CALENDAR_IS_EXPANDED = "(Скрыть)";
@@ -216,7 +221,8 @@ public class MainActivity extends AppCompatActivity {
                     }
                     calendarView.setVisibility(View.INVISIBLE);
                     arrowStateCalendar.setVisibility(View.INVISIBLE);
-                    arrowStateCalendar.setRotation(90f);
+                    arrowStateCalendar.setRotation(0f);
+                    actionStateTextCalendar.setText("Развернуть");
                 } else {
                     calendarView.setVisibility(View.VISIBLE);
                     arrowStateCalendar.setVisibility(View.VISIBLE);
@@ -226,6 +232,26 @@ public class MainActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
+        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linear_text_date_calendar);
+        actionStateTextCalendar = (TextView) findViewById(R.id.action_state_text_calendar);
+        linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!arrowCalendarAnimationIsRunning) {
+                    ViewGroup coordinatorLayout = (ViewGroup) findViewById(R.id.main_container);
+                    TransitionManager.beginDelayedTransition(coordinatorLayout);
+                    if (calendarView.getCalendarMode() == CalendarMode.WEEKS) {
+                        calendarView.state().edit().setCalendarDisplayMode(CalendarMode.MONTHS).commit();
+                        actionStateTextCalendar.setText("Свернуть");
+                    } else {
+                        calendarView.state().edit().setCalendarDisplayMode(CalendarMode.WEEKS).commit();
+                        actionStateTextCalendar.setText("Развернуть");
+                    }
+                    arrowStateCalendar.animate().rotationBy(540f).setDuration(700).start();
+                    collapsingToolbarLayout.getLayoutParams().height = ViewGroup.LayoutParams.WRAP_CONTENT;
+                }
+            }
+        });
     }
 
     private void initButtons() {
@@ -321,29 +347,17 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        arrowStateCalendar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!arrowCalendarAnimationIsRunning) {
-                    ViewGroup coordinatorLayout = (ViewGroup) findViewById(R.id.main_container);
-                    TransitionManager.beginDelayedTransition(coordinatorLayout);
-                    if (calendarView.getCalendarMode() == CalendarMode.WEEKS) {
-                        calendarView.state().edit().setCalendarDisplayMode(CalendarMode.MONTHS).commit();
-                    } else {
-                        calendarView.state().edit().setCalendarDisplayMode(CalendarMode.WEEKS).commit();
-                    }
-                    arrowStateCalendar.animate().rotationBy(540f).setDuration(700).start();
-                    collapsingToolbarLayout.getLayoutParams().height = ViewGroup.LayoutParams.WRAP_CONTENT;
-                }
-            }
-        });
 
     }
 
     private void initMaterialCalendarView() {
         calendarView = (MaterialCalendarView) findViewById(R.id.calendarView);
+        textViewMonthCalendar = (TextView) findViewById(R.id.text_month_calendar);
+        textYearCalendar = (TextView) findViewById(R.id.text_year_calendar);
+        textViewMonthCalendar.setText(getMonthFromNumber(currentDay.getMonth()));
+        textYearCalendar.setText(String.valueOf(currentDay.getYear()));
         calendarView.setDynamicHeightEnabled(true);
-        calendarView.setTitleMonths(new CharSequence[]{"Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"});
+        calendarView.setTopbarVisible(false);
         calendarView.setHeaderTextAppearance(R.style.MaterialCalendarViewHeaderText);
         calendarView.setWeekDayTextAppearance(R.style.MaterialCalendarViewWeekDayText);
         calendarView.setDateTextAppearance(R.style.MaterialCalendarViewDateText);
@@ -354,6 +368,44 @@ public class MainActivity extends AppCompatActivity {
                 updateDataFromCalendarDay(date);
             }
         });
+        calendarView.setOnMonthChangedListener(new OnMonthChangedListener() {
+            @Override
+            public void onMonthChanged(MaterialCalendarView widget, CalendarDay date) {
+                textViewMonthCalendar.setText(getMonthFromNumber(date.getMonth()));
+                textYearCalendar.setText(String.valueOf(date.getYear()));
+            }
+        });
+    }
+
+    private String getMonthFromNumber(int numberMonth){
+        switch (numberMonth){
+            case 1:
+                return "Январь";
+            case 2:
+                return "Февраль";
+            case 3:
+                return "Март";
+            case 4:
+                return "Апрель";
+            case 5:
+                return "Май";
+            case 6:
+                return "Июнь";
+            case 7:
+                return "Июль";
+            case 8:
+                return "Август";
+            case 9:
+                return "Сентябрь";
+            case 10:
+                return "Октябрь";
+            case 11:
+                return "Ноябрь";
+            case 12:
+                return "Декабрь";
+            default:
+                return "";
+        }
     }
 
     private void setSizeLinearLayout(int size) {
