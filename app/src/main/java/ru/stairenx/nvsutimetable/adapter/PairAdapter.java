@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ru.stairenx.nvsutimetable.ConstantsNVSU;
@@ -41,7 +42,7 @@ public class PairAdapter extends RecyclerView.Adapter<PairAdapter.PairViewHolder
     private int drawExam = R.drawable.shape_exam;
 
     public PairAdapter(List<PairItem> data) {
-        this.data = data;
+        this.data = checkSport(data);
     }
 
     class PairViewHolder extends RecyclerView.ViewHolder{
@@ -153,4 +154,46 @@ public class PairAdapter extends RecyclerView.Adapter<PairAdapter.PairViewHolder
         }
         return subgroup;
     }
+
+    private List<PairItem> checkSport(List<PairItem> d){
+        List<PairItem> redata = new ArrayList<>();
+        List<PairItem> fizra = new ArrayList<>();
+        List<PairItem> sortFizra = new ArrayList<>();
+        List<PairItem> result = new ArrayList<>();
+        for(int i=0;i<d.size();i++){
+            if(!d.get(i).getDISCIPLINE().equals(ConstantsNVSU.SPORT)){
+                redata.add(d.get(i));
+            }else{
+                fizra.add(d.get(i));
+            }
+        }
+        for(int a=0;a<fizra.size();a++){
+
+            if (sortFizra.size()==0){
+                sortFizra.add(fizra.get(a));
+            }else{
+                if(!sortFizra.get(sortFizra.size()-1).getPAIR().equals(fizra.get(a).getPAIR())){
+                    sortFizra.add(fizra.get(a));
+                }
+            }
+
+        }
+        for(int b=0;b<sortFizra.size();b++){
+            result.add(new PairItem(
+                    sortFizra.get(b).getGRUP(),
+                    sortFizra.get(b).getPAIR(),
+                    sortFizra.get(b).getTIME(),
+                    sortFizra.get(b).getDISCIPLINE(),
+                    sortFizra.get(b).getVID(),
+                    "ФОК",
+                    sortFizra.get(b).getPOTOK(),
+                    "",
+                    "К",
+                    true
+                    ));
+        }
+        result.addAll(redata);
+        return result;
+    }
+
 }

@@ -10,6 +10,7 @@ public class ConstantsNVSU {
 
     public static PairItem ITEM_PLACEHOLDER = new PairItem("", "", "","Занятий нет", "", "", "", "","",true);
     public static PairItem TEST = new PairItem("", "", "","TEST", "", "", "", "","",true);
+    public static String SPORT = "Элективные дисциплины (модули) по физической культуре и спорту";
 
 
     public static String facultet_gumanitar = "Гуманитарный Факультет";
