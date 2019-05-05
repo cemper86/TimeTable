@@ -5,14 +5,13 @@
     android:id="@+id/cardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:layout_marginTop="5dp"
-    android:layout_marginBottom="5dp"
-    android:layout_marginStart="8dp"
-    android:layout_marginLeft="8dp"
-    android:layout_marginEnd="8dp"
-    android:layout_marginRight="8dp"
-    app:cardCornerRadius="@dimen/shape_radius_item_pair"
+    android:layout_marginTop="4dp"
+    android:layout_marginBottom="4dp"
+    android:layout_marginStart="@dimen/margin_cardview"
+    android:layout_marginLeft="@dimen/margin_cardview"
+    android:layout_marginEnd="@dimen/margin_cardview"
+    android:layout_marginRight="@dimen/margin_cardview"
+    app:cardCornerRadius="@dimen/cardview_radius_item_pair"
     app:cardBackgroundColor="#F1F2F5"
     app:cardElevation="2dp">
 
@@ -29,7 +28,7 @@
 
             <ImageView
                 android:id="@+id/imageViewPair"
-                android:layout_width="10dp"
+                android:layout_width="6dp"
                 android:layout_height="match_parent"
                 android:background="@drawable/shape_image_left"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -37,56 +36,33 @@
                 app:layout_constraintTop_toTopOf="parent"/>
 
             <TextView
-                android:id="@+id/pair"
-                android:background="@drawable/shape_corners_pair"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="0dp"
-                android:layout_marginStart="0dp"
-                android:layout_marginRight="0dp"
-                android:layout_marginEnd="0dp"
-                android:text="pair"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:paddingStart="5dp"
-                android:paddingEnd="5dp"
-
-                android:textAlignment="center"
-                android:textColor="@color/colorWhite"
-                android:textSize="16sp"
-                android:gravity="center"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
                 android:id="@+id/time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginStart="5dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginEnd="0dp"
-                android:layout_marginRight="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
                 android:text="time"
                 android:textAlignment="center"
-                android:textColor="#111"
+                android:textColor="@color/colorPrimary"
                 android:textSize="18sp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/pair"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/imageViewPair"
                 app:layout_constraintTop_toTopOf="parent" />
         </android.support.constraint.ConstraintLayout>
 
         <android.support.constraint.ConstraintLayout
+            android:id="@+id/constarion_main"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
-            >
+            android:layout_marginBottom="0dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginLeft="0dp">
 
             <TextView
                 android:id="@+id/vid"
@@ -106,13 +82,15 @@
                 android:id="@+id/discipline"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="0dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginEnd="5dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginRight="40dp"
                 android:text="discipline"
                 android:textColor="#325C8C"
                 android:textSize="22sp"
                 app:layout_constraintBottom_toTopOf="@+id/aud"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/vid"
                 app:layout_constraintTop_toBottomOf="@+id/vid" />
 
@@ -122,7 +100,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="0dp"
                 android:layout_marginLeft="0dp"
-                android:layout_marginBottom="0dp"
+                android:layout_marginBottom="5dp"
                 android:text="aud"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -133,6 +111,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="0dp"
                 android:layout_marginLeft="0dp"
+                android:layout_marginBottom="5dp"
                 android:text="building"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/aud" />
@@ -141,15 +120,15 @@
                 android:id="@+id/teacher"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="0dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="5dp"
                 android:text="teacher"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toStartOf="@+id/pair" />
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="group"
                 android:gravity="right"
@@ -158,15 +137,34 @@
                 tools:ignore="MissingConstraints" />
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:layout_marginEnd="10dp"
-                android:text="potok"
-                android:gravity="right"
                 android:id="@+id/potok"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:layout_marginRight="5dp"
+                android:padding="2dp"
+                android:text="potok"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
                 android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="MissingConstraints" />
+
+            <TextView
+                android:id="@+id/pair"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/shape_corners_pair"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="pair"
+                android:textAlignment="center"
+                android:textColor="@color/colorWhite"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
         </android.support.constraint.ConstraintLayout>
     </LinearLayout>

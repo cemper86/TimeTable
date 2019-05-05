@@ -10,6 +10,7 @@
     <color name="colorVidPr">#E49100</color>
     <color name="colorVidEc">#BB0000</color>
     <color name="colorPrimary2">#B8C3D3</color>
-    <color name="colorItemPairNotSuitable">#BB0000</color>
+    <color name="colorItemPairNotSuitable">#F1F2F5</color>
+    <color name="colorPostWhite">#E7E7E7</color>
 
 </resources>

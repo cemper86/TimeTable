@@ -178,7 +178,6 @@ public class MainActivity extends AppCompatActivity {
             DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd MMMM");
             collapsingToolbarLayout.setTitle("На " + date.getDate().format(dateTimeFormatter));
         }
-
     }
 
     private void saveInformation(String newGroup, String newSubGroup) {
@@ -217,7 +216,7 @@ public class MainActivity extends AppCompatActivity {
                 if (Math.abs(i) - appBarLayout.getTotalScrollRange() == 0) { //  Collapsed
                     if (calendarView.getCalendarMode() != CalendarMode.WEEKS) {
                         calendarView.state().edit().setCalendarDisplayMode(CalendarMode.WEEKS).commit();
-                        collapsingToolbarLayout.getLayoutParams().height = (int) getResources().getDimension(R.dimen.app_bar_height_collapse);
+                        collapsingToolbarLayout.getLayoutParams().height = ViewGroup.LayoutParams.WRAP_CONTENT;
                     }
                     calendarView.setVisibility(View.INVISIBLE);
                     arrowStateCalendar.setVisibility(View.INVISIBLE);
@@ -377,8 +376,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private String getMonthFromNumber(int numberMonth){
-        switch (numberMonth){
+    private String getMonthFromNumber(int numberMonth) {
+        switch (numberMonth) {
             case 1:
                 return "Январь";
             case 2:

@@ -7,5 +7,7 @@
     <dimen name="padding_right_button_toolbar_settings">8dp</dimen>
     <dimen name="padding_left_button_toolbar_settings">18dp</dimen>
     <dimen name="text_size_edit_text">18sp</dimen>
-    <dimen name="shape_radius_item_pair">10dp</dimen>
+    <dimen name="margin_cardview">10dp</dimen>
+    <dimen name="cardview_radius_item_pair">7dp</dimen>
+    <dimen name="corners_item_pair_color">100dp</dimen>
 </resources>

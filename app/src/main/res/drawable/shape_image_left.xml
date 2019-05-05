@@ -4,13 +4,12 @@
         <shape>
             <gradient
                 android:startColor="#305785"
-                android:endColor="#2D688F"
+                android:endColor="#4197CF"
                 android:type="linear"
-                android:angle="90"
-                />
+                android:angle="90"/>
             <corners
-                android:topLeftRadius="@dimen/shape_radius_item_pair"
-                android:bottomLeftRadius="@dimen/shape_radius_item_pair"
+                android:topLeftRadius="@dimen/corners_item_pair_color"
+                android:bottomLeftRadius="@dimen/corners_item_pair_color"
                 />
         </shape>
     </item>

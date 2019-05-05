@@ -5,11 +5,12 @@
         <shape>
             <gradient
                 android:startColor="#305785"
-                android:endColor="#2D688F"
+                android:endColor="#4197CF"
                 android:type="linear"
-                android:angle="90"
-                />
-            <corners android:radius="100dp" />
+                android:angle="90"/>
+            <corners
+                android:bottomRightRadius="@dimen/cardview_radius_item_pair"
+                android:topLeftRadius="20dp"/>
         </shape>
     </item>
 </selector>
