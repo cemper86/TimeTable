@@ -176,6 +176,7 @@ public class PairAdapter extends RecyclerView.Adapter<PairAdapter.PairViewHolder
             }
 
         }
+
         result.addAll(redata);
         for(int b=0;b<sortFizra.size();b++){
             result.add(new PairItem(
