@@ -40,7 +40,7 @@ public class PairAdapter extends RecyclerView.Adapter<PairAdapter.PairViewHolder
     private int drawExam = R.drawable.shape_exam;
 
     public PairAdapter(List<PairItem> data) {
-        this.data = checkSport(data);
+        this.data = data;
     }
 
     class PairViewHolder extends RecyclerView.ViewHolder{
