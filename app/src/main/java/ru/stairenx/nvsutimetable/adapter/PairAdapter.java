@@ -178,6 +178,7 @@ public class PairAdapter extends RecyclerView.Adapter<PairAdapter.PairViewHolder
             }
 
         }
+        result.addAll(redata);
         for(int b=0;b<sortFizra.size();b++){
             result.add(new PairItem(
                     sortFizra.get(b).getGRUP(),
@@ -192,7 +193,7 @@ public class PairAdapter extends RecyclerView.Adapter<PairAdapter.PairViewHolder
                     true
                     ));
         }
-        result.addAll(redata);
+
         return result;
     }
 
