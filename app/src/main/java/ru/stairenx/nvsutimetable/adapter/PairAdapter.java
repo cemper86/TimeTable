@@ -165,18 +165,17 @@ public class PairAdapter extends RecyclerView.Adapter<PairAdapter.PairViewHolder
                 fizra.add(d.get(i));
             }
         }
-        for(int a=0;a<fizra.size();a++){
+        for(int a=0;a<fizra.size();a++) {
 
-            if (sortFizra.size()==0){
+            if (sortFizra.size() == 0) {
                 sortFizra.add(fizra.get(a));
-            }else{
-                if(!sortFizra.get(sortFizra.size()-1).getPAIR().equals(fizra.get(a).getPAIR())){
+            } else {
+                if (!sortFizra.get(sortFizra.size() - 1).getPAIR().equals(fizra.get(a).getPAIR())) {
                     sortFizra.add(fizra.get(a));
                 }
             }
 
         }
-
         result.addAll(redata);
         for(int b=0;b<sortFizra.size();b++){
             result.add(new PairItem(
@@ -190,7 +189,7 @@ public class PairAdapter extends RecyclerView.Adapter<PairAdapter.PairViewHolder
                     "",
                     "К",
                     true
-                    ));
+            ));
         }
 
         return result;
