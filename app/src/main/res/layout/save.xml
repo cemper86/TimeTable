@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Выберете свой факультет"
+        android:textColor="@color/colorWhite"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="426dp" />
+
+    <Spinner
+        android:id="@+id/spinner_faculty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="108dp"
+        tools:layout_editor_absoluteY="513dp" />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Выберете свою группу"
+        android:textColor="@color/colorWhite"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="578dp" />
+
+    <Spinner
+        android:id="@+id/spinner_group"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        tools:layout_editor_absoluteX="108dp"
+        tools:layout_editor_absoluteY="480dp" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="Указать подгруппу"
+        android:textColor="@color/colorWhite"
+        tools:layout_editor_absoluteX="215dp"
+        tools:layout_editor_absoluteY="610dp" />
+
+    <CheckBox
+        android:id="@+id/check_subgroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="127dp"
+        tools:layout_editor_absoluteY="597dp" />
+
+
+    <EditText
+        android:id="@+id/subgroup"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_radius_100w"
+        android:gravity="center"
+        android:hint="Подгруппа"
+        android:inputType="number"
+        android:maxLength="1"
+        android:padding="12dp"
+        android:textAlignment="center"
+        android:visibility="invisible"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="667dp" />
+
+
+    <Button
+        android:id="@+id/btn_add_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/shape_radius_100bt"
+        android:paddingLeft="32dp"
+        android:paddingTop="8dp"
+        android:paddingRight="32dp"
+        android:paddingBottom="8dp"
+        android:text="Сохранить"
+        android:textColor="@color/colorWhite"
+        tools:layout_editor_absoluteX="127dp"
+        tools:layout_editor_absoluteY="650dp" />
+</android.support.constraint.ConstraintLayout>

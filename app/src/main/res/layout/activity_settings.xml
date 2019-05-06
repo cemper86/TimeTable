@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.SettingsActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_settings"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_marginTop="0dp"
+        android:background="@color/colorPrimary"
+        app:layout_collapseMode="pin"
+        app:layout_constraintTop_toTopOf="parent"
+        app:popupTheme="@style/AppTheme.PopupOverlay"
+        app:title="@string/toolbar_settings"
+        app:titleTextColor="@color/colorWhite" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar_settings"
+        android:layout_alignParentBottom="true">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="26dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:textAlignment="center"
+                android:layout_gravity="center"
+                android:textColor="#111"
+                android:textSize="14dp"
+                android:text="faculty"
+                android:id="@+id/name_faculty"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="#111"
+                android:textSize="16dp"
+                android:text="1010"
+                android:id="@+id/name_group"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="76dp"
+                android:layout_marginRight="64dp"
+                android:layout_marginTop="16dp"
+                android:text="Изменить группу"
+                android:textColor="#111"
+                />
+
+            <EditText
+                android:id="@+id/edit_text_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:inputType="phone"
+                android:textAlignment="center"
+                android:layout_marginLeft="64dp"
+                android:layout_marginRight="64dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="16dp"
+                android:padding="12dp"
+                android:textColor="#111"
+                android:background="@drawable/shape_radius_100b_opt_07"
+                android:hint="@string/edit_text_group"
+                android:textSize="@dimen/text_size_edit_text" />
+
+            <EditText
+                android:id="@+id/edit_text_subgroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/edit_text_subgroup"
+                android:textColor="#111"
+                android:textAlignment="center"
+                android:background="@drawable/shape_radius_100b_opt_07"
+                android:padding="12dp"
+                android:gravity="center"
+                android:visibility="gone"
+                android:layout_marginLeft="64dp"
+                android:layout_marginRight="64dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:textSize="@dimen/text_size_edit_text" />
+
+            <Button
+                android:id="@+id/button_accept_change"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@color/colorWhite"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:paddingRight="36dp"
+                android:paddingLeft="36dp"
+                android:background="@drawable/shape_radius_100b"
+                android:text="@string/button_apply_change"
+                android:textSize="16dp"
+                />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</RelativeLayout>

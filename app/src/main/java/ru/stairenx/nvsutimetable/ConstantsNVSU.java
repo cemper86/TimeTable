@@ -1,6 +1,17 @@
 package ru.stairenx.nvsutimetable;
 
+import ru.stairenx.nvsutimetable.item.PairItem;
+
 public class ConstantsNVSU {
+
+    public static String group = "3502";
+
+    public static String NONE = "none";
+
+    public static PairItem ITEM_PLACEHOLDER = new PairItem("", "", "","Занятий нет", "", "", "", "","",true);
+    public static PairItem TEST = new PairItem("", "", "","TEST", "", "", "", "","",true);
+    public static String SPORT = "Элективные дисциплины (модули) по физической культуре и спорту";
+
 
     public static String facultet_gumanitar = "Гуманитарный Факультет";
     public static String facultet_inginer_tech = "Инженерно-технический факультет";
@@ -12,72 +23,14 @@ public class ConstantsNVSU {
     public static String facultet_eco = "Факультет экологии и инжиниринга";
     public static String facultet_finance = "Факультет экономики и управления";
 
-
-    public static String group1451 = "1451";
-    public static String group1452 = "1452";
-    public static String group1501 = "1501";
-    public static String group1502 = "1502";
-    public static String group1503 = "1503";
-    public static String group1504 = "1504";
-    public static String group1505 = "1505";
-    public static String group1506 = "1506";
-    public static String group1508 = "1508";
-    public static String group1512 = "1512";
-    public static String group1551 = "1551";
-    public static String group1552 = "1552";
-    public static String group1554 = "1554";
-    public static String group1601 = "1601";
-    public static String group1602 = "1602";
-    public static String group1603 = "1603";
-    public static String group1604 = "1604";
-    public static String group1605 = "1605";
-    public static String group1606 = "1606";
-    public static String group1608 = "1608";
-    public static String group1642 = "1642";
-    public static String group1644 = "1644";
-    public static String group1645 = "1645";
-    public static String group1648 = "1648";
-    public static String group1651 = "1651";
-    public static String group1701 = "1701";
-    public static String group1702 = "1702";
-    public static String group1703 = "1703";
-    public static String group1704 = "1704";
-    public static String group1705 = "1705";
-    public static String group1706 = "1706";
-    public static String group1708 = "1708";
-    public static String group1721 = "1721";
-    public static String group1722 = "1722";
-    public static String group1724 = "1724";
-    public static String group1725 = "1725";
-    public static String group1728 = "1728";
-    public static String group1729 = "1729";
-    public static String group1730 = "1730";
-    public static String group1743 = "1743";
-    public static String group1744 = "1744";
-    public static String group1748 = "1748";
-    public static String group1751 = "1751";
-    public static String group1752 = "1752";
-    public static String group1754 = "1754";
-    public static String group1801 = "1801";
-    public static String group1802 = "1802";
-    public static String group1803 = "1803";
-    public static String group1804 = "1804";
-    public static String group1805 = "1805";
-    public static String group1806 = "1806";
-    public static String group1808 = "1808";
-    public static String group1821 = "1821";
-    public static String group1822 = "1822";
-    public static String group1823 = "1823";
-    public static String group1824 = "1824";
-    public static String group1825 = "1825";
-    public static String group1827 = "1827";
-    public static String group1828 = "1828";
-    public static String group1829 = "1829";
-    public static String group1830 = "1830";
-    public static String group1842 = "1842";
-    public static String group1843 = "1843";
-    public static String group1844 = "1844";
-    public static String group1845 = "1845";
-    public static String group1848 = "1848";
+    public static String[] ARRAY_FACULTET_GUMANITAR = { "1451", "1452", "1501", "1502", "1503", "1504", "1505", "1506", "1508", "1512", "1551", "1552", "1554","1601", "1602", "1603", "1604", "1605", "1606", "1608", "1642", "1644", "1645", "1648", "1651", "1701", "1702", "1703", "1704", "1705", "1706", "1708", "1721", "1722", "1724", "1725", "1728", "1729", "1730", "1743", "1744", "1748", "1751", "1752", "1754", "1801", "1802", "1803", "1804", "1805", "1806", "1808", "1821", "1822", "1823", "1824", "1825", "1827", "1828", "1829", "1830", "1842", "1843", "1844", "1845", "1848" };
+    public static String[] ARRAY_FACULTET_INGINER_TECH = { "9451", "9452", "9501", "9551", "9561", "9601", "9602", "9651", "9652", "9661", "9662", "9671", "9672", "9682", "9701", "9702", "9712", "9751", "9752", "9753", "9761", "9762", "9772", "9782", "9801", "9802", "9851", "9852", "9853", "9861", "9862", "9872", "9882" };
+    public static String[] ARRAY_FACULTET_DOP_EDU = {};
+    public static String[] ARRAY_FACULTET_IT = { "3502", "3503", "3541", "3601", "3602", "3603", "3604", "3611", "3612", "3613", "3651", "3701", "3702", "3703", "3704", "3705", "3711", "3712", "3721", "3722", "3751", "3801", "3802", "3803", "3804", "3811", "3812", "3821", "3822", "3823", "3841" };
+    public static String[] ARRAY_FACULTET_DISIGN = { "4401", "4451", "4500", "4501", "4502", "4503", "4504", "4514", "4551", "4601", "4602", "4603", "4604", "4701", "4702", "4703", "4704", "4705", "4722", "4723", "4724", "4801", "4802", "4803", "4804", "4805", "4821", "4822", "4823", "4824" };
+    public static String[] ARRAY_FACULTET_PEDAGOG = { "6404", "6451", "6452", "6453", "6454", "6501", "6502", "6503", "6551", "6552", "6553", "6554", "6601", "6602", "6603", "6646", "6651", "6652", "6653", "6654", "6701", "6702", "6703", "6705", "6723", "6724", "6743", "6751", "6752", "6753", "6754", "6771", "6772", "6801", "6802", "6803", "6805", "6821", "6822", "6823", "6824", "6843", "6846", "6851", "6852", "6854" };
+    public static String[] ARRAY_FACULTET_SPORT = { "7451", "7501", "7551", "7601", "7641", "7651", "7701", "7721", "7741", "7751", "7801", "7821", "7841", "7851" };
+    public static String[] ARRAY_FACULTET_ECO = { "2451", "2454", "2501", "2502", "2503", "2504", "2505", "2508", "2551", "2554", "2601", "2602", "2603", "2604", "2605", "2608", "2611", "2612", "2643", "2651", "2654", "2701", "2702", "2703", "2704", "2705", "2708", "2721", "2722", "2723", "2724", "2727", "2743", "2751", "2754", "2801", "2802", "2803", "2805", "2808", "2809", "2821", "2822", "2823", "2824", "2825", "2827", "2841", "2843", "2851", "2854", "2855", "2856" };
+    public static String[] ARRAY_FACULTET_FINANCE = { "8501", "8502", "8503", "8504", "8505", "8601", "8602", "8604", "8605", "8610", "8611", "8612", "8653", "8663", "8673", "8701", "8702", "8703", "8704", "8705", "8710", "8711", "8721", "8753", "8763", "8773", "8801", "8802", "8803", "8804", "8810", "8811", "8821", "8843", "8853" };
 
 }

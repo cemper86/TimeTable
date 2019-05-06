@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimary">#325C8C</color>
+    <color name="colorPrimaryDark">#325C8C</color>
+    <color name="colorAccent">#FFB8C3D3</color>
+    <color name="colorFloatingActionButton">#284B6F</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorVidLekcy">#04AC00</color>
+    <color name="colorVidLab">#DB5800</color>
+    <color name="colorVidPr">#E49100</color>
+    <color name="colorVidEc">#BB0000</color>
+    <color name="colorPrimary2">#B8C3D3</color>
+    <color name="colorItemPairNotSuitable">#F1F2F5</color>
+    <color name="colorPostWhite">#E7E7E7</color>
+
 </resources>
