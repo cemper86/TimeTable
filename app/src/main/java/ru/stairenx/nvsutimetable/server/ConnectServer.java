@@ -27,6 +27,7 @@ public class ConnectServer {
             URL url = new URL(textUrl);
             httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.setRequestMethod("GET");
+            httpURLConnection.setConnectTimeout(9500);
             httpURLConnection.setReadTimeout(7500);
             httpURLConnection.connect();
 
