@@ -17,6 +17,9 @@ import ru.stairenx.nvsutimetable.activity.MainActivity;
 import ru.stairenx.nvsutimetable.database.DatabaseAction;
 import ru.stairenx.nvsutimetable.item.PairItem;
 
+import static ru.stairenx.nvsutimetable.activity.MainActivity.searchModeGroup;
+import static ru.stairenx.nvsutimetable.activity.MainActivity.teachers;
+
 /**
  * Created by viergo on 28.01.17.
  */
@@ -90,10 +93,15 @@ public class WebAction {
 
     private static String getObject(String group, String date) {
         String result = "";
+        String link;
         isSuitableList.clear();
         isNotSuitableList.clear();
         entryList.clear();
-        String link = LinkAPI.URL + LinkAPI.GROUP + group + LinkAPI.AND + LinkAPI.DATE + date;
+        if(group.length() > 4)
+            link = LinkAPI.URL + LinkAPI.LECTUR + group + LinkAPI.AND + LinkAPI.DATE + date;
+        else
+            link = LinkAPI.URL + LinkAPI.GROUP + group + LinkAPI.AND + LinkAPI.DATE + date;
+
         Log.d("-----", "Запрос на " + link);
         String resultJson = ConnectServer.getJSON(link);
         if (resultJson.equals("404"))

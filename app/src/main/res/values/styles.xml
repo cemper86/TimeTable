@@ -45,4 +45,8 @@
         <item name="android:textColor">@color/colorWhite</item>
     </style>
 
+    <style name="Autocomplete" parent="Widget.AppCompat.Light.AutoCompleteTextView">
+        <item name="android:background">@color/colorWhite</item>
+    </style>
+
 </resources>

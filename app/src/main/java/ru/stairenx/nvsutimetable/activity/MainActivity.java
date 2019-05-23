@@ -5,8 +5,12 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
+import android.hardware.input.InputManager;
+import android.inputmethodservice.Keyboard;
 import android.os.Build;
+import android.os.IBinder;
 import android.provider.Settings;
+import android.renderscript.ScriptGroup;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -16,9 +20,11 @@ import android.support.transition.TransitionManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatAutoCompleteTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,6 +32,9 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -58,14 +67,19 @@ import ru.stairenx.nvsutimetable.R;
 import ru.stairenx.nvsutimetable.adapter.PairAdapter;
 import ru.stairenx.nvsutimetable.database.DatabaseAction;
 import ru.stairenx.nvsutimetable.database.DatabaseActionTask;
+import ru.stairenx.nvsutimetable.database.TeachersTable;
 import ru.stairenx.nvsutimetable.item.PairItem;
+import ru.stairenx.nvsutimetable.item.Teacheritem;
+import ru.stairenx.nvsutimetable.server.ParsTeachersServer;
 import ru.stairenx.nvsutimetable.server.WebAction;
 
 public class MainActivity extends AppCompatActivity {
 
     public static List<PairItem> data = new ArrayList<>();
+    public static boolean searchModeGroup = true;
     public static RecyclerView RecyclerView;
     public static ImageView errorCat;
+    public static List<Teacheritem> teachers = new ArrayList<Teacheritem>();
     private RecyclerView.LayoutManager LayoutManager;
     private Toolbar toolbar;
     private Button buttonSettingsUser;
@@ -74,9 +88,8 @@ public class MainActivity extends AppCompatActivity {
     private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd_MM_yyyy");
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private CheckBox checkBoxSubGroup;
-    private EditText editTextGroup;
+    private static AppCompatAutoCompleteTextView editTextGroup;
     private EditText editTextSubGroup;
-    private TextView updateDateLast;
     private AppBarLayout appBarLayout;
     private LinearLayout linearLayout;
     public static String group;
@@ -97,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        userKey = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+        //userKey = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
         if (savedInstanceState != null)
             currentDay = CalendarDay.from(savedInstanceState.getInt("Year"), savedInstanceState.getInt("Month"), savedInstanceState.getInt("Day"));
         else
@@ -109,6 +122,8 @@ public class MainActivity extends AppCompatActivity {
         LayoutManager = new LinearLayoutManager(this);
         RecyclerView.setLayoutManager(LayoutManager);
         errorCat = findViewById(R.id.error_cat);
+        DatabaseAction.setContext(getApplicationContext());
+        new ParsTeachersServer().getTeachers();
         initToolbarAndSnackBar();
         initEditTexts();
         initButtons();
@@ -146,7 +161,6 @@ public class MainActivity extends AppCompatActivity {
         calendarView.setSelectedDate(CalendarDay.from(day.getDate()));
         calendarView.setCurrentDate(day);
         updateTableFromDate(group, day);
-        //updateDateLast.setText(calendarView.getSelectedDate().getDate().getMonth().toString());
     }
 
     public void updateTableFromDate(String group, CalendarDay date) {
@@ -199,9 +213,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initEditTexts() {
-        editTextGroup = (EditText) findViewById(R.id.edit_text_group);
+        editTextGroup = (AppCompatAutoCompleteTextView) findViewById(R.id.edit_search);
         editTextSubGroup = (EditText) findViewById(R.id.edit_text_subgroup);
-        updateDateLast = (TextView) findViewById(R.id.update_date_last);
+        editTextGroup.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus)
+                    editTextGroup.setText(null);
+                else{
+
+                }
+
+            }
+        });
     }
 
     private void initToolbarAndSnackBar() {
@@ -261,12 +285,14 @@ public class MainActivity extends AppCompatActivity {
                 //startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
                 ViewGroup coordinatorLayout = (ViewGroup) findViewById(R.id.linear_fast_settings);
                 TransitionManager.beginDelayedTransition(coordinatorLayout);
-                if (linearLayout.getLayoutParams().width != LinearLayout.LayoutParams.MATCH_PARENT) {
+                editTextGroup.clearFocus();
+                if (linearLayout.getLayoutParams().width != LinearLayout.LayoutParams.WRAP_CONTENT) {
+                    DatabaseAction.setContext(getApplicationContext());
+                    updateDateNamesTeachers();
                     buttonSettingsUser.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.button_form_toolbar_white));
                     buttonSettingsUser.setText("изм.");
                     buttonSettingsUser.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
                     buttonSettingsUser.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_save_fast_settings, 0);
-                    collapsingToolbarLayout.setTitleEnabled(false);
                     editTextGroup.setText(group);
                     if (!DatabaseAction.getUserSubgroup().equals("0")) {
                         editTextSubGroup.setVisibility(View.VISIBLE);
@@ -279,12 +305,14 @@ public class MainActivity extends AppCompatActivity {
                         checkBoxSubGroup.setChecked(false);
                         checkBoxSubGroup.setText("Указать \n подгруппу");
                     }
-                    setSizeLinearLayout(LinearLayout.LayoutParams.MATCH_PARENT);
+                    setSizeLinearLayout(LinearLayout.LayoutParams.WRAP_CONTENT);
                 } else {
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(editTextGroup.getWindowToken(),0);
+                    imm.hideSoftInputFromWindow(editTextSubGroup.getWindowToken(),0);
                     buttonSettingsUser.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.button_form_toolbar));
                     buttonSettingsUser.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorWhite));
                     buttonSettingsUser.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_user, 0);
-                    collapsingToolbarLayout.setTitleEnabled(true);
                     setSizeLinearLayout(0);
                     if (editTextGroup.length() > 3 && checkBoxSubGroup.isChecked())
                         if (editTextSubGroup.getText().toString().equals(""))
@@ -346,7 +374,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
     }
 
     private void initMaterialCalendarView() {
@@ -418,5 +445,15 @@ public class MainActivity extends AppCompatActivity {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             getWindow().setStatusBarColor(Color.parseColor("#00000000"));
         }
+    }
+
+    public static void updateDateNamesTeachers() {
+        if (teachers.isEmpty())
+            teachers = DatabaseAction.getTeacherCollection();
+        String[] namesTeachers = new String[teachers.size()];
+        for (int i = 0; i != teachers.size(); i++) {
+            namesTeachers[i] = (teachers.get(i).getName());
+        }
+        editTextGroup.setAdapter(new ArrayAdapter<>(DatabaseAction.getContext(), android.R.layout.simple_dropdown_item_1line, namesTeachers));
     }
 }

@@ -17,6 +17,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     static {
         cupboard().register(UserTable.class);
         cupboard().register(TimetableTable.class);
+        cupboard().register(TeachersTable.class);
     }
 
     @Override

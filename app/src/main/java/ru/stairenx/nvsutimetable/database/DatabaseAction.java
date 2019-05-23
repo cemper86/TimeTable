@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ru.stairenx.nvsutimetable.ConstantsNVSU;
+import ru.stairenx.nvsutimetable.item.Teacheritem;
 import ru.stairenx.nvsutimetable.item.UserItem;
 
 import static nl.qbusict.cupboard.CupboardFactory.cupboard;
@@ -147,6 +148,41 @@ public class DatabaseAction {
         sql.close();
 
         return subgroup;
+    }
+
+    public static void addTeacher(String name, String staffer){
+        DatabaseHelper dbHelper = new DatabaseHelper(getContext());
+        sql = dbHelper.getWritableDatabase();
+        cupboard().withDatabase(sql).put(new TeachersTable(name, staffer));
+    }
+
+    public static void addTeacherCollection(List<TeachersTable> collection){
+        DatabaseHelper dbHelper = new DatabaseHelper(getContext());
+        sql = dbHelper.getWritableDatabase();
+        cupboard().withDatabase(sql).delete(TeachersTable.class, null);
+        cupboard().withDatabase(sql).put(collection);
+    }
+
+    public static List<Teacheritem> getTeacherCollection() {
+        List<Teacheritem> teachers = new ArrayList<>();
+        DatabaseHelper dbHelper = new DatabaseHelper(getContext());
+        sql = dbHelper.getWritableDatabase();
+        String table = cupboard().getTable(TeachersTable.class);
+        if (getCountTable(table)){
+            String textQuery = "SELECT * FROM "+table;
+            Cursor cursor = sql.rawQuery(textQuery, null);
+            while (cursor.moveToNext()) {
+                teachers.add(new Teacheritem(
+                        cursor.getString(cursor.getColumnIndex(DatabaseConstants.COLUMN_NAME)),
+                        cursor.getString(cursor.getColumnIndex(DatabaseConstants.COLUMN_STAFF))
+                ));
+            }
+            cursor.close();
+        }else{
+
+        }
+        sql.close();
+        return teachers;
     }
 
     public static Context getContext(){
