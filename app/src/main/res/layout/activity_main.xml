@@ -70,11 +70,11 @@
 
                 <android.support.v7.widget.AppCompatAutoCompleteTextView
                     android:id="@+id/edit_search"
-                    android:layout_width="160dp"
+                    android:layout_width="125dp"
                     android:layout_height="60dp"
                     android:layout_gravity="center_vertical"
                     android:gravity="center"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:hint="Начните вводить"
                     android:textColorHint="@color/colorWhite"
                     android:imeOptions="actionDone"
@@ -92,22 +92,22 @@
                     android:gravity="center"
                     android:text="Указать \n подгруппу"
                     android:textColor="@color/colorWhite"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
 
                 <EditText
                     android:id="@+id/edit_text_subgroup"
-                    android:layout_width="100dp"
+                    android:layout_width="50dp"
                     android:layout_height="60dp"
                     android:layout_gravity="center_vertical"
                     android:background="@drawable/shape_radius_edit_text_settings_group"
                     android:gravity="center"
-                    android:hint="Подгруппа"
+                    android:hint="нет"
                     android:imeOptions="actionDone"
                     android:inputType="number"
                     android:maxLength="1"
                     android:textColor="@color/colorWhite"
                     android:textColorHint="@color/colorWhite"
-                    android:textSize="14sp"
+                    android:textSize="16sp"
                     android:visibility="invisible" />
             </LinearLayout>
 
@@ -244,6 +244,5 @@
         app:layout_anchorGravity="bottom|end"
         app:srcCompat="@drawable/ic_today"
         tools:ignore="VectorDrawableCompat" />
-
 
 </android.support.design.widget.CoordinatorLayout>
