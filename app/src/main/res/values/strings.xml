@@ -6,4 +6,6 @@
     <string name="edit_text_group">Введите группу</string>
     <string name="edit_text_subgroup">Введите подгруппу</string>
     <string name="button_apply_change">Сохранить</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 </resources>
