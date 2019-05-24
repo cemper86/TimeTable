@@ -1,5 +1,6 @@
 package ru.stairenx.nvsutimetable.server;
 
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.util.Pair;
@@ -8,6 +9,7 @@ import android.view.View;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -97,11 +99,13 @@ public class WebAction {
         isSuitableList.clear();
         isNotSuitableList.clear();
         entryList.clear();
-        if(group.length() > 4)
-            link = LinkAPI.URL + LinkAPI.LECTUR + group + LinkAPI.AND + LinkAPI.DATE + date;
-        else
+        if (group.length() > 4){
+            String teacher = Uri.encode(group);
+            link = LinkAPI.URL + LinkAPI.LECTUR + teacher + LinkAPI.AND + LinkAPI.DATE + date;
+            Log.d("----- URI encode", link);
+        }else {
             link = LinkAPI.URL + LinkAPI.GROUP + group + LinkAPI.AND + LinkAPI.DATE + date;
-
+        }
         Log.d("-----", "Запрос на " + link);
         String resultJson = ConnectServer.getJSON(link);
         if (resultJson.equals("404"))
