@@ -1,5 +1,8 @@
 package ru.stairenx.nvsutimetable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import ru.stairenx.nvsutimetable.item.PairItem;
 
 public class ConstantsNVSU {
@@ -12,6 +15,14 @@ public class ConstantsNVSU {
     public static PairItem TEST = new PairItem("", "", "","TEST", "", "", "", "","",true);
     public static String SPORT = "Элективные дисциплины (модули) по физической культуре и спорту";
 
+
+    public static List<PairItem> getTestPair(){
+        List<PairItem> data = new ArrayList<>();
+        data.add(new PairItem("group", "pair 1", "8:30 10:00", "Программирование", "Лекция", "402", "potok","teacher", "", true));
+        data.add(new PairItem("group", "pair 1", "10:10 11:40", "Программирование", "Лекция", "402", "potok","teacher", "", true));
+        data.add(new PairItem("group", "pair 1", "12:10 13:40", "Программирование", "Лекция", "402", "potok","teacher", "", true));
+        return data;
+    }
 
     public static String facultet_gumanitar = "Гуманитарный Факультет";
     public static String facultet_inginer_tech = "Инженерно-технический факультет";
