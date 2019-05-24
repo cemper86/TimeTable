@@ -99,11 +99,11 @@ public class WebAction {
         isSuitableList.clear();
         isNotSuitableList.clear();
         entryList.clear();
-        if (group.length() > 4){
+        if (group.length() > 4) {
             String teacher = Uri.encode(group);
             link = LinkAPI.URL + LinkAPI.LECTUR + teacher + LinkAPI.AND + LinkAPI.DATE + date;
             Log.d("----- URI encode", link);
-        }else {
+        } else {
             link = LinkAPI.URL + LinkAPI.GROUP + group + LinkAPI.AND + LinkAPI.DATE + date;
         }
         Log.d("-----", "Запрос на " + link);
@@ -235,10 +235,9 @@ public class WebAction {
         korp = obj.optString(ConstantsJson.OBJ_KORP);
         PairItem test = new PairItem(group, pair, time, discipline, type, aud, subgroup, teacher, korp, true);
 
-        if (entryList.isEmpty() & discipline.equals(ConstantsNVSU.SPORT)) {
+        if (entryList.isEmpty()) {
             entryList.add(test);
-            isSuitableList.add(new PairItem(group, pair, time, discipline, type, aud, subgroup, teacher, korp, true));
-        } else if (!entryList.isEmpty() & discipline.equals(ConstantsNVSU.SPORT)) {
+        } else {
             boolean isFound = false;
             for (int i = 0; i < entryList.size(); i++)
                 if (pair.equals(entryList.get(i).getPAIR())) {
@@ -247,13 +246,12 @@ public class WebAction {
                 }
             if (!isFound) {
                 entryList.add(test);
-                isSuitableList.add(new PairItem(group, pair, time, discipline, type, aud, subgroup, teacher, korp, true));
-            }
-        } else {
-            if (dbSubgroup.equals(linkSubgroup) || dbSubgroup.equals("0") || linkSubgroup.equals("0"))
-                isSuitableList.add(new PairItem(group, pair, time, discipline, type, aud, subgroup, teacher, korp, true));
-            else
-                isNotSuitableList.add(new PairItem(group, pair, time, discipline, type, aud, subgroup, teacher, korp, false));
+            }else
+                return;
         }
+        if (dbSubgroup.equals(linkSubgroup) || dbSubgroup.equals("0") || linkSubgroup.equals("0"))
+            isSuitableList.add(new PairItem(group, pair, time, discipline, type, aud, subgroup, teacher, korp, true));
+        else
+            isNotSuitableList.add(new PairItem(group, pair, time, discipline, type, aud, subgroup, teacher, korp, false));
     }
 }
