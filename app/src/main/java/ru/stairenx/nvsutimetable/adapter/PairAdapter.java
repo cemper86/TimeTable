@@ -95,7 +95,10 @@ public class PairAdapter extends RecyclerView.Adapter<PairAdapter.PairViewHolder
         holder.teacher.setText(item.getTEACHER());
         holder.potok.setText(setSubgroup(item.getPOTOK()));
         holder.time.setText(item.getTIME());
-        holder.KORP.setText(" - " + item.getKORP() + "орпус");
+        if(!item.getDISCIPLINE().equals(ConstantsNVSU.SPORT))
+            holder.KORP.setText(" - " + item.getKORP() + "орпус");
+        else
+            holder.KORP.setText(" - " + item.getKORP());
         setBackgroundColor(holder);
         if(!item.isSuitable()) {
             holder.cardView.setAlpha(0.50f);
