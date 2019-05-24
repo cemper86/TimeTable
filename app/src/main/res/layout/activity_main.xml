@@ -92,7 +92,7 @@
                     android:gravity="center"
                     android:text="Указать \n подгруппу"
                     android:textColor="@color/colorWhite"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"/>
 
                 <EditText
                     android:id="@+id/edit_text_subgroup"
