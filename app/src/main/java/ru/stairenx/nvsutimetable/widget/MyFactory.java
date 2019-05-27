@@ -3,6 +3,7 @@ package ru.stairenx.nvsutimetable.widget;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
@@ -12,6 +13,7 @@ import org.threeten.bp.format.DateTimeFormatter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ConcurrentSkipListMap;
 
 import ru.stairenx.nvsutimetable.ConstantsNVSU;
 import ru.stairenx.nvsutimetable.R;
@@ -19,6 +21,10 @@ import ru.stairenx.nvsutimetable.database.DatabaseAction;
 import ru.stairenx.nvsutimetable.item.PairItem;
 
 public class MyFactory implements RemoteViewsService.RemoteViewsFactory {
+
+    private static DateTimeFormatter dateTimeFormatterServer = DateTimeFormatter.ofPattern("dd_MM_yyyy");
+    private static CalendarDay day = CalendarDay.today();
+    private static String nowDay;
 
     public static List<PairItem> data = new ArrayList<>();
     Context context;
@@ -28,14 +34,12 @@ public class MyFactory implements RemoteViewsService.RemoteViewsFactory {
         this.context = context;
         widgetID = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
                 AppWidgetManager.INVALID_APPWIDGET_ID);
+        nowDay = day.getDate().format(dateTimeFormatterServer);
     }
 
     @Override
     public void onCreate() {
-        String group, date;
-        DatabaseAction.setContext(context);
-        group = DatabaseAction.getUserGroup();
-        new WidgetWebAction.GetTimeTableTask().execute(group,"22_05_2019");
+
     }
 
     @Override
@@ -45,9 +49,9 @@ public class MyFactory implements RemoteViewsService.RemoteViewsFactory {
 
     @Override
     public void onDataSetChanged() {
-        if(data.size()==0){
-            new WidgetWebAction.GetTimeTableTask().execute("3702","22_05_2019");
-        }
+        data.clear();
+        DatabaseAction.setContext(context);
+        data = WidgetWebAction.getJustTimeTable(DatabaseAction.getUserGroup(),nowDay);
     }
 
     @Override

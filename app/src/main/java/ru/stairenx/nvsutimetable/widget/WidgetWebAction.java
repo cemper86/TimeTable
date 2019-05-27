@@ -1,11 +1,9 @@
 package ru.stairenx.nvsutimetable.widget;
 
-import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -20,47 +18,41 @@ import ru.stairenx.nvsutimetable.server.WebAction;
 
 public class WidgetWebAction {
 
-    public static class GetTimeTableTask extends AsyncTask<String, Integer, String>{
+    private static List<PairItem> taskData = new ArrayList<>();
+
+    public static class GetTimeTableTask extends AsyncTask<String, Integer, List<PairItem>>{
         @Override
-        protected void onPostExecute(String s) {
+        protected void onPostExecute(List<PairItem> s) {
             super.onPostExecute(s);
+            MyFactory.data = taskData;
+
         }
 
         @Override
-        protected String doInBackground(String... strings) {
-            getJustTimeTable(strings[0],strings[1]);
-            return null;
+        protected List<PairItem> doInBackground(String... strings) {
+            return  getJustTimeTable(strings[0],strings[1]);
         }
     }
 
-    public static void getJustTimeTable(String group, String date){
+    public static List<PairItem> getJustTimeTable(String group, String date){
+        taskData.clear();
         String object = getObject(group,date);
-
         List<String> array = WebAction.token(object);
         int a = 0;
         for (int i = 0; i < array.size(); i++) {
             String json = array.get(a);
             try {
                 JSONObject obj = new JSONObject(json);
-
-                MyFactory.data.add(new PairItem(
-                                    obj.optString(ConstantsJson.OBJ_GRUP),
-                                    obj.optString(ConstantsJson.OBJ_PAIR),
-                                    WebAction.getTime(obj.optString(ConstantsJson.OBJ_PAIR)),
-                                    obj.optString(ConstantsJson.OBJ_DISCIPLINE),
-                                    WebAction.typePair(obj.optString(ConstantsJson.OBJ_VID)),
-                                    obj.optString(ConstantsJson.OBJ_AUD),
-                                    obj.optString(ConstantsJson.OBJ_SUBGRUP),
-                                    obj.optString(ConstantsJson.OBJ_TEACHER),
-                                    obj.optString(ConstantsJson.OBJ_KORP),
-                            true
-                ));
-
+                addPairOfList(obj);
                 a++;
             } catch (JSONException e) {
                 e.getStackTrace();
             }
         }
+        if(taskData.size()==0){
+            taskData.add(new PairItem("","","","Занятий нет","","","","","",true));
+        }
+        return taskData;
     }
 
     private static String getObject(String group, String date){
@@ -74,5 +66,37 @@ public class WidgetWebAction {
         }
         result = ConnectServer.getJSON(link);
         return result;
+    }
+
+    private static void addPairOfList(JSONObject obj){
+        String group, pair, time, discipline, type, aud, subgroup, teacher, korp;
+        String linkSubgroup = obj.optString(ConstantsJson.OBJ_SUBGRUP);
+
+        group = obj.optString(ConstantsJson.OBJ_GRUP);
+        pair = obj.optString(ConstantsJson.OBJ_PAIR);
+        time = WebAction.getTime(obj.optString(ConstantsJson.OBJ_PAIR));
+        discipline = obj.optString(ConstantsJson.OBJ_DISCIPLINE);
+        type = WebAction.typePair(obj.optString(ConstantsJson.OBJ_VID));
+        aud = obj.optString(ConstantsJson.OBJ_AUD);
+        subgroup = linkSubgroup;
+        teacher = obj.optString(ConstantsJson.OBJ_TEACHER);
+        korp = obj.optString(ConstantsJson.OBJ_KORP);
+
+        PairItem test = new PairItem(group, pair, time, discipline, type, aud, subgroup, teacher, korp, true);
+
+        if (taskData.isEmpty()) {
+            taskData.add(test);
+        } else {
+            boolean isFound = false;
+            for (int i = 0; i < taskData.size(); i++)
+                if (pair.equals(taskData.get(i).getPAIR())) {
+                    isFound = true;
+                    break;
+                }
+            if (!isFound) {
+                taskData.add(test);
+            }else
+                return;
+        }
     }
 }
