@@ -73,6 +73,9 @@ import ru.stairenx.nvsutimetable.item.PairItem;
 import ru.stairenx.nvsutimetable.item.Teacheritem;
 import ru.stairenx.nvsutimetable.server.ParsTeachersServer;
 import ru.stairenx.nvsutimetable.server.WebAction;
+import ru.stairenx.nvsutimetable.widget.MyFactory;
+import ru.stairenx.nvsutimetable.widget.TimeTableWidget;
+import ru.stairenx.nvsutimetable.widget.WidgetServiceList;
 
 public class MainActivity extends AppCompatActivity {
 
