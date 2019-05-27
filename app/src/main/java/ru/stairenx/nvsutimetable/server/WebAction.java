@@ -146,7 +146,7 @@ public class WebAction {
         return result;
     }
 
-    private static String typePair(String typePair) {
+    public static String typePair(String typePair) {
         String type = "";
         switch (typePair) {
             case "Лб":
@@ -165,7 +165,7 @@ public class WebAction {
         return type;
     }
 
-    private static String getTime(String pair) {
+    public static String getTime(String pair) {
         String time = "";
         switch (Integer.parseInt(pair)) {
             case 1:
@@ -193,7 +193,7 @@ public class WebAction {
         return time;
     }
 
-    private static String getSubgroup(String potok) {
+    public static String getSubgroup(String potok) {
         String subgroup;
         String[] data = potok.split("/");
         if (data.length > 1) {

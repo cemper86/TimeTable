@@ -6,29 +6,36 @@ import android.content.Intent;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
+import com.prolificinteractive.materialcalendarview.CalendarDay;
+
+import org.threeten.bp.format.DateTimeFormatter;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import ru.stairenx.nvsutimetable.ConstantsNVSU;
 import ru.stairenx.nvsutimetable.R;
+import ru.stairenx.nvsutimetable.database.DatabaseAction;
 import ru.stairenx.nvsutimetable.item.PairItem;
 
 public class MyFactory implements RemoteViewsService.RemoteViewsFactory {
 
-    List<PairItem> data = new ArrayList<>();
+    public static List<PairItem> data = new ArrayList<>();
     Context context;
     int widgetID;
 
     public MyFactory(Context context, Intent intent) {
         this.context = context;
-        data = ConstantsNVSU.getTestPair();
         widgetID = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
                 AppWidgetManager.INVALID_APPWIDGET_ID);
     }
 
     @Override
     public void onCreate() {
-        //data = WidgetWebAction.getJustTimeTable(context);
+        String group, date;
+        DatabaseAction.setContext(context);
+        group = DatabaseAction.getUserGroup();
+        new WidgetWebAction.GetTimeTableTask().execute(group,"22_05_2019");
     }
 
     @Override
@@ -38,7 +45,9 @@ public class MyFactory implements RemoteViewsService.RemoteViewsFactory {
 
     @Override
     public void onDataSetChanged() {
-        //data.notifyAll();
+        if(data.size()==0){
+            new WidgetWebAction.GetTimeTableTask().execute("3702","22_05_2019");
+        }
     }
 
     @Override
