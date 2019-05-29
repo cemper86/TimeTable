@@ -45,7 +45,7 @@ public class WebAction {
         protected String doInBackground(String... params) {
             MainActivity.data = new ArrayList<>();
             // отправка статистики по искользованию приложения
-            ConnectServer.sendStatistic(params[0], params[1], params[2]);
+            //ConnectServer.sendStatistic(params[0], params[1], params[2]);
             return getObject(params[0], params[1]);
         }
 
@@ -102,17 +102,14 @@ public class WebAction {
         if (group.length() > 4) {
             String teacher = Uri.encode(group);
             link = LinkAPI.URL + LinkAPI.LECTUR + teacher + LinkAPI.AND + LinkAPI.DATE + date;
-            Log.d("----- URI encode", link);
         } else {
             link = LinkAPI.URL + LinkAPI.GROUP + group + LinkAPI.AND + LinkAPI.DATE + date;
         }
-        Log.d("-----", "Запрос на " + link);
         String resultJson = ConnectServer.getJSON(link);
         if (resultJson.equals("404"))
             return resultJson;
         List<String> jsonArray = token(resultJson);
         int a = 0;
-        //System.out.println("Размер массива: "+jsonArray.size());
         for (int i = 0; i < jsonArray.size(); i++) {
             String json = jsonArray.get(a);
             try {

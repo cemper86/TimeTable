@@ -51,6 +51,7 @@ public class MyFactory implements RemoteViewsService.RemoteViewsFactory {
     public void onDataSetChanged() {
         data.clear();
         DatabaseAction.setContext(context);
+        Log.d("-----","Обновление массива с расписанием");
         data = WidgetWebAction.getJustTimeTable(DatabaseAction.getUserGroup(),nowDay);
     }
 

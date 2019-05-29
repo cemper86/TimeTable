@@ -3,7 +3,9 @@ package ru.stairenx.nvsutimetable.activity;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.hardware.input.InputManager;
@@ -204,6 +206,7 @@ public class MainActivity extends AppCompatActivity {
         DatabaseAction.setContext(getApplicationContext());
         new DatabaseActionTask.changeUserGroupAndSubGroupTask().execute(newGroup, newSubGroup);
         updateDataFromCalendarDay(currentDay);
+        updateWidget();
         Toast.makeText(getApplicationContext(), "Изменения сохранены", Toast.LENGTH_SHORT).show();
     }
 
@@ -460,4 +463,16 @@ public class MainActivity extends AppCompatActivity {
         }
         editTextGroup.setAdapter(new ArrayAdapter<>(DatabaseAction.getContext(), android.R.layout.simple_dropdown_item_1line, namesTeachers));
     }
+
+    private void updateWidget(){
+        try {
+            Intent updateWidget = new Intent(this, TimeTableWidget.class);
+            updateWidget.setAction("update_widget");
+            PendingIntent pending = PendingIntent.getBroadcast(this, 0, updateWidget, PendingIntent.FLAG_CANCEL_CURRENT);
+            pending.send();
+        } catch (PendingIntent.CanceledException e) {
+            Log.e("-----","Error widgetTrial()="+e.toString());
+        }
+    }
+
 }
