@@ -13,9 +13,7 @@ import org.threeten.bp.format.DateTimeFormatter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ConcurrentSkipListMap;
 
-import ru.stairenx.nvsutimetable.ConstantsNVSU;
 import ru.stairenx.nvsutimetable.R;
 import ru.stairenx.nvsutimetable.database.DatabaseAction;
 import ru.stairenx.nvsutimetable.item.PairItem;
@@ -30,16 +28,19 @@ public class MyFactory implements RemoteViewsService.RemoteViewsFactory {
     Context context;
     int widgetID;
 
-    public MyFactory(Context context, Intent intent) {
-        this.context = context;
-        widgetID = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
-                AppWidgetManager.INVALID_APPWIDGET_ID);
+    public MyFactory(Context ctx, Intent intent) {
+        context = ctx;
+        widgetID = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
         nowDay = day.getDate().format(dateTimeFormatterServer);
     }
 
     @Override
     public void onCreate() {
-
+        Log.d("---","Создание MyFactory");
+        data.clear();
+        DatabaseAction.setContext(context);
+        Log.d("-----","onCreate массива с расписанием");
+        data = WidgetWebAction.getJustTimeTable(DatabaseAction.getUserGroup(),nowDay);
     }
 
     @Override

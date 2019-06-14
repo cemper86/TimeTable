@@ -1,19 +1,12 @@
 package ru.stairenx.nvsutimetable.activity;
 
 import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.hardware.input.InputManager;
-import android.inputmethodservice.Keyboard;
 import android.os.Build;
-import android.os.IBinder;
-import android.provider.Settings;
-import android.renderscript.ScriptGroup;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -27,17 +20,13 @@ import android.support.v7.widget.AppCompatAutoCompleteTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.InputType;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -52,32 +41,22 @@ import com.prolificinteractive.materialcalendarview.CalendarMode;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 import com.prolificinteractive.materialcalendarview.OnMonthChangedListener;
-import com.prolificinteractive.materialcalendarview.format.DateFormatTitleFormatter;
-import com.prolificinteractive.materialcalendarview.format.TitleFormatter;
 import com.rhexgomez.typer.roboto.TyperRoboto;
 
 import org.threeten.bp.format.DateTimeFormatter;
-import org.w3c.dom.Text;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
-import ru.stairenx.nvsutimetable.ConstantsNVSU;
 import ru.stairenx.nvsutimetable.R;
 import ru.stairenx.nvsutimetable.adapter.PairAdapter;
 import ru.stairenx.nvsutimetable.database.DatabaseAction;
 import ru.stairenx.nvsutimetable.database.DatabaseActionTask;
-import ru.stairenx.nvsutimetable.database.TeachersTable;
 import ru.stairenx.nvsutimetable.item.PairItem;
 import ru.stairenx.nvsutimetable.item.Teacheritem;
 import ru.stairenx.nvsutimetable.server.ParsTeachersServer;
 import ru.stairenx.nvsutimetable.server.WebAction;
-import ru.stairenx.nvsutimetable.widget.MyFactory;
 import ru.stairenx.nvsutimetable.widget.TimeTableWidget;
-import ru.stairenx.nvsutimetable.widget.WidgetServiceList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -136,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
         initMaterialCalendarView();
         linearLayout = (LinearLayout) findViewById(R.id.linear_fast_settings);
         statusBarChangeOnSDK();
+        TimeTableWidget.onUpdateWidgetTimeTable(getApplicationContext());
     }
 
     @Override
@@ -147,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
             subGroup = DatabaseAction.getUserSubgroup();
         }
         updateDataFromCalendarDay(currentDay);
+        TimeTableWidget.onUpdateWidgetTimeTable(getApplicationContext());
     }
 
     @Override
@@ -206,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
         DatabaseAction.setContext(getApplicationContext());
         new DatabaseActionTask.changeUserGroupAndSubGroupTask().execute(newGroup, newSubGroup);
         updateDataFromCalendarDay(currentDay);
-        updateWidget();
+        TimeTableWidget.onUpdateWidgetTimeTable(getApplicationContext());
         Toast.makeText(getApplicationContext(), "Изменения сохранены", Toast.LENGTH_SHORT).show();
     }
 

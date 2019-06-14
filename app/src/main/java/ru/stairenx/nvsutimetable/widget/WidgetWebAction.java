@@ -52,6 +52,7 @@ public class WidgetWebAction {
         if(taskData.size()==0){
             taskData.add(new PairItem("","","","Занятий нет","","","","","",true));
         }
+        //MyFactory.data = taskData;
         return taskData;
     }
 
