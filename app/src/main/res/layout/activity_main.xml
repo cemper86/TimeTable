@@ -82,7 +82,10 @@
                     android:singleLine="true"
                     android:theme="@style/Autocomplete"
                     android:background="@drawable/shape_radius_edit_text_settings_group"
-                    android:focusableInTouchMode="true"/>
+                    android:focusableInTouchMode="true"
+                    android:dropDownAnchor="@id/linear_fast_settings"
+                    android:dropDownWidth="180dp"
+                    style="@style/Autocomplete"/>
 
                 <CheckBox
                     android:id="@+id/check_subgroup_toolbar"

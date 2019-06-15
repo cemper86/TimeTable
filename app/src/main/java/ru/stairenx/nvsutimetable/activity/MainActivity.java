@@ -442,7 +442,7 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i != teachers.size(); i++) {
             namesTeachers[i] = (teachers.get(i).getName());
         }
-        editTextGroup.setAdapter(new ArrayAdapter<>(DatabaseAction.getContext(), android.R.layout.simple_dropdown_item_1line, namesTeachers));
+        editTextGroup.setAdapter(new ArrayAdapter<>(DatabaseAction.getContext(), R.layout.custom_simple_dropdown_item, namesTeachers));
     }
 
     private void updateWidget(){

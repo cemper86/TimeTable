@@ -29,24 +29,6 @@ public class TimeTableWidget extends AppWidgetProvider {
     private static CharSequence widgetTitile;
     private static String strUpdateTime;
 
-    public static void update(){
-
-    }
-
-    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
-                                int appWidgetId) {
-
-        day = CalendarDay.today();
-        today = day.getDate().format(dateTimeFormatter);
-        widgetTitile = "Ceгодня, " + today;
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.time_table_widget);
-        views.setTextViewText(R.id.appwidget_text, widgetTitile);
-        Intent adapter = new Intent(context, WidgetService.class);
-        adapter.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-        views.setRemoteAdapter(R.id.rv_pair, adapter);
-        appWidgetManager.updateAppWidget(appWidgetId, views);
-    }
-
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         onUpdateWidgetTimeTable(context);
@@ -65,6 +47,7 @@ public class TimeTableWidget extends AppWidgetProvider {
         justTime = ZonedDateTime.now().format(dateTimeFormatterTime);
         widgetTitile = "Ceгодня, " + today;
         strUpdateTime = justTime;
+        DatabaseAction.setContext(context);
         String group = DatabaseAction.getUserGroup();
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         int appWidgetId[] = appWidgetManager.getAppWidgetIds(new ComponentName(context.getPackageName(),TimeTableWidget.class.getName()));
