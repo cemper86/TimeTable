@@ -14,6 +14,7 @@ import org.threeten.bp.ZonedDateTime;
 import org.threeten.bp.format.DateTimeFormatter;
 
 import ru.stairenx.nvsutimetable.R;
+import ru.stairenx.nvsutimetable.adapter.AppSharedPreferences;
 import ru.stairenx.nvsutimetable.database.DatabaseAction;
 
 /**
@@ -47,8 +48,7 @@ public class TimeTableWidget extends AppWidgetProvider {
         justTime = ZonedDateTime.now().format(dateTimeFormatterTime);
         widgetTitile = "Ceгодня, " + today;
         strUpdateTime = justTime;
-        DatabaseAction.setContext(context);
-        String group = DatabaseAction.getUserGroup();
+        String group = AppSharedPreferences.Group.loadGroup(context);
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         int appWidgetId[] = appWidgetManager.getAppWidgetIds(new ComponentName(context.getPackageName(),TimeTableWidget.class.getName()));
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.time_table_widget);

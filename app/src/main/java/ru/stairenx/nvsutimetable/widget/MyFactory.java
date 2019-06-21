@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ru.stairenx.nvsutimetable.R;
+import ru.stairenx.nvsutimetable.adapter.AppSharedPreferences;
 import ru.stairenx.nvsutimetable.database.DatabaseAction;
 import ru.stairenx.nvsutimetable.item.PairItem;
 
@@ -40,7 +41,7 @@ public class MyFactory implements RemoteViewsService.RemoteViewsFactory {
         data.clear();
         DatabaseAction.setContext(context);
         Log.d("-----","onCreate массива с расписанием");
-        data = WidgetWebAction.getJustTimeTable(DatabaseAction.getUserGroup(),nowDay);
+        data = WidgetWebAction.getJustTimeTable(AppSharedPreferences.Group.loadGroup(context),nowDay);
     }
 
     @Override
@@ -53,7 +54,7 @@ public class MyFactory implements RemoteViewsService.RemoteViewsFactory {
         data.clear();
         DatabaseAction.setContext(context);
         Log.d("-----","Обновление массива с расписанием");
-        data = WidgetWebAction.getJustTimeTable(DatabaseAction.getUserGroup(),nowDay);
+        data = WidgetWebAction.getJustTimeTable(AppSharedPreferences.Group.loadGroup(context),nowDay);
     }
 
     @Override

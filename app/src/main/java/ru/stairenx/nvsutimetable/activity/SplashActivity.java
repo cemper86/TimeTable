@@ -7,6 +7,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import ru.stairenx.nvsutimetable.ConstantsNVSU;
+import ru.stairenx.nvsutimetable.adapter.AppSharedPreferences;
 import ru.stairenx.nvsutimetable.database.DatabaseAction;
 
 public class SplashActivity extends AppCompatActivity {
@@ -19,11 +20,11 @@ public class SplashActivity extends AppCompatActivity {
 
     private void getUserGroup(){
         DatabaseAction.setContext(getApplicationContext());
-        String group = DatabaseAction.getUserGroup();
-        String subGroup = DatabaseAction.getUserSubgroup();
-        if(!group.equals(ConstantsNVSU.NONE)){
-            MainActivity.group = group;
-            MainActivity.subGroup = subGroup;
+        String group = AppSharedPreferences.Group.loadGroup(getApplicationContext());
+        String subGroup = AppSharedPreferences.Subgroup.loadSubgroup(getApplicationContext());
+        if(group!=null){
+            //MainActivity.group = group;
+            //MainActivity.subGroup = subGroup;
             startActivity(new Intent(this, MainActivity.class));
         }else{
             startActivity(new Intent(this, LoginActivity.class));

@@ -35,7 +35,7 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
         initToolbar();
         initFoarmSetting();
-        initInformation();
+        //initInformation();
     }
 
     private void initToolbar(){
@@ -49,7 +49,7 @@ public class SettingsActivity extends AppCompatActivity {
         faculty = findViewById(R.id.name_faculty);
         group = findViewById(R.id.name_group);
         DatabaseAction.setContext(getApplicationContext());
-        List<UserItem> info = DatabaseAction.getUserInformation(DatabaseAction.getUserGroup());
+        List<UserItem> info = DatabaseAction.getUserInformation("");
         faculty.setText(info.get(0).getFaculty());
         group.setText(info.get(0).getGroup());
     }
@@ -66,7 +66,7 @@ public class SettingsActivity extends AppCompatActivity {
     private void initFoarmSetting(){
         et_group = findViewById(R.id.edit_text_group);
         et_subgroup = findViewById(R.id.edit_text_subgroup);
-        et_group.setHint("Ваша группа: "+MainActivity.group);
+        //et_group.setHint("Ваша группа: "+MainActivity.group);
         submit = findViewById(R.id.button_accept_change);
         saveInformation(submit);
     }
@@ -77,9 +77,9 @@ public class SettingsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String gr = et_group.getText().toString();
                 if(!gr.equals("")){
-                    MainActivity.group = gr;
-                    DatabaseAction.setContext(getApplicationContext());
-                    DatabaseAction.changeUserGroup(gr);
+                    //MainActivity.group = gr;
+                    //DatabaseAction.setContext(getApplicationContext());
+                    //DatabaseAction.changeUserGroup(gr);
                     Toast.makeText(SettingsActivity.this, "Группа изменена на "+ gr, Toast.LENGTH_SHORT).show();
                 }
             }

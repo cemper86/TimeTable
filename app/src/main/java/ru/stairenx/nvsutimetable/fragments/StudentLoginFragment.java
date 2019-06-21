@@ -9,19 +9,19 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
-import ru.stairenx.nvsutimetable.activity.LoginActivity;
 import ru.stairenx.nvsutimetable.R;
 import ru.stairenx.nvsutimetable.activity.MainActivity;
-import ru.stairenx.nvsutimetable.database.DatabaseAction;
+import ru.stairenx.nvsutimetable.adapter.AppSharedPreferences;
 
 public class StudentLoginFragment extends Fragment {
     private static  final int LAYOUT = R.layout.fragment_student_login;
@@ -93,11 +93,13 @@ public class StudentLoginFragment extends Fragment {
     private void saveInformation(String newGroup, String newSubGroup) {
         if(editTextSubGroup.length() == 0 || !checkBoxSubGroup.isChecked())
             newSubGroup="0";
-        DatabaseAction.setContext(view.getContext());
-        DatabaseAction.addUser("",newGroup,newSubGroup);
-        MainActivity.group = newGroup;
-        MainActivity.subGroup = newSubGroup;
-        startActivity(new Intent(view.getContext(), MainActivity.class));
+        if(AppSharedPreferences.Group.saveGroup(getContext().getApplicationContext(),newGroup)&&
+        AppSharedPreferences.Subgroup.saveSubgroup(getContext().getApplicationContext(),newSubGroup)) {
+            startActivity(new Intent(view.getContext(), MainActivity.class));
+        }else{
+            Toast.makeText(getContext().getApplicationContext(), "Ошибка записи", Toast.LENGTH_SHORT).show();
+            Log.d("---","Error. Запись preferences не произошла");
+        }
     }
 
     private static void animateImageView(ImageView imageView) {

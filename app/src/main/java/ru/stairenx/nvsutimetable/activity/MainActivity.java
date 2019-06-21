@@ -49,9 +49,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ru.stairenx.nvsutimetable.R;
+import ru.stairenx.nvsutimetable.adapter.AppSharedPreferences;
 import ru.stairenx.nvsutimetable.adapter.PairAdapter;
 import ru.stairenx.nvsutimetable.database.DatabaseAction;
-import ru.stairenx.nvsutimetable.database.DatabaseActionTask;
 import ru.stairenx.nvsutimetable.item.PairItem;
 import ru.stairenx.nvsutimetable.item.Teacheritem;
 import ru.stairenx.nvsutimetable.server.ParsTeachersServer;
@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //userKey = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+        checkPreferences();
         if (savedInstanceState != null)
             currentDay = CalendarDay.from(savedInstanceState.getInt("Year"), savedInstanceState.getInt("Month"), savedInstanceState.getInt("Day"));
         else
@@ -123,8 +123,8 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         if (group == null | subGroup == null) {
             DatabaseAction.setContext(getApplicationContext());
-            group = DatabaseAction.getUserGroup();
-            subGroup = DatabaseAction.getUserSubgroup();
+            group = AppSharedPreferences.Group.loadGroup(getApplicationContext());
+            subGroup = AppSharedPreferences.Subgroup.loadSubgroup(getApplicationContext());
         }
         updateDataFromCalendarDay(currentDay);
         TimeTableWidget.onUpdateWidgetTimeTable(getApplicationContext());
@@ -184,8 +184,8 @@ public class MainActivity extends AppCompatActivity {
     private void saveInformation(String newGroup, String newSubGroup) {
         MainActivity.group = newGroup;
         MainActivity.subGroup = newSubGroup;
-        DatabaseAction.setContext(getApplicationContext());
-        new DatabaseActionTask.changeUserGroupAndSubGroupTask().execute(newGroup, newSubGroup);
+        AppSharedPreferences.Group.saveGroup(getApplicationContext(),newGroup);
+        AppSharedPreferences.Subgroup.saveSubgroup(getApplicationContext(),newSubGroup);
         updateDataFromCalendarDay(currentDay);
         TimeTableWidget.onUpdateWidgetTimeTable(getApplicationContext());
         Toast.makeText(getApplicationContext(), "Изменения сохранены", Toast.LENGTH_SHORT).show();
@@ -282,10 +282,10 @@ public class MainActivity extends AppCompatActivity {
                     buttonSettingsUser.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
                     buttonSettingsUser.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_save_fast_settings, 0);
                     editTextGroup.setText(group);
-                    if (!DatabaseAction.getUserSubgroup().equals("0")) {
+                    if (AppSharedPreferences.Group.loadGroup(getApplicationContext())!=null) {
                         editTextSubGroup.setVisibility(View.VISIBLE);
                         checkBoxSubGroup.setChecked(true);
-                        editTextSubGroup.setText(DatabaseAction.getUserSubgroup());
+                        editTextSubGroup.setText(AppSharedPreferences.Subgroup.loadSubgroup(getApplicationContext()));
                         checkBoxSubGroup.setText("");
                     } else {
                         editTextSubGroup.setText("");
@@ -454,6 +454,16 @@ public class MainActivity extends AppCompatActivity {
         } catch (PendingIntent.CanceledException e) {
             Log.e("-----","Error widgetTrial()="+e.toString());
         }
+    }
+
+    private void checkPreferences(){
+        final Context ctx = getApplication();
+        DatabaseAction.setContext(ctx);
+        if(AppSharedPreferences.Group.loadGroup(ctx)==null) AppSharedPreferences.Group.saveGroup(ctx,DatabaseAction.getUserGroup());
+        else Log.d("---","Используется Preferences");
+
+        if(AppSharedPreferences.Subgroup.loadSubgroup(ctx)==null) AppSharedPreferences.Subgroup.saveSubgroup(ctx,DatabaseAction.getUserSubgroup());
+        else Log.d("---","Используется Preferences");
     }
 
 }
